@@ -1,6 +1,7 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
 #' @include gcd.R
+#' @include isRational.R
 
 #' @title Rational Number Arithmetic
 #' 
@@ -27,7 +28,7 @@ NULL
   d <- d %/% g
   return(list(n=n, d=d))
 }
-.rationalAddInteger <- function(n1, d1, i2) rationalAddRational(n1, d1, i2, rep(1, length(i2)))
+.rationalAddInteger <- function(n1, d1, i2) .rationalAddRational(n1, d1, i2, rep(1L, length(i2)))
 .rationalAddNumeric <- function(n1, d1, f2) n1 / d1 + f2
 
 # Note that rationalR6 and R6 will not work as signatures for setMethod for
@@ -36,10 +37,10 @@ NULL
 #  work as primitive method signatures
 
 #' @rdname rational-operators
-#' @examples 
+#' @examples
 #'   a <- rational(1L,2L,"S4")
 #'   b <- rational(3L,5L,"S4")
-#'   d <- a+b
+#'   d <- a + b
 #'   stopifnot(d@@n == 11)
 #'   stopifnot(d@@d == 10)
 setMethod("+", c("rationalS4", "rationalS4"), function(e1, e2)
@@ -49,6 +50,12 @@ setMethod("+", c("rationalS4", "rationalS4"), function(e1, e2)
 })
 
 #' @rdname rational-operators
+#' @examples
+#'   a <- 7L
+#'   b <- rational(3L,5L,"S4")
+#'   d <- a + b
+#'   stopifnot(d@@n == 38)
+#'   stopifnot(d@@d == 5)
 setMethod("+", c("integer", "rationalS4"), function(e1, e2)
 {
   res <- .rationalAddInteger(e2@n, e2@d, e1)
@@ -56,44 +63,85 @@ setMethod("+", c("integer", "rationalS4"), function(e1, e2)
 })
 
 #' @rdname rational-operators
+#' @examples
+#'   a <- rational(1L,2L,"S4")
+#'   b <- 7L
+#'   d <- a + b
+#'   stopifnot(d@@n == 15)
+#'   stopifnot(d@@d == 2)
 setMethod("+", c("rationalS4", "integer"), function(e1, e2)
 {
-  return(e2 + e1)
+  res <- .rationalAddInteger(e1@n, e1@d, e2)
+  return(new("rationalS4", n=res$n, d=res$d))
 })
 
 #' @rdname rational-operators
+#' @examples
+#'   a <- 7
+#'   b <- rational(3L,5L,"S4")
+#'   d <- a + b
+#'   stopifnot(abs(d - 7.6) < 1E-12)
 setMethod("+", c("numeric", "rationalS4"), function(e1, e2)
 {
   return(.rationalAddNumeric(e2@n, e2@d, e1))
 })
 
 #' @rdname rational-operators
+#' @examples
+#'   a <- rational(1L,2L,"S4")
+#'   b <- 7
+#'   d <- a + b
+#'   stopifnot(abs(d - 7.5) < 1E-12)
 setMethod("+", c("rationalS4", "numeric"), function(e1, e2)
 {
-  return(e2 + e1)
+  return(.rationalAddNumeric(e1@n, e1@d, e2))
 })
 
 #' @rdname rational-operators
+#' @examples
+#'   a <- rational(1L,2L,"S3")
+#'   b <- rational(3L,5L,"S3")
+#'   d <- a + b
+#'   stopifnot(d$n == 11)
+#'   stopifnot(d$d == 10)
+#'   a <- 7L
+#'   b <- rational(3L,5L,"S3")
+#'   d <- a + b
+#'   stopifnot(d$n == 38)
+#'   stopifnot(d$d == 5)
+#'   a <- rational(1L,2L,"S3")
+#'   b <- 7L
+#'   d <- a + b
+#'   stopifnot(d$n == 15)
+#'   stopifnot(d$d == 2)
+#'   a <- 7
+#'   b <- rational(3L,5L,"S3")
+#'   d <- a + b
+#'   stopifnot(abs(d - 7.6) < 1E-12)
+#'   a <- rational(1L,2L,"S3")
+#'   b <- 7
+#'   d <- a + b
+#'   stopifnot(abs(d - 7.5) < 1E-12)
 '+.rationalS3' <- function(e1, e2)
 {
-  if (class(e1) == "rationalS3" && class(e2) == "rationalS3")
+  if (is.rationalS3(e1) && is.rationalS3(e2))
   {
     res <- .rationalAddRational(e1$n, e1$d, e2$n, e2$d)
     return(rationalS3(res$n, res$d))
-  } else if (is.integer(e1) && class(e2) == "rationalS3")
+  } else if (is.integer(e1) && is.rationalS3(e2))
   {
     res <- .rationalAddInteger(e2$n, e2$d, e1)
     return(rationalS3(res$n, res$d))
-  } else if (class(e1) == "rationalS3" && is.integer(e2))
+  } else if (is.rationalS3(e1) && is.integer(e2))
   {
-    return(e2+e1)
-  } else if (is.numeric(e1) && class(e2) == "rationalS3")
-  {
-    res <- .rationalAddNumeric(e2$n, e2$d, e1)
+    res <- .rationalAddInteger(e1$n, e1$d, e2)
     return(rationalS3(res$n, res$d))
-  } else if (class(e1) == "rationalS3" && is.numeric(e2))
+  } else if (is.numeric(e1) && is.rationalS3(e2))
   {
-    return(e2+e1)
+    return(.rationalAddNumeric(e2$n, e2$d, e1))
+  } else if (is.rationalS3(e1) && is.numeric(e2))
+  {
+    return(.rationalAddNumeric(e1$n, e1$d, e2))
   } else 
   {
     return(NA)
@@ -101,26 +149,50 @@ setMethod("+", c("rationalS4", "numeric"), function(e1, e2)
 }
 
 #' @rdname rational-operators
+#' @examples
+#'   a <- rational(1L,2L,"R6")
+#'   b <- rational(3L,5L,"R6")
+#'   d <- a + b
+#'   stopifnot(d$getNumerator() == 11)
+#'   stopifnot(d$getDenominator() == 10)
+#'   a <- 7L
+#'   b <- rational(3L,5L,"R6")
+#'   d <- a + b
+#'   stopifnot(d$getNumerator() == 38)
+#'   stopifnot(d$getDenominator() == 5)
+#'   a <- rational(1L,2L,"R6")
+#'   b <- 7L
+#'   d <- a + b
+#'   stopifnot(d$getNumerator() == 15)
+#'   stopifnot(d$getDenominator() == 2)
+#'   a <- 7
+#'   b <- rational(3L,5L,"R6")
+#'   d <- a + b
+#'   stopifnot(abs(d - 7.6) < 1E-12)
+#'   a <- rational(1L,2L,"R6")
+#'   b <- 7
+#'   d <- a + b
+#'   stopifnot(abs(d - 7.5) < 1E-12)
 '+.rationalR6' <- function(e1, e2)
 {
-  if (class(e1) == "rationalR6" && class(e2) == "rationalR6")
+  if (is.rationalR6(e1) && is.rationalR6(e2))
   {
     res <- .rationalAddRational(e1$getNumerator(), e1$getDenominator(), e2$getNumerator(), e2$getDenominator())
     return(rationalR6(res$n, res$d))
-  } else if (is.integer(e1) && class(e2) == "rationalR6")
+  } else if (is.integer(e1) && is.rationalR6(e2))
   {
     res <- .rationalAddInteger(e2$getNumerator(), e2$getDenominator(), e1)
     return(rationalR6(res$n, res$d))
-  } else if (class(e1) == "rationalR6" && is.integer(e2))
+  } else if (is.rationalR6(e1) && is.integer(e2))
   {
-    return(e2+e1)
-  } else if (is.numeric(e1) && class(e2) == "rationalR6")
-  {
-    res <- .rationalAddNumeric(e2$getNumerator(), e2$getDenominator(), e1)
+    res <- .rationalAddInteger(e1$getNumerator(), e1$getDenominator(), e2)
     return(rationalR6(res$n, res$d))
-  } else if (class(e1) == "rationalR6" && is.numeric(e2))
+  } else if (is.numeric(e1) && is.rationalR6(e2))
   {
-    return(e2+e1)
+    return(.rationalAddNumeric(e2$getNumerator(), e2$getDenominator(), e1))
+  } else if (is.rationalR6(e1) && is.numeric(e2))
+  {
+    return(.rationalAddNumeric(e1$getNumerator(), e1$getDenominator(), e2))
   } else 
   {
     return(NA)
@@ -135,14 +207,22 @@ setMethod("+", c("rationalS4", "numeric"), function(e1, e2)
 #'   a$add(b)
 #'   stopifnot(a$getNumerator() == 11)
 #'   stopifnot(a$getDenominator() == 10)
+#'   a <- rational(1L,2L,"R6")
+#'   b <- 7L
+#'   a$add(b)
+#'   stopifnot(a$getNumerator() == 15)
+#'   stopifnot(a$getDenominator() == 2)
 .rationalR6$set("public", "add", function(e1)
 {
-  if (class(e1) == "rationalR6")
+  if (is.rationalR6(e1))
   {
     res <- .rationalAddRational(private$n, private$d, e1$getNumerator(), e1$getDenominator())  
   } else if (is.integer(e1))
   {
     res <- .rationalAddInteger(private$n, private$d, e1)
+  } else
+  {
+    stop("R6$add can only be used with objects of class rationalR6 and integer")
   }
   private$n <- res$n
   private$d <- res$d
