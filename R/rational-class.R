@@ -14,7 +14,7 @@
 #' @field n,d,v the numerator, denominator, and value field of the S3 class
 #' @slot n,d,v the numerator, denominator, and value slots of the S4 class
 #' @name rational-class
-NULL
+
 require(R6)
 require(methods)
 
@@ -28,7 +28,9 @@ require(methods)
 .rationalErrorMessage3 <- paste(.rationalError0, "The numerator and denominator must have equal length")
 .rationalErrorMessage4 <- paste(.rationalError0, "The method argument may only be of length 1")
 .rationalErrorMessage5 <- paste(.rationalError0, "the method must be one of S3, S4, or R6")
-.ratioanlErrorMessage6 <- paste(.rationalError0, "binary operators of rational numbers require that the numbers be the same length")
+.rationalErrorMessage6 <- paste(.rationalError0, "binary operators of rational numbers require that the numbers be the same length")
+.rationalErrorMessage7 <- paste(.rationalError0, "only rationalR6 objects can be insterted into a rationalR6 vector")
+.rationalErrorMessage8 <- paste(.rationalError0, "only rationalS3 objects can be insterted into a rationalS3 vector")
 
 # rational number S3 class generator
 #
@@ -229,15 +231,18 @@ setMethod("[[<-",
             return(x)
           })
 
-a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S4")
-stopifnot(a[2]@n == 5L)
-stopifnot(all(a[2:3]@n == c(5,6)))
-a[2] <- rational(7L, 10L, "S4")
-stopifnot(a[2]@n == 7L)
-stopifnot(a[2]@d == 10L)
-a[[2]] <- rational(1L, 6L, "S4")
-stopifnot(a[2]@n == 1L)
-stopifnot(a[2]@d == 6L)
+if (FALSE)
+{
+  a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S4")
+  stopifnot(a[2]@n == 5L)
+  stopifnot(all(a[2:3]@n == c(5,6)))
+  a[2] <- rational(7L, 10L, "S4")
+  stopifnot(a[2]@n == 7L)
+  stopifnot(a[2]@d == 10L)
+  a[[2]] <- rational(1L, 6L, "S4")
+  stopifnot(a[2]@n == 1L)
+  stopifnot(a[2]@d == 6L)
+}
 
 #' @param x the rational number
 #' @param i,j,...indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.
@@ -257,7 +262,7 @@ stopifnot(a[2]@d == 6L)
 {
   if (!is.rationalS3(value))
   {
-    stop("only rationalS3 objects can be insterted into a rationalS3 vector")
+    stop(.rationalErrorMessage8)
   }
   x$n[i] <- value$n
   x$d[i] <- value$d
@@ -274,7 +279,7 @@ stopifnot(a[2]@d == 6L)
 {
   if (!is.rationalS3(value))
   {
-    stop("only rationalS3 objects can be insterted into a rationalS3 vector")
+    stop(.rationalErrorMessage8)
   }
   x$n[[i]] <- value$n
   x$d[[i]] <- value$d
@@ -300,7 +305,7 @@ stopifnot(a[2]@d == 6L)
 {
   if (!is.rationalR6(value))
   {
-    stop("only rationalR^ objects can be insterted into a rationalR6 vector")
+    stop(.rationalErrorMessage7)
   }
   x$n[i] <- value$getNumerator()
   x$d[i] <- value$getDenominator()
@@ -317,7 +322,7 @@ stopifnot(a[2]@d == 6L)
 {
   if (!is.rationalR6(value))
   {
-    stop("only rationalR6 objects can be insterted into a rationalR6 vector")
+    stop(.rationalErrorMessage7)
   }
   x$n[[i]] <- value$getNumerator()
   x$d[[i]] <- value$getDenominator()
