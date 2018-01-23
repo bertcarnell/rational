@@ -141,7 +141,7 @@ setMethod("/", c("rationalS4", "numeric"), function(e1, e2)
 #'   b <- 7
 #'   d <- a / b
 #'   stopifnot(abs(d - 1/14) < 1E-12)
-'*.rationalR6' <- function(e1, e2)
+'/.rationalR6' <- function(e1, e2)
 {
   if (is.rationalR6(e1) && is.rationalR6(e2))
   {
