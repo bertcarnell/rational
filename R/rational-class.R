@@ -154,3 +154,219 @@ rational <- function(n, d, method="R6")
    stop(.rationalErrorMessage5)
   }
 }
+
+#' Length
+#' 
+#' @rdname rational-class
+#' @examples
+#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S4")
+#'   stopifnot(length(a) == 3)
+setMethod("length",
+          "rationalS4",
+          function(x)
+          {
+            callNextMethod(x@n)
+          })
+
+#' @examples
+#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S3")
+#'   stopifnot(length(a) == 3)
+length.rationalS3 <- function(e1)
+{
+  return(length(e1$n))
+}
+
+#' @examples
+#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "R6")
+#'   stopifnot(length(a) == 3)
+length.rationalR6 <- function(e1)
+{
+  return(length(e1$getNumerator()))
+}
+
+#' Extract
+#' 
+#' @param x the rational number
+#' @param i,j,...indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.
+#' @param drop For matrices and arrays. If TRUE the result is coerced to the lowest possible dimension (see the examples). This only works for extracting elements, not for the replacement. See drop for further details.
+#' @seealso \code{\link{Extract}} for more full descriptions
+#' @rdname rational-class
+#' @examples
+#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S4")
+#'   stopifnot(a[2]@@n == 5L)
+#'   stopifnot(all(a[2:3]@@n == c(5,6)))
+setMethod("[",
+          "rationalS4",
+          function(x, i, j, ..., drop)
+          {
+            rational(x@n[i], x@d[i], "S4")
+          })
+
+setMethod("[<-",
+          "rationalS4",
+          function(x, i, j, ..., value)
+          {
+            x@n[i] <- value@n
+            x@d[i] <- value@d
+            x@v[i] <- value@v
+            return(x)
+          })
+
+setMethod("[[",
+          "rationalS4",
+          function(x, i, ..., drop)
+          {
+            rational(x@n[[i]], x@d[[i]], "S4")
+          })
+
+setMethod("[[<-",
+          "rationalS4",
+          function(x, i, ..., value)
+          {
+            x@n[[i]] <- value@n
+            x@d[[i]] <- value@d
+            x@v[[i]] <- value@v
+            return(x)
+          })
+
+a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S4")
+stopifnot(a[2]@n == 5L)
+stopifnot(all(a[2:3]@n == c(5,6)))
+a[2] <- rational(7L, 10L, "S4")
+stopifnot(a[2]@n == 7L)
+stopifnot(a[2]@d == 10L)
+a[[2]] <- rational(1L, 6L, "S4")
+stopifnot(a[2]@n == 1L)
+stopifnot(a[2]@d == 6L)
+
+#' @param x the rational number
+#' @param i,j,...indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.
+#' @param drop For matrices and arrays. If TRUE the result is coerced to the lowest possible dimension (see the examples). This only works for extracting elements, not for the replacement. See drop for further details.
+#' @seealso \code{\link{Extract}} for more full descriptions
+#' @rdname rational-class
+#' @examples
+#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S3")
+#'   stopifnot(a[2]$n == 5L)
+#'   stopifnot(all(a[2:3]$n == c(5,6)))
+'[.rationalS3' <- function(x, i, j, ..., drop)
+{
+  return(rational(x$n[i], x$d[i], "S3"))
+}
+
+'[<-.rationalS3' <- function(x, i, j, ..., value)
+{
+  if (!is.rationalS3(value))
+  {
+    stop("only rationalS3 objects can be insterted into a rationalS3 vector")
+  }
+  x$n[i] <- value$n
+  x$d[i] <- value$d
+  x$v[i] <- value$v
+  return(x)
+})
+
+'[[.rationalS3' <- function(x, i, j, ..., drop)
+{
+  return(rational(x$n[[i]], x$d[[i]], "S3"))
+}
+
+'[[<-.rationalS3' <- function(x, i, j, ..., value)
+{
+  if (!is.rationalS3(value))
+  {
+    stop("only rationalS3 objects can be insterted into a rationalS3 vector")
+  }
+  x$n[[i]] <- value$n
+  x$d[[i]] <- value$d
+  x$v[[i]] <- value$v
+  return(x)
+}
+
+#' @param x the rational number
+#' @param i,j,...indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.
+#' @param drop For matrices and arrays. If TRUE the result is coerced to the lowest possible dimension (see the examples). This only works for extracting elements, not for the replacement. See drop for further details.
+#' @seealso \code{\link{Extract}} for more full descriptions
+#' @rdname rational-class
+#' @examples
+#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "R6")
+#'   stopifnot(a[2]$getNumerator() == 5L)
+#'   stopifnot(all(a[2:3]$n == c(5,6)))
+'[.rationalR6' <- function(x, i, j, ..., drop)
+{
+  return(rational(x$getNumerator()[i], x$getDenominator()[i], "R6"))
+}
+
+'[<-.rationalR6' <- function(x, i, j, ..., value)
+{
+  if (!is.rationalR6(value))
+  {
+    stop("only rationalR^ objects can be insterted into a rationalR6 vector")
+  }
+  x$n[i] <- value$getNumerator()
+  x$d[i] <- value$getDenominator()
+  x$v[i] <- value$getValue()
+  return(x)
+})
+
+'[[.rationalR6' <- function(x, i, j, ..., drop)
+{
+  return(rational(x$getNumerator()[[i]], x$getDenominator()[[i]], "R6"))
+}
+
+'[[<-.rationalR6' <- function(x, i, j, ..., value)
+{
+  if (!is.rationalR6(value))
+  {
+    stop("only rationalR6 objects can be insterted into a rationalR6 vector")
+  }
+  x$n[[i]] <- value$getNumerator()
+  x$d[[i]] <- value$getDenominator()
+  x$v[[i]] <- value$getValue()
+  return(x)
+}
+
+################################################################################
+
+.printRational <- function(n, d, v)
+{
+  for (i in seq_along(n))
+  {
+    print(paste0("(", n[i], " / ", d[i], ") = ", v[i]))
+  }
+}
+
+#' Print
+#' 
+#' @param x rational number
+#' @rdname rational-class
+setMethod("print", signature="rational",
+          function(x)
+          {
+            .printRational(x@n, x@d, x@v)
+          })
+
+setMethod("show", signature="rational",
+          function(object)
+          {
+            .printRational(x@n, x@d, x@v)
+          })
+
+print.rationalS3 <- function(x)
+{
+  .printRational(x$n, x$d, x$v)
+}
+
+show.rationalS3 <- function(x)
+{
+  .printRational(x$n, x$d, x$v)
+}
+
+print.rationalR6 <- function(x)
+{
+  .printRational(x$getNumerator(), x$getDenominator(), x$getValue())
+}
+
+show.rationalR6 <- function(x)
+{
+  .printRational(x$getNumerator(), x$getDenominator(), x$getValue())
+}
