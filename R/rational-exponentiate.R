@@ -28,13 +28,8 @@
     }
     return(res)
   }
-  mapply(tempf, b, e, USE.NAMES=USE.NAMES)
+  mapply(tempf, b, e, USE.NAMES = USE.NAMES)
 }
-
-.integerExponentiate(2L, 5L) == 32L
-.integerExponentiate(2L, 1L) == 2L
-is.infinite(.integerExponentiate(2L, 2000000L, checkOverflow=TRUE))
-all(.integerExponentiate(c(2L,3L), c(5L,3L)) == c(32L,27L))
 
 .rationalExpRational <- function(n1, d1, v1, n2, d2, v2)
 {
@@ -50,8 +45,8 @@ all(.integerExponentiate(c(2L,3L), c(5L,3L)) == c(32L,27L))
   {
     n <- .integerExponentiate(n1, n2, FALSE)
     d <- .integerExponentiate(d1, n2, FALSE)
-    return(list(n=n, d=d))
-  } 
+    return(list(n = n, d = d))
+  }
   return(v1^v2)
 }
 
@@ -67,7 +62,7 @@ all(.integerExponentiate(c(2L,3L), c(5L,3L)) == c(32L,27L))
   }
   n <- .integerExponentiate(n1, i2, FALSE)
   d <- .integerExponentiate(d1, i2, FALSE)
-  return(list(n=n, d=d))
+  return(list(n = n, d = d))
 }
 
 .integerExpRational <- function(i1, n2, d2, v2)
@@ -81,12 +76,12 @@ all(.integerExponentiate(c(2L,3L), c(5L,3L)) == c(32L,27L))
   if (d2 == 1L)
   {
     n <- .integerExponentiate(i1, n2, FALSE)
-    return(list(n=n, d=rep(1L,length(n))))
-  } 
+    return(list(n = n, d = rep(1L, length(n))))
+  }
   return(res_n)
 }
 
-setMethod("^", signature=c("rationalS4", "rationalS4"),
+setMethod("^", signature = c("rationalS4", "rationalS4"),
           function(e1,e2)
           {
             res <- .rationalExpRational(e1@n, e1@d, e1@v, e2@n, e2@d, e2@v)
@@ -97,12 +92,7 @@ setMethod("^", signature=c("rationalS4", "rationalS4"),
             return(res)
           })
 
-rational(2L, 3L, "S4")^rational(5L, 1L, "S4")
-rational(2L, 3L, "S4")^rational(5L, 2L, "S4")
-rational(2L, 3L, "S4")^rational(500000000L, 1L, "S4")
-rational(c(2L, 3L), c(3L, 4L), "S4") ^ rational(2L, 1L, "S4")
-
-setMethod("^", signature=c("rationalS4", "integer"),
+setMethod("^", signature = c("rationalS4", "integer"),
           function(e1,e2)
           {
             res <- .rationalExpInteger(e1@n, e1@d, e1@v, e2)
@@ -113,11 +103,7 @@ setMethod("^", signature=c("rationalS4", "integer"),
             return(res)
           })
 
-rational(2L, 3L, "S4")^5L
-rational(2L, 3L, "S4")^50000L
-rational(c(2L, 3L), c(3L, 4L), "S4") ^ 2L
-
-setMethod("^", signature=c("integer", "rationalS4"),
+setMethod("^", signature = c("integer", "rationalS4"),
           function(e1,e2)
           {
             res <- .integerExpRational(e1, e2@n, e2@d, e2@v)
@@ -127,23 +113,18 @@ setMethod("^", signature=c("integer", "rationalS4"),
             }
             return(res)
           })
-5L^rational(2L, 3L, "S4")
-5L^rational(2L, 1L, "S4")
 
-setMethod("^", signature=c("rationalS4", "numeric"),
+setMethod("^", signature = c("rationalS4", "numeric"),
           function(e1,e2)
           {
             return(e1@v^e2)
           })
 
-setMethod("^", signature=c("numeric", "rationalS4"),
+setMethod("^", signature = c("numeric", "rationalS4"),
           function(e1,e2)
           {
             return(e1^e2@v)
           })
-
-rational(1L, 2L, "S4")^1.5
-1.7^rational(1L, 2L, "S4")
 
 '^.rationalS3' <- function(e1, e2)
 {
@@ -177,30 +158,17 @@ rational(1L, 2L, "S4")^1.5
   } else if (is.rationalS3(e1) && is.numeric(e2))
   {
     return(e1$v^e2)
-  } else 
+  } else
   {
     return(NA)
   }
 }
 
-rational(2L, 3L, "S3")^rational(5L, 1L, "S3")
-rational(2L, 3L, "S3")^rational(5L, 2L, "S3")
-rational(2L, 3L, "S3")^rational(500000000L, 1L, "S3")
-rational(c(2L, 3L), c(3L, 4L), "S3") ^ rational(2L, 1L, "S3")
-rational(2L, 3L, "S3")^5L
-rational(2L, 3L, "S3")^50000L
-rational(c(2L, 3L), c(3L, 4L), "S3") ^ 2L
-5L^rational(2L, 3L, "S3")
-5L^rational(2L, 1L, "S3")
-rational(1L, 2L, "S3")^1.5
-1.7^rational(1L, 2L, "S3")
-
-
 '^.rationalR6' <- function(e1, e2)
 {
   if (is.rationalR6(e1) && is.rationalR6(e2))
   {
-    res <- .rationalExpRational(e1$getNumerator(), e1$getDenominator(), e1$getValue(), 
+    res <- .rationalExpRational(e1$getNumerator(), e1$getDenominator(), e1$getValue(),
                                 e2$getNumerator(), e2$getDenominator(), e2$getValue())
     if (is.list(res))
     {
@@ -229,24 +197,8 @@ rational(1L, 2L, "S3")^1.5
   } else if (is.rationalR6(e1) && is.numeric(e2))
   {
     return(e1$getValue()^e2)
-  } else 
+  } else
   {
     return(NA)
   }
 }
-
-if (FALSE)
-{
-  rational(2L, 3L, "R6")^rational(5L, 1L, "R6")
-  rational(2L, 3L, "R6")^rational(5L, 2L, "R6")
-  rational(2L, 3L, "R6")^rational(500000000L, 1L, "R6")
-  rational(c(2L, 3L), c(3L, 4L), "R6") ^ rational(2L, 1L, "R6")
-  rational(2L, 3L, "R6")^5L
-  rational(2L, 3L, "R6")^50000L
-  rational(c(2L, 3L), c(3L, 4L), "R6") ^ 2L
-  5L^rational(2L, 3L, "R6")
-  5L^rational(2L, 1L, "R6")
-  rational(1L, 2L, "R6")^1.5
-  1.7^rational(1L, 2L, "R6")
-}
-
