@@ -29,12 +29,9 @@ Is an object from class rational
 Test if an object is of class "rationalS3", "rationalS4", or "rationalR6"
 }
 \note{
-The \code{inherit} parameter is included for speed.  There is a 
+The \code{inherit} parameter is included for speed.  There is a
 performance boost from not checking for inheritence in the class structure.
-When \code{inherit==FALSE}, the the first class returned from \code{class()} is 
-checked to be equal to "rationalXX".  When \code{inherit==TRUE}, then the 
+When \code{inherit==FALSE}, the the first class returned from \code{class()} is
+checked to be equal to "rationalXX".  When \code{inherit==TRUE}, then the
 \code{methods::is()} function is used.
-}
-\seealso{
-See \code{\link{methods::is}}
 }

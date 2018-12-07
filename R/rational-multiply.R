@@ -1,11 +1,10 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
 #' @include gcd.R
-#' @include rational-add.R
 #' @include isRational.R
 
 # multiply two rational numbers
-# 
+#
 # n1 numerator of the first number
 # d1 denominator of the first number
 # n2 numerator of the second number
@@ -20,13 +19,13 @@
   g <- .gcd(n,d)
   n <- n %/% g
   d <- d %/% g
-  return(list(n=n, d=d))
+  return(list(n = n, d = d))
 }
 .rationalMultiplyInteger <- function(n1, d1, i2) .rationalMultiplyRational(n1, d1, i2, rep(1L, length(i2)))
 .rationalMultiplyNumeric <- function(n1, d1, f2) n1 / d1 * f2
 
 #' @rdname rational-operators
-#' @examples 
+#' @examples
 #'   a <- rational(1L,2L,"S4")
 #'   b <- rational(3L,5L,"S4")
 #'   d <- a * b
@@ -35,7 +34,7 @@
 setMethod("*", c("rationalS4", "rationalS4"), function(e1, e2)
 {
   res <- .rationalMultiplyRational(e1@n, e1@d, e2@n, e2@d)
-  return(new("rationalS4", n=res$n, d=res$d))
+  return(new("rationalS4", n = res$n, d = res$d))
 })
 
 #' @rdname rational-operators
@@ -48,7 +47,7 @@ setMethod("*", c("rationalS4", "rationalS4"), function(e1, e2)
 setMethod("*", c("integer", "rationalS4"), function(e1, e2)
 {
   res <- .rationalMultiplyInteger(e2@n, e2@d, e1)
-  return(new("rationalS4", n=res$n, d=res$d))
+  return(new("rationalS4", n = res$n, d = res$d))
 })
 
 #' @rdname rational-operators
@@ -61,7 +60,7 @@ setMethod("*", c("integer", "rationalS4"), function(e1, e2)
 setMethod("*", c("rationalS4", "integer"), function(e1, e2)
 {
   res <- .rationalMultiplyInteger(e1@n, e1@d, e2)
-  return(new("rationalS4", n=res$n, d=res$d))
+  return(new("rationalS4", n = res$n, d = res$d))
 })
 
 #' @rdname rational-operators
@@ -131,7 +130,7 @@ setMethod("*", c("rationalS4", "numeric"), function(e1, e2)
   } else if (is.rationalS3(e1) && is.numeric(e2))
   {
     return(.rationalMultiplyNumeric(e1$n, e1$d, e2))
-  } else 
+  } else
   {
     return(NA)
   }
@@ -182,7 +181,7 @@ setMethod("*", c("rationalS4", "numeric"), function(e1, e2)
   } else if (is.rationalR6(e1) && is.numeric(e2))
   {
     return(.rationalMultiplyNumeric(e1$getNumerator(), e1$getDenominator(), e2))
-  } else 
+  } else
   {
     return(NA)
   }
@@ -190,7 +189,7 @@ setMethod("*", c("rationalS4", "numeric"), function(e1, e2)
 
 #' @name R6Class$multiply
 #' @rdname rational-operators
-#' @examples 
+#' @examples
 #'   a <- rational(1L,2L,"R6")
 #'   b <- rational(3L,5L,"R6")
 #'   a$multiply(b)
@@ -205,7 +204,7 @@ setMethod("*", c("rationalS4", "numeric"), function(e1, e2)
 {
   if (is.rationalR6(e1))
   {
-    res <- .rationalMultiplyRational(private$n, private$d, e1$getNumerator(), e1$getDenominator())  
+    res <- .rationalMultiplyRational(private$n, private$d, e1$getNumerator(), e1$getDenominator())
   } else if (is.integer(e1))
   {
     res <- .rationalMultiplyInteger(private$n, private$d, e1)

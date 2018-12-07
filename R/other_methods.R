@@ -1,130 +1,10 @@
+# include the rational-class.R so that it is loaded first
+#' @include rational-class.R
 
-.rationalIntDivRational <- function(n1, d1, n2, d2) (n1 * d2) %/% (n2 * d1)
-.integerIntDivRational <- function(i1, n2, d2) (i1 * d2) %/% n2
-.rationalIntDivInteger <- function(n1, d1, i2) n1 %/% (i2 * d1)
-.rationalIntDivNumeric <- function(v1, v2) v1 %/% v2
-.numericIntDivRational <- function(v1, v2) v1 %/% v2
-
-
-setMethod("%/%", signature = c("rationalS4", "rationalS4"),
-  function(e1,e2)
-  {
-    .rationalIntDivRational(e1@n, e1@d, e2@n, e2@d)
-  }
-)
-setMethod("%/%", signature = c("integer", "rationalS4"),
-          function(e1,e2)
-          {
-            .integerIntDivRational(e1, e2@n, e2@d)
-          }
-)
-setMethod("%/%", signature = c("rationalS4", "integer"),
-          function(e1,e2)
-          {
-            .rationalIntDivInteger(e1@n, e1@d, e2)
-          }
-)
-setMethod("%/%", signature = c("numeric", "rationalS4"),
-          function(e1,e2)
-          {
-            .numericIntDivRational(e1, e@v)
-          }
-)
-setMethod("%/%", signature = c("rationalS4", "numeric"),
-          function(e1,e2)
-          {
-            .rationalIntDivNumeric(e1@v, e2)
-          }
-)
-
-setMethod("%%", signature = c("rationalS4", "rationalS4"),
-  function(e1,e2)
-  {
-    e1 - e2 * e1 %/% e2
-  }
-)
-setMethod("%%", signature = c("integer", "rationalS4"),
-          function(e1,e2)
-          {
-            e1 - e2 * e1 %/% e2
-          }
-)
-setMethod("%%", signature = c("rationalS4", "integer"),
-          function(e1,e2)
-          {
-            e1 - e2 * e1 %/% e2
-          }
-)
-setMethod("%%", signature = c("numeric", "rationalS4"),
-          function(e1,e2)
-          {
-            e1 - e2 * e1 %/% e2
-          }
-)
-setMethod("%%", signature = c("rationalS4", "numeric"),
-          function(e1,e2)
-          {
-            e1 - e2 * e1 %/% e2
-          }
-)
-
-
-setMethod("Compare", signature = c("rationalS4", "numeric"),
-  function(e1, e2)
-  {
-    if (e2 != as.integer(e2))
-    {
-      callGeneric(e1@v, e2)
-    } else
-    {
-      callGeneric(e1@n, e2*e1@d)
-    }
-  }
-)
-
-setMethod("Compare", signature = c("rationalS4", "integer"),
-  function(e1, e2)
-  {
-    callGeneric(e1@n, e2*e1@d)
-  }
-)
-
-setMethod("Compare", signature = c("numeric", "rationalS4"),
-  function(e1, e2)
-  {
-    if (e1 != as.integer(e1))
-    {
-      callGeneric(e1, e2@v)
-    } else
-    {
-      callGeneric(e1*e2@d, e2@n)
-    }
-  }
-)
-
-setMethod("Compare", signature = c("integer", "rationalS4"),
-  function(e1, e2)
-  {
-    callGeneric(e1*e2@d, e2@n)
-  }
-)
-
-setMethod("Compare", signature = c("rationalS4", "rationalS4"),
-  function(e1, e2)
-  {
-    if (e1@d == e2@d)
-    {
-      callGeneric(e1@n, e2@n)
-    } else
-    {
-      # give numbers the same denominator to compare
-      n1 <- e1@n * e2@d
-      n2 <- e2@n * e1@d
-      callGeneric(n1, n2)
-    }
-  }
-)
-
+#' @rdname rational-class
+#' @examples
+#' floor(rational(5L, 2L, "S4"))
+#' sign(rational(-1L, 2L, "S4"))
 setMethod("Math", signature = c("rationalS4"),
   function(x)
   {
@@ -132,6 +12,9 @@ setMethod("Math", signature = c("rationalS4"),
   }
 )
 
+#' @rdname rational-class
+#' @examples
+#' round(rational(5L, 2L, "S4"), 0)
 setMethod("Math2", signature = c("rationalS4"),
   function(x)
   {
@@ -139,6 +22,10 @@ setMethod("Math2", signature = c("rationalS4"),
   }
 )
 
+#' @rdname rational-class
+#' @examples
+#' x <- abs(rational(-2L, 3L, "S4"))
+#' stopifnot("rationalS4" %in% class(x))
 setMethod("abs", signature = c("rationalS4"),
   function(x)
   {
@@ -148,6 +35,9 @@ setMethod("abs", signature = c("rationalS4"),
   }
 )
 
+#' @rdname rational-class
+#' @examples
+#' log(rational(2L, 5L, "S4"))
 setMethod("log", signature = c("rationalS4"),
   function(x)
   {
@@ -155,6 +45,9 @@ setMethod("log", signature = c("rationalS4"),
   }
 )
 
+#' @rdname rational-class
+#' @examples
+#' log10(rational(2L, 5L, "S4"))
 setMethod("log10", signature = c("rationalS4"),
   function(x)
   {
@@ -164,6 +57,9 @@ setMethod("log10", signature = c("rationalS4"),
 
 setGeneric("logb")
 
+#' @rdname rational-class
+#' @examples
+#' logb(rational(2L, 5L, "S4"), base = 5)
 setMethod("logb", signature = c("rationalS4"),
   function(x, base)
   {
@@ -171,6 +67,9 @@ setMethod("logb", signature = c("rationalS4"),
   }
 )
 
+#' @rdname rational-class
+#' @examples
+#' log2(rational(2L, 5L, "S4"))
 setMethod("log2", signature = c("rationalS4"),
   function(x)
   {
@@ -178,6 +77,9 @@ setMethod("log2", signature = c("rationalS4"),
   }
 )
 
+#' @rdname rational-class
+#' @examples
+#' gamma(rational(2L, 5L, "S4"))
 setMethod("gamma", signature = c("rationalS4"),
   function(x)
   {
@@ -200,6 +102,9 @@ setMethod("gamma", signature = c("rationalS4"),
   }
 )
 
+#' @rdname rational-class
+#' @examples
+#' max(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("max", signature = c("rationalS4"),
   function(x, na.rm=FALSE)
   {
@@ -208,6 +113,9 @@ setMethod("max", signature = c("rationalS4"),
   }
 )
 
+#' @rdname rational-class
+#' @examples
+#' min(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("min", signature = c("rationalS4"),
   function(x, na.rm=FALSE)
   {
@@ -216,6 +124,9 @@ setMethod("min", signature = c("rationalS4"),
   }
 )
 
+#' @rdname rational-class
+#' @examples
+#' range(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("range", signature = c("rationalS4"),
   function(x, na.rm=FALSE)
   {
@@ -223,6 +134,9 @@ setMethod("range", signature = c("rationalS4"),
   }
 )
 
+#' @rdname rational-class
+#' @examples
+#' prod(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("prod", signature = c("rationalS4"),
   function(x, na.rm=FALSE)
   {
@@ -239,6 +153,9 @@ setMethod("prod", signature = c("rationalS4"),
   }
 )
 
+#' @rdname rational-class
+#' @examples
+#' sum(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("sum", signature = c("rationalS4"),
   function(x, na.rm=FALSE)
   {
@@ -256,76 +173,3 @@ setMethod("sum", signature = c("rationalS4"),
   }
 )
 
-setMethod("as.numeric", signature = "rationalS4",
-  function(x,...)
-  {
-    x@v
-  }
-)
-
-setMethod("as.integer", signature = "rationalS4",
-  function(x,...)
-  {
-    if (x@d == 1)
-    {
-      as.integer(x@n)
-    } else
-    {
-      as.integer(x@v)
-    }
-  }
-)
-
-setMethod("as.character", signature = "rationalS4",
-  function(x,...)
-  {
-    paste(x@n, "/", x@d)
-  }
-)
-
-setGeneric("as.rationalS4",
-  def = function(x, cycles = 10, max.denominator = 2000)
-  {
-    standardGeneric("as.rationalS4")
-  }
-)
-
-setMethod("as.rationalS4", signature = "numeric",
-  function(x, cycles=10, max.denominator=2000)
-  {
-    if (!is.integer(x))
-    {
-      r <- MASS:::.rat(x, cycles, max.denominator)$rat
-      if (length(x) == 1)
-      {
-        if (r[1] / r[2] != x)
-        {
-          warning("as.rational produced an approximate rational number")
-        }
-        structure(.Data = rational(as.integer(r[1]), as.integer(r[2]), "S4"),
-                  abs.error = abs(r[1] / r[2] - x),
-                  class = c("rational", "numeric"))
-      } else if (length(x) > 1)
-      {
-        if (any(r[,1] / r[,2] != x))
-        {
-          warning("as.rational produced an approximate rational number")
-        }
-        structure(.Data = rational(as.integer(r[,1]), as.integer(r[,2]), "S4"),
-                  abs.error = abs(r[,1] / r[,2] - x),
-                  class = c("rational", "numeric"))
-      }
-    } else
-    {
-      rational(as.integer(x), 1L, "S4")
-    }
-  }
-)
-
-setMethod("as.rationalS4", signature = "character",
-  function(x, cycles = 10, max.denominator = 2000)
-  {
-    b <- as.numeric(x)
-    as.rationalS4(b, cycles, max.denominator)
-  }
-)

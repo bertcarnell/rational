@@ -2,10 +2,13 @@ Package: rational
 Title: Rational Numbers in S3, S4, and R6
 Version: 0.1.0.9000
 Authors@R: person("Rob", "Carnell", , "bertcarnell@gmail.com", role = c("aut", "cre"))
-Description: Provides examples of creating rational numbers under the S3, S4, and R6 object framework
-Depends:
-    R6
-License: GPLv2
+Description: This package provides examples of creating rational numbers under the S3, S4, and R6 object framework.
+Depends: R (>= 3.4.0)
+Imports:
+    R6,
+    MASS,
+    methods
+License: GPL (>= 2)
 LazyData: true
 Suggests: 
     testthat
@@ -16,8 +19,12 @@ Collate:
     'isRational.R'
     'other_methods.R'
     'rational-add.R'
+    'rational-compare.R'
     'rational-multiply.R'
     'rational-divide.R'
     'rational-exponentiate.R'
+    'rational-integer-division.R'
+    'rational-mod.R'
     'rational-subtract.R'
+    'rational-transformation.R'
     'rational.R'

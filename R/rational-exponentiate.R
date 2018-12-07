@@ -1,3 +1,6 @@
+# include the rational-class.R so that it is loaded first
+#' @include rational-class.R
+
 # Note is.integer(3L^5L) == FALSE
 # and is.integer(prod(c(2L, 2L, 2L))) == FALSE
 # however, is.integer(sum(c(3L, 4L, 5L))) == TRUE
@@ -81,6 +84,11 @@
   return(res_n)
 }
 
+#' @rdname rational-operators
+#' @examples
+#'   a <- rational(1L,2L,"S4")
+#'   b <- rational(3L,5L,"S4")
+#'   a ^ b
 setMethod("^", signature = c("rationalS4", "rationalS4"),
           function(e1,e2)
           {
@@ -92,6 +100,11 @@ setMethod("^", signature = c("rationalS4", "rationalS4"),
             return(res)
           })
 
+#' @rdname rational-operators
+#' @examples
+#'   a <- rational(1L,2L,"S4")
+#'   b <- 3L
+#'   a ^ b
 setMethod("^", signature = c("rationalS4", "integer"),
           function(e1,e2)
           {
@@ -103,6 +116,11 @@ setMethod("^", signature = c("rationalS4", "integer"),
             return(res)
           })
 
+#' @rdname rational-operators
+#' @examples
+#'   a <- 2L
+#'   b <- rational(3L,5L,"S4")
+#'   a ^ b
 setMethod("^", signature = c("integer", "rationalS4"),
           function(e1,e2)
           {
@@ -114,18 +132,39 @@ setMethod("^", signature = c("integer", "rationalS4"),
             return(res)
           })
 
+#' @rdname rational-operators
+#' @examples
+#'   a <- rational(1L,2L,"S4")
+#'   b <- 1.5
+#'   a ^ b
 setMethod("^", signature = c("rationalS4", "numeric"),
           function(e1,e2)
           {
             return(e1@v^e2)
           })
 
+#' @rdname rational-operators
+#' @examples
+#'   a <- 3.1
+#'   b <- rational(3L,5L,"S4")
+#'   a ^ b
 setMethod("^", signature = c("numeric", "rationalS4"),
           function(e1,e2)
           {
             return(e1^e2@v)
           })
 
+#' @rdname rational-operators
+#' @examples
+#'   a <- rational(1L,2L,"S3")
+#'   b <- rational(3L,5L,"S3")
+#'   d <- 3L
+#'   e <- 1.5
+#'   a ^ b
+#'   d ^ b
+#'   a ^ d
+#'   e ^ b
+#'   d ^ e
 '^.rationalS3' <- function(e1, e2)
 {
   if (is.rationalS3(e1) && is.rationalS3(e2))
@@ -164,6 +203,17 @@ setMethod("^", signature = c("numeric", "rationalS4"),
   }
 }
 
+#' @rdname rational-operators
+#' @examples
+#'   a <- rational(1L,2L,"R6")
+#'   b <- rational(3L,5L,"R6")
+#'   d <- 3L
+#'   e <- 1.5
+#'   a ^ b
+#'   d ^ b
+#'   a ^ d
+#'   e ^ b
+#'   d ^ e
 '^.rationalR6' <- function(e1, e2)
 {
   if (is.rationalR6(e1) && is.rationalR6(e2))
