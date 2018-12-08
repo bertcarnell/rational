@@ -9,6 +9,7 @@
 NULL
 
 #' @rdname rational-transformation
+#' @export
 #' @examples
 #' as.numeric(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("as.numeric", signature = "rationalS4",
@@ -19,6 +20,7 @@ setMethod("as.numeric", signature = "rationalS4",
 )
 
 #' @rdname rational-transformation
+#' @export
 #' @examples
 #' as.integer(rational(c(2L, 3L), c(5L, 1L), "S4"))
 #' as.integer(rational(8L, 3L, "S4"))
@@ -45,6 +47,7 @@ setMethod("as.integer", signature = "rationalS4",
 )
 
 #' @rdname rational-transformation
+#' @export
 #' @examples
 #' as.character(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("as.character", signature = "rationalS4",
@@ -54,6 +57,8 @@ setMethod("as.character", signature = "rationalS4",
           }
 )
 
+#' @rdname rational-transformation
+#' @export
 setGeneric("as.rationalS4",
            def = function(x, cycles = 10, max.denominator = 2000)
            {
@@ -64,6 +69,7 @@ setGeneric("as.rationalS4",
 #' @rdname rational-transformation
 #' @param cycles The maximum number of steps to be used in the continued fraction approximation process
 #' @param max.denominator If the denominator exceeds this number, the algorithm will stop with an approximation
+#' @export
 #' @examples
 #' as.rationalS4(33.3)
 setMethod("as.rationalS4", signature = "numeric",
@@ -99,6 +105,7 @@ setMethod("as.rationalS4", signature = "numeric",
 )
 
 #' @rdname rational-transformation
+#' @export
 setMethod("as.rationalS4", signature = "character",
           function(x, cycles = 10, max.denominator = 2000)
           {

@@ -63,11 +63,11 @@ rational(n, d, method = "R6")
 
 \S4method{show}{rationalS4}(object)
 
-print.rationalS3(x)
+\method{print}{rationalS3}(x, ...)
 
 show.rationalS3(x)
 
-print.rationalR6(x)
+\method{print}{rationalR6}(x, ...)
 
 show.rationalR6(x)
 }

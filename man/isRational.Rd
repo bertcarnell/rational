@@ -43,7 +43,7 @@ stopifnot(!is.rationalR6("no"))
 stopifnot(is.rationalS4(rational(1L, 2L, "S4")))
 stopifnot(!is.rationalS4(TRUE))
 stopifnot(is.rational(rational(1L, 2L, "S3")))
-stopifnot(!is.rationalS3(7.1))
+stopifnot(!is.rational(7.1))
 stopifnot(is.rational(rational(1L, 2L, "R6")))
 stopifnot(is.rational(rational(1L, 2L, "S4")))
 }

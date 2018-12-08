@@ -52,6 +52,7 @@
 \alias{-,integer,rationalS4-method}
 \alias{-,rationalS4,integer-method}
 \alias{-,numeric,rationalS4-method}
+\alias{-,rationalS4,numeric-method}
 \alias{-.rationalS3}
 \alias{-.rationalR6}
 \alias{R6Class$subtract}
@@ -145,7 +146,7 @@
 
 \S4method{-}{numeric,rationalS4}(e1, e2)
 
-\S4method{+}{rationalS4,numeric}(e1, e2)
+\S4method{-}{rationalS4,numeric}(e1, e2)
 
 \method{-}{rationalS3}(e1, e2)
 
@@ -378,8 +379,8 @@ Rational Number Arithmetic
   a <- 7L
   b <- rational(3L,5L,"R6")
   d <- a / b
-  stopifnot(d$getNumerator() == 3)
-  stopifnot(d$getDenominator() == 35)
+  stopifnot(d$getNumerator() == 35)
+  stopifnot(d$getDenominator() == 3)
   a <- rational(1L,2L,"R6")
   b <- 7L
   d <- a / b
@@ -481,16 +482,16 @@ Rational Number Arithmetic
   stopifnot(d@d == 5)
   a <- rational(1L,2L,"S4")
   b <- 7L
-  d <- a + b
+  d <- a - b
   stopifnot(d@n == -13)
   stopifnot(d@d == 2)
   a <- 7
   b <- rational(3L,5L,"S4")
-  d <- a + b
+  d <- a - b
   stopifnot(abs(d - 6.4) < 1E-12)
   a <- rational(1L,2L,"S4")
   b <- 7
-  d <- a + b
+  d <- a - b
   stopifnot(abs(d - -6.5) < 1E-12)
   a <- rational(1L,2L,"S3")
   b <- rational(3L,5L,"S3")
@@ -513,7 +514,7 @@ Rational Number Arithmetic
   stopifnot(abs(d - 6.4) < 1E-12)
   a <- rational(1L,2L,"S3")
   b <- 7
-  d <- a + b
+  d <- a - b
   stopifnot(abs(d - -6.5) < 1E-12)
   a <- rational(1L,2L,"R6")
   b <- rational(3L,5L,"R6")

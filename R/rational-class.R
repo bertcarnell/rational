@@ -17,7 +17,7 @@
 #' @slot v the \code{numeric} value of the S4 class
 #' @name rational-class
 #'
-#' @importFrom methods callGeneric callNextMethod is new
+#' @importFrom methods callGeneric callNextMethod is new show
 #' @importFrom R6 R6Class
 NULL
 
@@ -78,7 +78,7 @@ require(R6)
                          n = 1L,
                          d = 1L,
                          v = 1L
-                       ))
+                       ), lock_class = FALSE, lock_objects = FALSE, portable = FALSE)
 
 # rational number S4 class generator
 #
@@ -175,6 +175,7 @@ setMethod("length",
 
 #' @rdname rational-class
 #' @method length rationalS3
+#' @export
 #' @examples
 #'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S3")
 #'   stopifnot(length(a) == 3)
@@ -185,6 +186,7 @@ length.rationalS3 <- function(x, ...)
 
 #' @rdname rational-class
 #' @method length rationalR6
+#' @export
 #' @examples
 #'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "R6")
 #'   stopifnot(length(a) == 3)
@@ -200,6 +202,7 @@ length.rationalR6 <- function(x, ...)
 #' @param drop For matrices and arrays. If TRUE the result is coerced to the lowest possible dimension (see the examples). This only works for extracting elements, not for the replacement. See drop for further details.
 #' @param value the replacement value
 #' @seealso \code{\link{Extract}} for more full descriptions
+#' @export
 #' @rdname rational-class
 #' @examples
 #'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S4")
@@ -213,6 +216,7 @@ setMethod("[",
           })
 
 #' @rdname rational-class
+#' @export
 setMethod("[<-",
           "rationalS4",
           function(x, i, j, ..., value)
@@ -224,6 +228,7 @@ setMethod("[<-",
           })
 
 #' @rdname rational-class
+#' @export
 setMethod("[[",
           "rationalS4",
           function(x, i, ..., drop)
@@ -232,6 +237,7 @@ setMethod("[[",
           })
 
 #' @rdname rational-class
+#' @export
 setMethod("[[<-",
           "rationalS4",
           function(x, i, ..., value)
@@ -243,6 +249,7 @@ setMethod("[[<-",
           })
 
 #' @rdname rational-class
+#' @export
 #' @examples
 #'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S3")
 #'   stopifnot(a[2]$n == 5L)
@@ -253,6 +260,7 @@ setMethod("[[<-",
 }
 
 #' @rdname rational-class
+#' @export
 '[<-.rationalS3' <- function(x, i, j, ..., value)
 {
   if (!is.rationalS3(value))
@@ -266,12 +274,14 @@ setMethod("[[<-",
 }
 
 #' @rdname rational-class
+#' @export
 '[[.rationalS3' <- function(x, i, j, ..., drop)
 {
   return(rational(x$n[[i]], x$d[[i]], "S3"))
 }
 
 #' @rdname rational-class
+#' @export
 '[[<-.rationalS3' <- function(x, i, j, ..., value)
 {
   if (!is.rationalS3(value))
@@ -289,12 +299,14 @@ setMethod("[[<-",
 #'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "R6")
 #'   stopifnot(a[2]$getNumerator() == 5L)
 #'   stopifnot(all(a[2:3]$n == c(5,6)))
+#' @export
 '[.rationalR6' <- function(x, i, j, ..., drop)
 {
   return(rational(x$getNumerator()[i], x$getDenominator()[i], "R6"))
 }
 
 #' @rdname rational-class
+#' @export
 '[<-.rationalR6' <- function(x, i, j, ..., value)
 {
   if (!is.rationalR6(value))
@@ -308,12 +320,14 @@ setMethod("[[<-",
 }
 
 #' @rdname rational-class
+#' @export
 '[[.rationalR6' <- function(x, i, j, ..., drop)
 {
   return(rational(x$getNumerator()[[i]], x$getDenominator()[[i]], "R6"))
 }
 
 #' @rdname rational-class
+#' @export
 '[[<-.rationalR6' <- function(x, i, j, ..., value)
 {
   if (!is.rationalR6(value))
@@ -334,6 +348,7 @@ setMethod("[[<-",
 }
 
 #' @rdname rational-class
+#' @export
 setMethod("print", signature = "rationalS4",
           function(x)
           {
@@ -342,6 +357,7 @@ setMethod("print", signature = "rationalS4",
 
 #' @rdname rational-class
 #' @param object the object to show
+#' @export
 setMethod("show", signature = "rationalS4",
           function(object)
           {
@@ -349,27 +365,31 @@ setMethod("show", signature = "rationalS4",
           })
 
 #' @rdname rational-class
-print.rationalS3 <- function(x)
+#' @method print rationalS3
+#' @export
+print.rationalS3 <- function(x, ...)
 {
   .printRational(x$n, x$d, x$v)
 }
 
 #' @rdname rational-class
+#' @export
 show.rationalS3 <- function(x)
 {
   .printRational(x$n, x$d, x$v)
 }
 
 #' @rdname rational-class
-print.rationalR6 <- function(x)
+#' @method print rationalR6
+#' @export
+print.rationalR6 <- function(x, ...)
 {
   .printRational(x$getNumerator(), x$getDenominator(), x$getValue())
 }
 
 #' @rdname rational-class
+#' @export
 show.rationalR6 <- function(x)
 {
   .printRational(x$getNumerator(), x$getDenominator(), x$getValue())
 }
-
-if (getRversion() >= "2.15.1")  utils::globalVariables(c("rationalR6", "rationalS3"))

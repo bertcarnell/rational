@@ -6,6 +6,7 @@
 \alias{as.numeric,rationalS4-method}
 \alias{as.integer,rationalS4-method}
 \alias{as.character,rationalS4-method}
+\alias{as.rationalS4}
 \alias{as.rationalS4,numeric-method}
 \alias{as.rationalS4,character-method}
 \title{Rational Transformations}
@@ -15,6 +16,8 @@
 \S4method{as.integer}{rationalS4}(x, ...)
 
 \S4method{as.character}{rationalS4}(x, ...)
+
+as.rationalS4(x, cycles = 10, max.denominator = 2000)
 
 \S4method{as.rationalS4}{numeric}(x, cycles = 10,
   max.denominator = 2000)

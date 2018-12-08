@@ -18,6 +18,7 @@
 NULL
 
 #' @rdname isRational
+#' @export
 #' @examples
 #' stopifnot(is.rationalS3(rational(1L, 2L, "S3")))
 #' stopifnot(!is.rationalS3(7.1))
@@ -28,6 +29,7 @@ is.rationalS3 <- function(e1, inherit=FALSE)
 }
 
 #' @rdname isRational
+#' @export
 #' @examples
 #' stopifnot(is.rationalR6(rational(1L, 2L, "R6")))
 #' stopifnot(!is.rationalR6("no"))
@@ -38,6 +40,7 @@ is.rationalR6 <- function(e1, inherit=FALSE)
 }
 
 #' @rdname isRational
+#' @export
 #' @examples
 #' stopifnot(is.rationalS4(rational(1L, 2L, "S4")))
 #' stopifnot(!is.rationalS4(TRUE))
@@ -48,9 +51,10 @@ is.rationalS4 <- function(e1, inherit=FALSE)
 }
 
 #' @rdname isRational
+#' @export
 #' @examples
 #' stopifnot(is.rational(rational(1L, 2L, "S3")))
-#' stopifnot(!is.rationalS3(7.1))
+#' stopifnot(!is.rational(7.1))
 #' stopifnot(is.rational(rational(1L, 2L, "R6")))
 #' stopifnot(is.rational(rational(1L, 2L, "S4")))
 is.rational <- function(e1, inherit=FALSE)

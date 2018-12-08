@@ -44,6 +44,40 @@ test_that("exponentiations works", {
   5L^rational(2L, 1L, "R6")
   rational(1L, 2L, "R6")^1.5
   1.7^rational(1L, 2L, "R6")
+
+  a <- rational(1L,2L,"S4")
+  b <- rational(3L,5L,"S4")
+  a ^ b
+  a <- rational(1L,2L,"S4")
+  b <- 3L
+  a ^ b
+  a <- 2L
+  b <- rational(3L,5L,"S4")
+  a ^ b
+  a <- rational(1L,2L,"S4")
+  b <- 1.5
+  a ^ b
+  a <- 3.1
+  b <- rational(3L,5L,"S4")
+  a ^ b
+  a <- rational(1L,2L,"S3")
+  b <- rational(3L,5L,"S3")
+  d <- 3L
+  e <- 1.5
+  a ^ b
+  d ^ b
+  a ^ d
+  e ^ b
+  d ^ e
+  a <- rational(1L,2L,"R6")
+  b <- rational(3L,5L,"R6")
+  d <- 3L
+  e <- 1.5
+  a ^ b
+  d ^ b
+  a ^ d
+  e ^ b
+  d ^ e
 })
 
 

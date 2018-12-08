@@ -26,6 +26,7 @@
 .rationalMultiplyNumeric <- function(n1, d1, f2) n1 / d1 * f2
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- rational(1L,2L,"S4")
 #'   b <- rational(3L,5L,"S4")
@@ -39,6 +40,7 @@ setMethod("*", c("rationalS4", "rationalS4"), function(e1, e2)
 })
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- 7L
 #'   b <- rational(3L,5L,"S4")
@@ -52,6 +54,7 @@ setMethod("*", c("integer", "rationalS4"), function(e1, e2)
 })
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- rational(1L,2L,"S4")
 #'   b <- 7L
@@ -65,6 +68,7 @@ setMethod("*", c("rationalS4", "integer"), function(e1, e2)
 })
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- 7
 #'   b <- rational(3L,5L,"S4")
@@ -76,6 +80,7 @@ setMethod("*", c("numeric", "rationalS4"), function(e1, e2)
 })
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- rational(1L,2L,"S4")
 #'   b <- 7
@@ -87,6 +92,7 @@ setMethod("*", c("rationalS4", "numeric"), function(e1, e2)
 })
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- rational(1L,2L,"S3")
 #'   b <- rational(3L,5L,"S3")
@@ -116,15 +122,15 @@ setMethod("*", c("rationalS4", "numeric"), function(e1, e2)
   if (is.rationalS3(e1) && is.rationalS3(e2))
   {
     res <- .rationalMultiplyRational(e1$n, e1$d, e2$n, e2$d)
-    return(rationalS3(res$n, res$d))
+    return(.rationalS3(res$n, res$d))
   } else if (is.integer(e1) && is.rationalS3(e2))
   {
     res <- .rationalMultiplyInteger(e2$n, e2$d, e1)
-    return(rationalS3(res$n, res$d))
+    return(.rationalS3(res$n, res$d))
   } else if (is.rationalS3(e1) && is.integer(e2))
   {
     res <- .rationalMultiplyInteger(e1$n, e1$d, e2)
-    return(rationalS3(res$n, res$d))
+    return(.rationalS3(res$n, res$d))
   } else if (is.numeric(e1) && is.rationalS3(e2))
   {
     return(.rationalMultiplyNumeric(e2$n, e2$d, e1))
@@ -138,6 +144,7 @@ setMethod("*", c("rationalS4", "numeric"), function(e1, e2)
 }
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- rational(1L,2L,"R6")
 #'   b <- rational(3L,5L,"R6")
@@ -167,15 +174,15 @@ setMethod("*", c("rationalS4", "numeric"), function(e1, e2)
   if (is.rationalR6(e1) && is.rationalR6(e2))
   {
     res <- .rationalMultiplyRational(e1$getNumerator(), e1$getDenominator(), e2$getNumerator(), e2$getDenominator())
-    return(rationalR6(res$n, res$d))
+    return(.rationalR6$new(res$n, res$d))
   } else if (is.integer(e1) && is.rationalR6(e2))
   {
     res <- .rationalMultiplyInteger(e2$getNumerator(), e2$getDenominator(), e1)
-    return(rationalR6(res$n, res$d))
+    return(.rationalR6$new(res$n, res$d))
   } else if (is.rationalR6(e1) && is.integer(e2))
   {
     res <- .rationalMultiplyInteger(e1$getNumerator(), e1$getDenominator(), e2)
-    return(rationalR6(res$n, res$d))
+    return(.rationalR6$new(res$n, res$d))
   } else if (is.numeric(e1) && is.rationalR6(e2))
   {
     return(.rationalMultiplyNumeric(e2$getNumerator(), e2$getDenominator(), e1))

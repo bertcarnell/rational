@@ -6,10 +6,12 @@
 #'
 #' @param e1 rational numbers, integers, or numerics
 #' @param e2 rational numbers, integers, or numerics
+#' @importMethodsFrom methods Compare
 #' @name rational-compare
 NULL
 
 #' @rdname rational-compare
+#' @export
 setMethod("Compare", signature = c("rationalS4", "numeric"),
           function(e1, e2)
           {
@@ -24,6 +26,7 @@ setMethod("Compare", signature = c("rationalS4", "numeric"),
 )
 
 #' @rdname rational-compare
+#' @export
 setMethod("Compare", signature = c("rationalS4", "integer"),
           function(e1, e2)
           {
@@ -32,6 +35,7 @@ setMethod("Compare", signature = c("rationalS4", "integer"),
 )
 
 #' @rdname rational-compare
+#' @export
 setMethod("Compare", signature = c("numeric", "rationalS4"),
           function(e1, e2)
           {
@@ -46,6 +50,7 @@ setMethod("Compare", signature = c("numeric", "rationalS4"),
 )
 
 #' @rdname rational-compare
+#' @export
 setMethod("Compare", signature = c("integer", "rationalS4"),
           function(e1, e2)
           {
@@ -54,6 +59,7 @@ setMethod("Compare", signature = c("integer", "rationalS4"),
 )
 
 #' @rdname rational-compare
+#' @export
 setMethod("Compare", signature = c("rationalS4", "rationalS4"),
           function(e1, e2)
           {
@@ -83,6 +89,7 @@ setMethod("Compare", signature = c("rationalS4", "rationalS4"),
 
 
 #' @rdname rational-compare
+#' @export
 #' @examples
 #' a <- rational(1L, 3L, "S3")
 #' b <- rational(3L, 4L, "S3")
@@ -130,6 +137,7 @@ Ops.rationalS3 <- function(e1, e2)
 }
 
 #' @rdname rational-compare
+#' @export
 #' @examples
 #' a <- rational(1L, 3L, "R6")
 #' b <- rational(3L, 4L, "R6")

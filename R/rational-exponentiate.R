@@ -85,6 +85,7 @@
 }
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- rational(1L,2L,"S4")
 #'   b <- rational(3L,5L,"S4")
@@ -101,6 +102,7 @@ setMethod("^", signature = c("rationalS4", "rationalS4"),
           })
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- rational(1L,2L,"S4")
 #'   b <- 3L
@@ -117,6 +119,7 @@ setMethod("^", signature = c("rationalS4", "integer"),
           })
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- 2L
 #'   b <- rational(3L,5L,"S4")
@@ -133,6 +136,7 @@ setMethod("^", signature = c("integer", "rationalS4"),
           })
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- rational(1L,2L,"S4")
 #'   b <- 1.5
@@ -144,6 +148,7 @@ setMethod("^", signature = c("rationalS4", "numeric"),
           })
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- 3.1
 #'   b <- rational(3L,5L,"S4")
@@ -155,6 +160,7 @@ setMethod("^", signature = c("numeric", "rationalS4"),
           })
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- rational(1L,2L,"S3")
 #'   b <- rational(3L,5L,"S3")
@@ -204,6 +210,7 @@ setMethod("^", signature = c("numeric", "rationalS4"),
 }
 
 #' @rdname rational-operators
+#' @export
 #' @examples
 #'   a <- rational(1L,2L,"R6")
 #'   b <- rational(3L,5L,"R6")
