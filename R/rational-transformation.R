@@ -1,22 +1,29 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
 
-#' @rdname rational-class
+#' @title Rational Transformations
+#'
+#' @param x parameter to be transformed between classes
+#' @param ... additional parameters passed to underlying methods
+#' @name rational-transformation
+NULL
+
+#' @rdname rational-transformation
 #' @examples
 #' as.numeric(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("as.numeric", signature = "rationalS4",
-          function(x,...)
+          function(x, ...)
           {
             x@v
           }
 )
 
-#' @rdname rational-class
+#' @rdname rational-transformation
 #' @examples
 #' as.integer(rational(c(2L, 3L), c(5L, 1L), "S4"))
 #' as.integer(rational(8L, 3L, "S4"))
 setMethod("as.integer", signature = "rationalS4",
-          function(x,...)
+          function(x, ...)
           {
             if (length(x) == 1)
             {
@@ -37,11 +44,11 @@ setMethod("as.integer", signature = "rationalS4",
           }
 )
 
-#' @rdname rational-class
+#' @rdname rational-transformation
 #' @examples
 #' as.character(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("as.character", signature = "rationalS4",
-          function(x,...)
+          function(x, ...)
           {
             paste(x@n, "/", x@d)
           }
@@ -54,7 +61,9 @@ setGeneric("as.rationalS4",
            }
 )
 
-#' @rdname rational-class
+#' @rdname rational-transformation
+#' @param cycles The maximum number of steps to be used in the continued fraction approximation process
+#' @param max.denominator If the denominator exceeds this number, the algorithm will stop with an approximation
 #' @examples
 #' as.rationalS4(33.3)
 setMethod("as.rationalS4", signature = "numeric",
@@ -62,10 +71,10 @@ setMethod("as.rationalS4", signature = "numeric",
           {
             if (!is.integer(x))
             {
-              r <- MASS:::.rat(x, cycles, max.denominator)$rat
+              r <- .rat(x, cycles, max.denominator)$rat
               if (length(x) == 1)
               {
-                if (r[1] / r[2] != x)
+                if (abs(r[1] / r[2] - x) > 1E-9)
                 {
                   warning("as.rational produced an approximate rational number")
                 }
@@ -74,7 +83,7 @@ setMethod("as.rationalS4", signature = "numeric",
                           class = c("rationalS4", "numeric"))
               } else if (length(x) > 1)
               {
-                if (any(r[,1] / r[,2] != x))
+                if (any(abs(r[,1] / r[,2] - x) > 1E-9))
                 {
                   warning("as.rational produced an approximate rational number")
                 }
@@ -89,6 +98,7 @@ setMethod("as.rationalS4", signature = "numeric",
           }
 )
 
+#' @rdname rational-transformation
 setMethod("as.rationalS4", signature = "character",
           function(x, cycles = 10, max.denominator = 2000)
           {

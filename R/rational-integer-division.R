@@ -1,5 +1,6 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
+#' @include rational-add.R
 
 .rationalIntDivRational <- function(n1, d1, n2, d2) (n1 * d2) %/% (n2 * d1)
 .integerIntDivRational <- function(i1, n2, d2) (i1 * d2) %/% n2

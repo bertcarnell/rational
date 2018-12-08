@@ -152,7 +152,9 @@
 \method{-}{rationalR6}(e1, e2)
 }
 \arguments{
-\item{e1, e2}{rational numbers, integers, or numerics}
+\item{e1}{rational numbers, integers, or numerics}
+
+\item{e2}{rational numbers, integers, or numerics}
 }
 \description{
 Rational Number Arithmetic

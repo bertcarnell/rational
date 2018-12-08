@@ -1,17 +1,16 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
-#' @include gcd.R
-#' @include isRational.R
 
 #' @title Rational Number Arithmetic
-#' 
-#' @param e1,e2 rational numbers, integers, or numerics
+#'
+#' @param e1 rational numbers, integers, or numerics
+#' @param e2 rational numbers, integers, or numerics
 #' @field add for R6 classes, using the \code{$add(e1)} to do addition is the fastest method
 #' @name rational-operators
 NULL
 
 # Add two rational numbers
-# 
+#
 # n1 numerator of the first number
 # d1 denominator of the first number
 # n2 numerator of the second number
@@ -142,7 +141,7 @@ setMethod("+", c("rationalS4", "numeric"), function(e1, e2)
   } else if (is.rationalS3(e1) && is.numeric(e2))
   {
     return(.rationalAddNumeric(e1$n, e1$d, e2))
-  } else 
+  } else
   {
     return(NA)
   }
@@ -193,7 +192,7 @@ setMethod("+", c("rationalS4", "numeric"), function(e1, e2)
   } else if (is.rationalR6(e1) && is.numeric(e2))
   {
     return(.rationalAddNumeric(e1$getNumerator(), e1$getDenominator(), e2))
-  } else 
+  } else
   {
     return(NA)
   }
@@ -201,7 +200,7 @@ setMethod("+", c("rationalS4", "numeric"), function(e1, e2)
 
 #' @name R6Class$add
 #' @rdname rational-operators
-#' @examples 
+#' @examples
 #'   a <- rational(1L,2L,"R6")
 #'   b <- rational(3L,5L,"R6")
 #'   a$add(b)
@@ -216,7 +215,7 @@ setMethod("+", c("rationalS4", "numeric"), function(e1, e2)
 {
   if (is.rationalR6(e1))
   {
-    res <- .rationalAddRational(private$n, private$d, e1$getNumerator(), e1$getDenominator())  
+    res <- .rationalAddRational(private$n, private$d, e1$getNumerator(), e1$getDenominator())
   } else if (is.integer(e1))
   {
     res <- .rationalAddInteger(private$n, private$d, e1)

@@ -7,16 +7,21 @@
 #'    \item rationalR6 - internal elements are private, so fields are accessed with accessor methods,
 #'      \code{$getNumerator(), $getDenominator(), $getValue()}
 #' }
+#' The classes are designed to be used in a similar way to integers and numerics in R.
 #'
-#' @usage The classes are designed to be used in a similar way to integers and numerics in R.
-#'
-#' @param n,d the numerator and denominator of the class
+#' @param n the numerator
+#' @param d the denominator
 #' @field n,d,v the numerator, denominator, and value field of the S3 class
-#' @slot n,d,v the numerator, denominator, and value slots of the S4 class
+#' @slot n the numerator of the S4 class
+#' @slot d the denominator of the S4 class
+#' @slot v the \code{numeric} value of the S4 class
 #' @name rational-class
 #'
 #' @importFrom methods callGeneric callNextMethod is new
-#' @import R6
+#' @importFrom R6 R6Class
+NULL
+
+require(R6)
 
 # error messages
 .rationalError0 <- "rational class error:"
@@ -157,8 +162,6 @@ rational <- function(n, d, method="R6")
   }
 }
 
-#' Length
-#'
 #' @rdname rational-class
 #' @examples
 #'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S4")
@@ -190,11 +193,12 @@ length.rationalR6 <- function(x, ...)
   return(length(x$getNumerator()))
 }
 
-#' Extract
-#'
 #' @param x the rational number
-#' @param i,j,...indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.
+#' @param i index specifying elements
+#' @param j index specifying elements
+#' @param ... indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.
 #' @param drop For matrices and arrays. If TRUE the result is coerced to the lowest possible dimension (see the examples). This only works for extracting elements, not for the replacement. See drop for further details.
+#' @param value the replacement value
 #' @seealso \code{\link{Extract}} for more full descriptions
 #' @rdname rational-class
 #' @examples
@@ -238,10 +242,6 @@ setMethod("[[<-",
             return(x)
           })
 
-#' @param x the rational number
-#' @param i,j,...indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.
-#' @param drop For matrices and arrays. If TRUE the result is coerced to the lowest possible dimension (see the examples). This only works for extracting elements, not for the replacement. See drop for further details.
-#' @seealso \code{\link{Extract}} for more full descriptions
 #' @rdname rational-class
 #' @examples
 #'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S3")
@@ -284,10 +284,6 @@ setMethod("[[<-",
   return(x)
 }
 
-#' @param x the rational number
-#' @param i,j,...indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.
-#' @param drop For matrices and arrays. If TRUE the result is coerced to the lowest possible dimension (see the examples). This only works for extracting elements, not for the replacement. See drop for further details.
-#' @seealso \code{\link{Extract}} for more full descriptions
 #' @rdname rational-class
 #' @examples
 #'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "R6")
@@ -337,9 +333,6 @@ setMethod("[[<-",
   print(paste0("(", n, " / ", d, ") = ", v))
 }
 
-#' Print
-#'
-#' @param x rational number
 #' @rdname rational-class
 setMethod("print", signature = "rationalS4",
           function(x)
@@ -348,6 +341,7 @@ setMethod("print", signature = "rationalS4",
           })
 
 #' @rdname rational-class
+#' @param object the object to show
 setMethod("show", signature = "rationalS4",
           function(object)
           {
@@ -377,3 +371,5 @@ show.rationalR6 <- function(x)
 {
   .printRational(x$getNumerator(), x$getDenominator(), x$getValue())
 }
+
+if (getRversion() >= "2.15.1")  utils::globalVariables(c("rationalR6", "rationalS3"))

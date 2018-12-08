@@ -35,3 +35,15 @@ When \code{inherit==FALSE}, the the first class returned from \code{class()} is
 checked to be equal to "rationalXX".  When \code{inherit==TRUE}, then the
 \code{methods::is()} function is used.
 }
+\examples{
+stopifnot(is.rationalS3(rational(1L, 2L, "S3")))
+stopifnot(!is.rationalS3(7.1))
+stopifnot(is.rationalR6(rational(1L, 2L, "R6")))
+stopifnot(!is.rationalR6("no"))
+stopifnot(is.rationalS4(rational(1L, 2L, "S4")))
+stopifnot(!is.rationalS4(TRUE))
+stopifnot(is.rational(rational(1L, 2L, "S3")))
+stopifnot(!is.rationalS3(7.1))
+stopifnot(is.rational(rational(1L, 2L, "R6")))
+stopifnot(is.rational(rational(1L, 2L, "S4")))
+}

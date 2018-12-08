@@ -1,5 +1,6 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
+#' @include rational-add.R
 
 #' @rdname rational-operators
 setMethod("%%", signature = c("rationalS4", "rationalS4"),

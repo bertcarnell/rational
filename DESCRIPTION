@@ -6,9 +6,8 @@ Description: This package provides examples of creating rational numbers under t
 Depends: R (>= 3.4.0)
 Imports:
     R6,
-    MASS,
     methods
-License: GPL (>= 2)
+License: GPL-2
 LazyData: true
 Suggests: 
     testthat
@@ -17,12 +16,13 @@ Collate:
     'gcd.R'
     'rational-class.R'
     'isRational.R'
-    'other_methods.R'
+    'rat.R'
     'rational-add.R'
     'rational-compare.R'
     'rational-multiply.R'
     'rational-divide.R'
     'rational-exponentiate.R'
+    'rational-functions.R'
     'rational-integer-division.R'
     'rational-mod.R'
     'rational-subtract.R'

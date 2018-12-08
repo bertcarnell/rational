@@ -2,6 +2,7 @@
 #' @include rational-class.R
 #' @include gcd.R
 #' @include isRational.R
+#' @include rational-add.R
 
 # multiply two rational numbers
 #

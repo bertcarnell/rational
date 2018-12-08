@@ -1,7 +1,14 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
 
-#' @rdname rational-class
+#' @title Functions of Rational Numbers
+#'
+#' @param x rational numbers
+#' @param na.rm will NAs be removed from a collection before the computation is performed
+#' @name rational-functions
+NULL
+
+#' @rdname rational-functions
 #' @examples
 #' floor(rational(5L, 2L, "S4"))
 #' sign(rational(-1L, 2L, "S4"))
@@ -12,7 +19,7 @@ setMethod("Math", signature = c("rationalS4"),
   }
 )
 
-#' @rdname rational-class
+#' @rdname rational-functions
 #' @examples
 #' round(rational(5L, 2L, "S4"), 0)
 setMethod("Math2", signature = c("rationalS4"),
@@ -22,7 +29,7 @@ setMethod("Math2", signature = c("rationalS4"),
   }
 )
 
-#' @rdname rational-class
+#' @rdname rational-functions
 #' @examples
 #' x <- abs(rational(-2L, 3L, "S4"))
 #' stopifnot("rationalS4" %in% class(x))
@@ -35,7 +42,7 @@ setMethod("abs", signature = c("rationalS4"),
   }
 )
 
-#' @rdname rational-class
+#' @rdname rational-functions
 #' @examples
 #' log(rational(2L, 5L, "S4"))
 setMethod("log", signature = c("rationalS4"),
@@ -45,7 +52,7 @@ setMethod("log", signature = c("rationalS4"),
   }
 )
 
-#' @rdname rational-class
+#' @rdname rational-functions
 #' @examples
 #' log10(rational(2L, 5L, "S4"))
 setMethod("log10", signature = c("rationalS4"),
@@ -57,7 +64,8 @@ setMethod("log10", signature = c("rationalS4"),
 
 setGeneric("logb")
 
-#' @rdname rational-class
+#' @rdname rational-functions
+#' @param base the logarithm base in the \code{logb} function
 #' @examples
 #' logb(rational(2L, 5L, "S4"), base = 5)
 setMethod("logb", signature = c("rationalS4"),
@@ -67,7 +75,7 @@ setMethod("logb", signature = c("rationalS4"),
   }
 )
 
-#' @rdname rational-class
+#' @rdname rational-functions
 #' @examples
 #' log2(rational(2L, 5L, "S4"))
 setMethod("log2", signature = c("rationalS4"),
@@ -77,7 +85,7 @@ setMethod("log2", signature = c("rationalS4"),
   }
 )
 
-#' @rdname rational-class
+#' @rdname rational-functions
 #' @examples
 #' gamma(rational(2L, 5L, "S4"))
 setMethod("gamma", signature = c("rationalS4"),
@@ -102,7 +110,7 @@ setMethod("gamma", signature = c("rationalS4"),
   }
 )
 
-#' @rdname rational-class
+#' @rdname rational-functions
 #' @examples
 #' max(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("max", signature = c("rationalS4"),
@@ -113,7 +121,7 @@ setMethod("max", signature = c("rationalS4"),
   }
 )
 
-#' @rdname rational-class
+#' @rdname rational-functions
 #' @examples
 #' min(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("min", signature = c("rationalS4"),
@@ -124,7 +132,7 @@ setMethod("min", signature = c("rationalS4"),
   }
 )
 
-#' @rdname rational-class
+#' @rdname rational-functions
 #' @examples
 #' range(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("range", signature = c("rationalS4"),
@@ -134,7 +142,7 @@ setMethod("range", signature = c("rationalS4"),
   }
 )
 
-#' @rdname rational-class
+#' @rdname rational-functions
 #' @examples
 #' prod(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("prod", signature = c("rationalS4"),
@@ -153,7 +161,7 @@ setMethod("prod", signature = c("rationalS4"),
   }
 )
 
-#' @rdname rational-class
+#' @rdname rational-functions
 #' @examples
 #' sum(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("sum", signature = c("rationalS4"),
@@ -172,4 +180,3 @@ setMethod("sum", signature = c("rationalS4"),
     }
   }
 )
-

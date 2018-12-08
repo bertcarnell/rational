@@ -230,8 +230,8 @@ test_that("Other math functions", {
   expect_equal(a@d, 10)
   #expect_equal(a, rational(3L,10L,"S4"))
 
-  expect_warning(as.rationalS4(c(0.3,0.3333)))
-  suppressWarnings(b <- as.rationalS4(c(0.3,0.3333)))
+  expect_warning(as.rationalS4(c(0.3, 0.3333)))
+  suppressWarnings(b <- as.rationalS4(c(0.3, 0.3333)))
   #expect_equal(b[1], rational(3L,10L, "S4"))
   #expect_equal(b[2], rational(1L,3L, "S4"))
   expect_equal(attr(a, "abs.error"), 0)

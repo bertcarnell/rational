@@ -18,6 +18,9 @@
 NULL
 
 #' @rdname isRational
+#' @examples
+#' stopifnot(is.rationalS3(rational(1L, 2L, "S3")))
+#' stopifnot(!is.rationalS3(7.1))
 is.rationalS3 <- function(e1, inherit=FALSE)
 {
   if (inherit) return(is(e1, "rationalS3"))
@@ -25,6 +28,9 @@ is.rationalS3 <- function(e1, inherit=FALSE)
 }
 
 #' @rdname isRational
+#' @examples
+#' stopifnot(is.rationalR6(rational(1L, 2L, "R6")))
+#' stopifnot(!is.rationalR6("no"))
 is.rationalR6 <- function(e1, inherit=FALSE)
 {
   if (inherit) return(is(e1, "rationalR6"))
@@ -32,6 +38,9 @@ is.rationalR6 <- function(e1, inherit=FALSE)
 }
 
 #' @rdname isRational
+#' @examples
+#' stopifnot(is.rationalS4(rational(1L, 2L, "S4")))
+#' stopifnot(!is.rationalS4(TRUE))
 is.rationalS4 <- function(e1, inherit=FALSE)
 {
   if (inherit) return(is(e1, "rationalS4"))
@@ -39,6 +48,11 @@ is.rationalS4 <- function(e1, inherit=FALSE)
 }
 
 #' @rdname isRational
+#' @examples
+#' stopifnot(is.rational(rational(1L, 2L, "S3")))
+#' stopifnot(!is.rationalS3(7.1))
+#' stopifnot(is.rational(rational(1L, 2L, "R6")))
+#' stopifnot(is.rational(rational(1L, 2L, "S4")))
 is.rational <- function(e1, inherit=FALSE)
 {
   if (inherit) return(is(e1, "rationalS4") || is(e1, "rationalS3") || is(e1, "rationalR6"))
