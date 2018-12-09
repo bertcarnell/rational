@@ -78,13 +78,9 @@ setMethod("Compare", signature = c("rationalS4", "rationalS4"),
 
 .compare <- function(n1, d1, n2, d2, comp_func)
 {
-  if (d1 == d2)
-  {
-    comp_func(n1, n2)
-  } else
-  {
-    comp_func(n1*d2, n2*d1)
-  }
+  if (length(n1) != length(n2))
+    stop("Comparison of rational objects of different lengths is not supported")
+  comp_func(n1*d2, n2*d1)
 }
 
 

@@ -9,6 +9,12 @@
 \alias{as.rationalS4}
 \alias{as.rationalS4,numeric-method}
 \alias{as.rationalS4,character-method}
+\alias{as.rationalS3}
+\alias{as.double.rationalS3}
+\alias{as.integer.rationalS3}
+\alias{as.rationalR6}
+\alias{as.double.rationalR6}
+\alias{as.integer.rationalR6}
 \title{Rational Transformations}
 \usage{
 \S4method{as.numeric}{rationalS4}(x, ...)
@@ -24,6 +30,18 @@ as.rationalS4(x, cycles = 10, max.denominator = 2000)
 
 \S4method{as.rationalS4}{character}(x, cycles = 10,
   max.denominator = 2000)
+
+as.rationalS3(x, cycles = 10, max.denominator = 2000)
+
+\method{as.double}{rationalS3}(x, ...)
+
+\method{as.integer}{rationalS3}(x, ...)
+
+as.rationalR6(x, cycles = 10, max.denominator = 2000)
+
+\method{as.double}{rationalR6}(x, ...)
+
+\method{as.integer}{rationalR6}(x, ...)
 }
 \arguments{
 \item{x}{parameter to be transformed between classes}
@@ -43,4 +61,21 @@ as.integer(rational(c(2L, 3L), c(5L, 1L), "S4"))
 as.integer(rational(8L, 3L, "S4"))
 as.character(rational(c(2L, 3L), c(5L, 1L), "S4"))
 as.rationalS4(33.3)
+as.rationalS4("33.3")
+as.rationalS3(33.3)
+as.rationalS3(c(33.3, 3.3))
+as.double(rational(1L, 3L, "S3"))
+as.double(rational(c(1L, 2L), c(3L, 5L), "S3"))
+as.numeric(rational(1L, 3L, "S3"))
+as.numeric(rational(c(1L, 2L), c(3L, 5L), "S3"))
+as.integer(rational(1L, 3L, "S3"))
+as.integer(rational(c(1L, 2L), c(3L, 5L), "S3"))
+as.rationalR6(33.3)
+as.rationalR6(c(33.3, 3.3))
+as.double(rational(1L, 3L, "S3"))
+as.double(rational(c(1L, 2L), c(3L, 5L), "S3"))
+as.numeric(rational(1L, 3L, "S3"))
+as.numeric(rational(c(1L, 2L), c(3L, 5L), "S3"))
+as.integer(rational(1L, 3L, "S3"))
+as.integer(rational(c(1L, 2L), c(3L, 5L), "S3"))
 }
