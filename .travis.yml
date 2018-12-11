@@ -1,4 +1,12 @@
 language: r
+
+r_github_packages:
+  - r-lib/covr
+
 r:
   - release
   - devel
+
+after_success:
+  - Rscript -e 'covr::codecov()'
+

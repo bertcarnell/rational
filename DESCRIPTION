@@ -10,7 +10,8 @@ Imports:
 License: GPL-2
 LazyData: true
 Suggests: 
-    testthat
+    testthat,
+    covr
 RoxygenNote: 6.1.1
 Collate: 
     'gcd.R'

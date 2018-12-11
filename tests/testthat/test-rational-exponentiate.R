@@ -1,10 +1,14 @@
 context("test-rational-exponentiate")
 
 test_that("exponentiations works", {
+  expect_error(.integerExponentiate(c(2L,5), c(6,7)))
   expect_equal(.integerExponentiate(2L, 5L), 32L)
   expect_equal(.integerExponentiate(2L, 1L), 2L)
   expect_true(is.infinite(.integerExponentiate(2L, 2000000L, checkOverflow = TRUE)))
   expect_equal(.integerExponentiate(c(2L,3L), c(5L,3L)), c(32L,27L))
+  expect_equal(2147483640^2, .integerExpRational(2147483640L, 2L, 1L, 2))
+  expect_true(is.na(rational(1L, 2L, "S3")^"test"))
+  expect_true(is.na(rational(1L, 2L, "R6")^"test"))
 
   rational(2L, 3L, "S4")^rational(5L, 1L, "S4")
   rational(2L, 3L, "S4")^rational(5L, 2L, "S4")

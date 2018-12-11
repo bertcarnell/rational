@@ -20,6 +20,7 @@ setMethod("%/%", signature = c("rationalS4", "rationalS4"),
             .rationalIntDivRational(e1@n, e1@d, e2@n, e2@d)
           }
 )
+
 #' @rdname rational-operators
 #' @export
 #' @examples
@@ -89,26 +90,14 @@ setMethod("%/%", signature = c("rationalS4", "numeric"),
   if (is.rationalS3(e1) && is.rationalS3(e2))
   {
     res <- .rationalIntDivRational(e1$n, e1$d, e2$n, e2$d)
-    if (is.list(res))
-    {
-      return(rational(res$n, res$d, "S3"))
-    }
     return(res)
   } else if (is.integer(e1) && is.rationalS3(e2))
   {
     res <- .integerIntDivRational(e1, e2$n, e2$d)
-    if (is.list(res))
-    {
-      return(rational(res$n, res$d, "S3"))
-    }
     return(res)
   } else if (is.rationalS3(e1) && is.integer(e2))
   {
     res <- .rationalIntDivInteger(e1$n, e1$d, e2)
-    if (is.list(res))
-    {
-      return(rational(res$n, res$d, "S3"))
-    }
     return(res)
   } else if (is.numeric(e1) && is.rationalS3(e2))
   {
@@ -140,26 +129,14 @@ setMethod("%/%", signature = c("rationalS4", "numeric"),
   {
     res <- .rationalIntDivRational(e1$getNumerator(), e1$getDenominator(),
                                 e2$getNumerator(), e2$getDenominator())
-    if (is.list(res))
-    {
-      return(rational(res$n, res$d, "R6"))
-    }
     return(res)
   } else if (is.integer(e1) && is.rationalR6(e2))
   {
     res <- .integerIntDivRational(e1, e2$getNumerator(), e2$getDenominator())
-    if (is.list(res))
-    {
-      return(rational(res$n, res$d, "R6"))
-    }
     return(res)
   } else if (is.rationalR6(e1) && is.integer(e2))
   {
     res <- .rationalIntDivInteger(e1$getNumerator(), e1$getDenominator(), e2)
-    if (is.list(res))
-    {
-      return(rational(res$n, res$d, "R6"))
-    }
     return(res)
   } else if (is.numeric(e1) && is.rationalR6(e2))
   {

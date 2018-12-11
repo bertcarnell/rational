@@ -14,12 +14,19 @@ testthat::test_that("Test S4 functions", {
   expect_equal(logb(2/5, base = 5), logb(b, base = 5))
   expect_equal(log2(2/5), log2(b))
   expect_equal(gamma(2/5), gamma(b))
+  expect_equal(gamma(3/2), gamma(rational(3L, 2L, "S4")))
+  expect_equal(gamma(-3/2), gamma(rational(-3L, 2L, "S4")))
   expect_true(3 == max(rational(c(2L, 3L), c(5L, 1L), "S4")))
   expect_true(2/5 == min(rational(c(2L, 3L), c(5L, 1L), "S4")))
   expect_true(is.list(range(rational(c(2L, 3L), c(5L, 1L), "S4"))))
   expect_true(range(rational(c(2L, 3L), c(5L, 1L), "S4"))[[1]] == rational(2L, 5L, "S4"))
   expect_true(6/5 == prod(rational(c(2L, 3L), c(5L, 1L), "S4")))
   expect_true(17/5 == sum(rational(c(2L, 3L), c(5L, 1L), "S4")))
+
+  expect_warning(.rational_prod(c(.Machine$integer.max, 2L, 3L), c(1L, 1L, 1L)))
+  expect_true(prod(rational(1L, 2L, "S4"), rational(1L, 2L, "S4")) == rational(1L, 4L, "S4"))
+  expect_warning(.rational_sum(c(.Machine$integer.max, 2L), c(1L, 1L)))
+  expect_true(sum(rational(1L, 2L, "S4"), rational(4L, 3L, "S4")) == rational(11L, 6L, "S4"))
 })
 
 testthat::test_that("Test S3 functions", {
@@ -42,6 +49,12 @@ testthat::test_that("Test S3 functions", {
   expect_true(range(rational(c(2L, 3L), c(5L, 1L), "S3"))[[1]] == rational(2L, 5L, "S3"))
   expect_true(6/5 == prod(rational(c(2L, 3L), c(5L, 1L), "S3")))
   expect_true(17/5 == sum(rational(c(2L, 3L), c(5L, 1L), "S3")))
+
+  expect_true(is.na(max(rational(c(2L, as.integer(NA)), c(7L, 5L), "S3"))$v))
+  expect_true(is.na(min(rational(c(2L, as.integer(NA)), c(7L, 5L), "S3"))$v))
+
+  expect_true(max(rational(1L,2L,"S4"), rational(3L, 5L, "S4"), rational(1L, 5L, "S4")) == rational(3L, 5L, "S4"))
+  expect_true(min(rational(1L,2L,"S4"), rational(3L, 5L, "S4"), rational(1L, 5L, "S4")) == rational(1L, 5L, "S4"))
 })
 
 testthat::test_that("Test R6 functions", {

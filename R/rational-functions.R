@@ -166,7 +166,7 @@ setGeneric("logb")
 #' @examples
 #' logb(rational(2L, 5L, "S4"), base = 5)
 setMethod("logb", signature = c("rationalS4"),
-  function(x, base)
+  function(x, base = exp(1))
   {
     .rational_log(x@n, x@d, base = base)
   }
@@ -176,7 +176,7 @@ setMethod("logb", signature = c("rationalS4"),
 #' @export
 #' @examples
 #' logb(rational(2L, 5L, "S3"), base = 5)
-logb.rationalS3 <- function(x, base)
+logb.rationalS3 <- function(x, base = exp(1))
 {
   .rational_log(x$n, x$d, base = base)
 }
@@ -185,7 +185,7 @@ logb.rationalS3 <- function(x, base)
 #' @export
 #' @examples
 #' logb(rational(2L, 5L, "R6"), base = 5)
-logb.rationalR6 <- function(x, base)
+logb.rationalR6 <- function(x, base = exp(1))
 {
   .rational_log(x$getNumerator(), x$getDenominator(), base = base)
 }
@@ -283,7 +283,7 @@ gamma.rationalR6 <- function(x)
 #' @export
 #' @examples
 #' max(rational(c(2L, 3L), c(5L, 1L), "S4"))
-setMethod("max", signature = c("rationalS4", "logical"),
+setMethod("max", signature = c(x = "rationalS4"),
   function(x, ..., na.rm=FALSE)
   {
     args_ <- list(...)
@@ -291,14 +291,14 @@ setMethod("max", signature = c("rationalS4", "logical"),
     {
       n <- c(x@n, sapply(args_, function(z) z@n, USE.NAMES = FALSE))
       d <- c(x@d, sapply(args_, function(z) z@d, USE.NAMES = FALSE))
-      d <- c(x@v, sapply(args_, function(z) z@v, USE.NAMES = FALSE))
+      v <- c(x@v, sapply(args_, function(z) z@v, USE.NAMES = FALSE))
     } else
     {
       n <- x@n
       d <- x@d
       v <- x@v
     }
-    .rational_max(x@n, x@d, x@v, na.rm = na.rm, rational_type = "S4")
+    .rational_max(n, d, v, na.rm, "S4")
   }
 )
 
@@ -332,7 +332,7 @@ max.rationalR6 <- function(..., na.rm = FALSE)
 #' @export
 #' @examples
 #' min(rational(c(2L, 3L), c(5L, 1L), "S4"))
-setMethod("min", signature = c("rationalS4", "logical"),
+setMethod("min", signature = c(x = "rationalS4"),
   function(x, ..., na.rm=FALSE)
   {
     args_ <- list(...)
@@ -340,7 +340,7 @@ setMethod("min", signature = c("rationalS4", "logical"),
     {
       n <- c(x@n, sapply(args_, function(z) z@n, USE.NAMES = FALSE))
       d <- c(x@d, sapply(args_, function(z) z@d, USE.NAMES = FALSE))
-      d <- c(x@v, sapply(args_, function(z) z@v, USE.NAMES = FALSE))
+      v <- c(x@v, sapply(args_, function(z) z@v, USE.NAMES = FALSE))
     } else
     {
       n <- x@n
@@ -424,7 +424,7 @@ range.rationalR6 <- function(..., na.rm = FALSE)
 #' @export
 #' @examples
 #' prod(rational(c(2L, 3L), c(5L, 1L), "S4"))
-setMethod("prod", signature = c("rationalS4"),
+setMethod("prod", signature = c(x = "rationalS4"),
   function(x, ..., na.rm=FALSE)
   {
     args_ <- list(...)
@@ -484,7 +484,7 @@ prod.rationalR6 <- function(..., na.rm  = FALSE)
 #' @export
 #' @examples
 #' sum(rational(c(2L, 3L), c(5L, 1L), "S4"))
-setMethod("sum", signature = c("rationalS4"),
+setMethod("sum", signature = c(x = "rationalS4"),
   function(x, ..., na.rm=FALSE)
   {
     args_ <- list(...)

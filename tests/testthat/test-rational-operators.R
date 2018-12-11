@@ -1,6 +1,10 @@
 testthat::context("test-rational-operators")
 
 testthat::test_that("Test Addition", {
+  expect_error(rational(c(1L,2L),c(3L,5L), "S4") + rational(1L, 2L, "S4"))
+  expect_true(is.na(rational(1L, 2L, "S3") + "test"))
+  expect_true(is.na(rational(1L, 2L, "R6") + "test"))
+
   a <- rational(1L,2L,"S4")
   b <- rational(3L,5L,"S4")
   d <- a + b
@@ -83,6 +87,10 @@ testthat::test_that("Test Addition", {
 })
 
 testthat::test_that("Test Multiply", {
+  expect_error(rational(c(1L,2L),c(3L,5L), "S4") * rational(1L, 2L, "S4"))
+  expect_true(is.na(rational(1L, 2L, "S3") * "test"))
+  expect_true(is.na(rational(1L, 2L, "R6") * "test"))
+
   a <- rational(1L,2L,"S4")
   b <- rational(3L,5L,"S4")
   d <- a * b
@@ -165,6 +173,9 @@ testthat::test_that("Test Multiply", {
 })
 
 testthat::test_that("Test Divide", {
+  expect_true(is.na(rational(1L, 2L, "S3") / "test"))
+  expect_true(is.na(rational(1L, 2L, "R6") / "test"))
+
   a <- rational(1L,2L,"S4")
   b <- rational(3L,5L,"S4")
   d <- a / b
@@ -247,6 +258,9 @@ testthat::test_that("Test Divide", {
 })
 
 testthat::test_that("Test Subtract", {
+  expect_true(is.na(rational(1L, 2L, "S3") - "test"))
+  expect_true(is.na(rational(1L, 2L, "R6") - "test"))
+
   a <- rational(1L,2L,"S4")
   b <- rational(3L,5L,"S4")
   d <- a - b
@@ -330,6 +344,9 @@ testthat::test_that("Test Subtract", {
 })
 
 testthat::test_that("Test Integer Divistion", {
+  expect_true(is.na(rational(1L, 2L, "S3") %/% "test"))
+  expect_true(is.na(rational(1L, 2L, "R6") %/% "test"))
+
   a <- rational(3L,1L,"S4")
   b <- rational(2L,1L,"S4")
   expect_equal(1, a %/% b)

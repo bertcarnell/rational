@@ -215,9 +215,9 @@ test_that("Other math functions", {
 
   expect_true(!(0.1 + 0.1 + 0.1 == 0.3))
   expect_true(sum(rational(c(1L,1L,1L),c(10L,10L,10L), "S4")) == 0.3)
-  expect_true(sum(rational(c(1L,1L,1L),c(10L,10L,10L), "S4")) == rational(3L,10L, "S4"))
-  expect_true(max(rational(c(2L,3L,4L,1L),c(5L,7L,3L,2L), "S4")) == rational(4L,3L, "S4"))
-  expect_true(min(rational(c(2L,3L,4L,1L),c(5L,7L,3L,2L), "S4")) == rational(2L,5L, "S4"))
+  expect_true(sum(rational(c(1L,1L,1L),c(10L,10L,10L), "S4")) == rational(3L, 10L, "S4"))
+  expect_true(max(rational(c(2L, 3L, 4L, 1L), c(5L, 7L, 3L, 2L), "S4")) == rational(4L, 3L, "S4"))
+  expect_true(min(rational(c(2L, 3L, 4L, 1L), c(5L, 7L, 3L, 2L), "S4")) == rational(2L, 5L, "S4"))
   d <- range(rational(c(2L,3L,4L,1L),c(5L,7L,3L,2L), "S4"))
   expect_equal(d[[1]]@v, 2/5)
   expect_equal(d[[2]]@v, 4/3)
@@ -247,4 +247,20 @@ test_that("Other math functions", {
   expect_equal(a@n, 3)
   expect_equal(a@d, 10)
   #expect_equal(a, rational(3L,10L, "S4"))
+
+  expect_error(rational(1L, 0L, method = "R6"))
+  expect_error(rational(1L, 3L, method = c("R6", "S3")))
+  expect_error(rational(1L, 3L, method = "test"))
+
+  expect_equal(length(rational(as.integer(1:10), as.integer(10:1), "S3")), 10)
+  expect_equal(length(rational(as.integer(1:10), as.integer(10:1), "R6")), 10)
+
+  # operational check
+  testthat::expect_output(print(rational(1L, 2L, "S4")))
+  testthat::expect_output(show(rational(1L, 2L, "S4")))
+  testthat::expect_output(print(rational(1L, 2L, "S3")))
+  testthat::expect_output(show(rational(1L, 2L, "S3")))
+  testthat::expect_output(print(rational(1L, 2L, "R6")))
+  testthat::expect_output(show(rational(1L, 2L, "R6")))
+
 })

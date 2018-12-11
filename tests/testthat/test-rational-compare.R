@@ -23,6 +23,12 @@ testthat::test_that("Test S3", {
   expect_true(!(a > e))
   expect_true(a <= e)
   expect_true(!(a >= e))
+
+  expect_true(d != a)
+
+  expect_error(rational(c(1L, 2L), c(3L, 5L), "S3") == rational(6L, 7L, "S3"))
+
+  expect_error(a == "test")
 })
 
 testthat::test_that("Test S4", {
@@ -48,6 +54,8 @@ testthat::test_that("Test S4", {
   expect_true(!(a > e))
   expect_true(a <= e)
   expect_true(!(a >= e))
+
+  expect_true(d != a)
 })
 
 testthat::test_that("Test R6", {
@@ -73,4 +81,10 @@ testthat::test_that("Test R6", {
   expect_true(!(a > e))
   expect_true(a <= e)
   expect_true(!(a >= e))
+
+  expect_true(d != a)
+
+  expect_error(rational(c(1L, 2L), c(3L, 5L), "R6") == rational(6L, 7L, "R6"))
+
+  expect_error(a == "test")
 })

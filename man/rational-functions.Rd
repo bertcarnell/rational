@@ -25,19 +25,19 @@
 \alias{gamma,rationalS4-method}
 \alias{gamma.rationalS3}
 \alias{gamma.rationalR6}
-\alias{max,rationalS4,logical-method}
+\alias{max,rationalS4-method}
 \alias{max.rationalS3}
 \alias{max.rationalR6}
-\alias{min,rationalS4,logical-method}
+\alias{min,rationalS4-method}
 \alias{min.rationalS3}
 \alias{min.rationalR6}
-\alias{range,rationalS4,ANY-method}
+\alias{range,rationalS4-method}
 \alias{range.rationalS3}
 \alias{range.rationalR6}
-\alias{prod,rationalS4,ANY-method}
+\alias{prod,rationalS4-method}
 \alias{prod.rationalS3}
 \alias{prod.rationalR6}
-\alias{sum,rationalS4,ANY-method}
+\alias{sum,rationalS4-method}
 \alias{sum.rationalS3}
 \alias{sum.rationalR6}
 \title{Functions of Rational Numbers}
@@ -70,9 +70,9 @@ log10.rationalR6(x)
 
 \S4method{logb}{rationalS4}(x, base = exp(1))
 
-logb.rationalS3(x, base)
+logb.rationalS3(x, base = exp(1))
 
-logb.rationalR6(x, base)
+logb.rationalR6(x, base = exp(1))
 
 \S4method{log2}{rationalS4}(x)
 
@@ -86,31 +86,31 @@ log2.rationalR6(x)
 
 \method{gamma}{rationalR6}(x)
 
-\S4method{max}{rationalS4,logical}(x, ..., na.rm = FALSE)
+\S4method{max}{rationalS4}(x, ..., na.rm = FALSE)
 
 \method{max}{rationalS3}(..., na.rm = FALSE)
 
 \method{max}{rationalR6}(..., na.rm = FALSE)
 
-\S4method{min}{rationalS4,logical}(x, ..., na.rm = FALSE)
+\S4method{min}{rationalS4}(x, ..., na.rm = FALSE)
 
 \method{min}{rationalS3}(..., na.rm = FALSE)
 
 \method{min}{rationalR6}(..., na.rm = FALSE)
 
-\S4method{range}{rationalS4,ANY}(x, ..., na.rm = FALSE)
+\S4method{range}{rationalS4}(x, ..., na.rm = FALSE)
 
 \method{range}{rationalS3}(..., na.rm = FALSE)
 
 \method{range}{rationalR6}(..., na.rm = FALSE)
 
-\S4method{prod}{rationalS4,ANY}(x, ..., na.rm = FALSE)
+\S4method{prod}{rationalS4}(x, ..., na.rm = FALSE)
 
 \method{prod}{rationalS3}(..., na.rm = FALSE)
 
 \method{prod}{rationalR6}(..., na.rm = FALSE)
 
-\S4method{sum}{rationalS4,ANY}(x, ..., na.rm = FALSE)
+\S4method{sum}{rationalS4}(x, ..., na.rm = FALSE)
 
 \method{sum}{rationalS3}(..., na.rm = FALSE)
 
