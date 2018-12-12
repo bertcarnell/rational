@@ -55,6 +55,12 @@ testthat::test_that("Test S3 functions", {
 
   expect_true(max(rational(1L,2L,"S4"), rational(3L, 5L, "S4"), rational(1L, 5L, "S4")) == rational(3L, 5L, "S4"))
   expect_true(min(rational(1L,2L,"S4"), rational(3L, 5L, "S4"), rational(1L, 5L, "S4")) == rational(1L, 5L, "S4"))
+
+  expect_equal(logb(2/5), logb.rationalS3(b))
+  expect_equal(logb(2/5), logb(b))
+  expect_equal(logb(2/5, base = 5), logb.rationalS3(b, base = 5))
+  expect_equal(logb(2/5, base = 5), logb(b, base = 5))
+
 })
 
 testthat::test_that("Test R6 functions", {
@@ -77,4 +83,9 @@ testthat::test_that("Test R6 functions", {
   expect_true(range(rational(c(2L, 3L), c(5L, 1L), "R6"))[[1]] == rational(2L, 5L, "R6"))
   expect_true(6/5 == prod(rational(c(2L, 3L), c(5L, 1L), "R6")))
   expect_true(17/5 == sum(rational(c(2L, 3L), c(5L, 1L), "R6")))
+
+  expect_equal(logb(2/5), logb.rationalR6(b))
+  expect_equal(logb(2/5), logb(b))
+  expect_equal(logb(2/5, base = 5), logb.rationalR6(b, base = 5))
+  expect_equal(logb(2/5, base = 5), logb(b, base = 5))
 })

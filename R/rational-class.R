@@ -73,12 +73,28 @@ require(R6)
                            private$d <- d
                            private$v <- n / d
                            self
+                         },
+                         setNumerator = function(x)
+                         {
+                           private$n <- x
+                           private$v <- private$n / private$d
+                         },
+                         setDenominator = function(x)
+                         {
+                           private$d <- x
+                           private$v <- private$n / private$d
+                         },
+                         assign_at = function(i, value)
+                         {
+                           private$n[i] <- value$getNumerator()
+                           private$d[i] <- value$getDenominator()
+                           private$v <- private$n / private$d
                          }),
                        private = list(
                          n = 1L,
                          d = 1L,
                          v = 1L
-                       ), lock_class = FALSE, lock_objects = FALSE, portable = FALSE)
+                       ), lock_class = FALSE, lock_objects = TRUE, portable = TRUE)
 
 # rational number S4 class generator
 #
@@ -201,6 +217,7 @@ length.rationalR6 <- function(x, ...)
 #' @param ... indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.
 #' @param drop For matrices and arrays. If TRUE the result is coerced to the lowest possible dimension (see the examples). This only works for extracting elements, not for the replacement. See drop for further details.
 #' @param value the replacement value
+#' @param exact controls partial matching when extracting by character
 #' @seealso \code{\link{Extract}} for more full descriptions
 #' @export
 #' @rdname rational-class
@@ -254,14 +271,14 @@ setMethod("[[<-",
 #'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S3")
 #'   stopifnot(a[2]$n == 5L)
 #'   stopifnot(all(a[2:3]$n == c(5,6)))
-'[.rationalS3' <- function(x, i, j, ..., drop)
+'[.rationalS3' <- function(x, i, ..., drop = TRUE)
 {
   return(rational(x$n[i], x$d[i], "S3"))
 }
 
 #' @rdname rational-class
 #' @export
-'[<-.rationalS3' <- function(x, i, j, ..., value)
+'[<-.rationalS3' <- function(x, i, ..., value)
 {
   if (!is.rationalS3(value))
   {
@@ -275,14 +292,14 @@ setMethod("[[<-",
 
 #' @rdname rational-class
 #' @export
-'[[.rationalS3' <- function(x, i, j, ..., drop)
+'[[.rationalS3' <- function(x, i, ..., exact = TRUE)
 {
   return(rational(x$n[[i]], x$d[[i]], "S3"))
 }
 
 #' @rdname rational-class
 #' @export
-'[[<-.rationalS3' <- function(x, i, j, ..., value)
+'[[<-.rationalS3' <- function(x, i, ..., value)
 {
   if (!is.rationalS3(value))
   {
@@ -300,45 +317,44 @@ setMethod("[[<-",
 #'   stopifnot(a[2]$getNumerator() == 5L)
 #'   stopifnot(all(a[2:3]$n == c(5,6)))
 #' @export
-'[.rationalR6' <- function(x, i, j, ..., drop)
+'[.rationalR6' <- function(x, i, ..., drop = TRUE)
 {
   return(rational(x$getNumerator()[i], x$getDenominator()[i], "R6"))
 }
 
-#' @rdname rational-class
-#' @export
-'[<-.rationalR6' <- function(x, i, j, ..., value)
-{
-  if (!is.rationalR6(value))
-  {
-    stop(.rationalErrorMessage7)
-  }
-  x$n[i] <- value$getNumerator()
-  x$d[i] <- value$getDenominator()
-  x$v[i] <- value$getValue()
-  return(x)
-}
+# '[<-.rationalR6' <- function(x, i, ..., value)
+# {
+#   if (!is.rationalR6(value))
+#   {
+#     stop(.rationalErrorMessage7)
+#   }
+#   n <- x$getNumerator()
+#   d <- x$getDenominator()
+#   n[i] <- value$getNumerator()
+#   d[i] <- value$getDenominator()
+#   x <- rational(n, d, "R6")
+#   return(x)
+# }
 
 #' @rdname rational-class
 #' @export
-'[[.rationalR6' <- function(x, i, j, ..., drop)
+'[[.rationalR6' <- function(x, i, ..., exact = TRUE)
 {
   return(rational(x$getNumerator()[[i]], x$getDenominator()[[i]], "R6"))
 }
 
-#' @rdname rational-class
-#' @export
-'[[<-.rationalR6' <- function(x, i, j, ..., value)
-{
-  if (!is.rationalR6(value))
-  {
-    stop(.rationalErrorMessage7)
-  }
-  x$n[[i]] <- value$getNumerator()
-  x$d[[i]] <- value$getDenominator()
-  x$v[[i]] <- value$getValue()
-  return(x)
-}
+# '[[<-.rationalR6' <- function(x, i, ..., value)
+# {
+#   if (!is.rationalR6(value))
+#   {
+#     stop(.rationalErrorMessage7)
+#   }
+#   n <- x$getNumerator()
+#   d <- x$getDenominator()
+#   n[[i]] <- value$getNumerator()
+#   d[[i]] <- value$getDenominator()
+#   return(rational(n, d, "R6"))
+# }
 
 ################################################################################
 

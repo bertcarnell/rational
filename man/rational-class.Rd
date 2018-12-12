@@ -16,9 +16,7 @@
 \alias{[[.rationalS3}
 \alias{[[<-.rationalS3}
 \alias{[.rationalR6}
-\alias{[<-.rationalR6}
 \alias{[[.rationalR6}
-\alias{[[<-.rationalR6}
 \alias{print,rationalS4-method}
 \alias{show,rationalS4-method}
 \alias{print.rationalS3}
@@ -43,21 +41,17 @@ rational(n, d, method = "R6")
 
 \S4method{[[}{rationalS4}(x, i, j, ...) <- value
 
-\method{[}{rationalS3}(x, i, j, ..., drop)
+\method{[}{rationalS3}(x, i, ..., drop = TRUE)
 
-\method{[}{rationalS3}(x, i, j, ...) <- value
+\method{[}{rationalS3}(x, i, ...) <- value
 
-\method{[[}{rationalS3}(x, i, j, ..., drop)
+\method{[[}{rationalS3}(x, i, ..., exact = TRUE)
 
-\method{[[}{rationalS3}(x, i, j, ...) <- value
+\method{[[}{rationalS3}(x, i, ...) <- value
 
-\method{[}{rationalR6}(x, i, j, ..., drop)
+\method{[}{rationalR6}(x, i, ..., drop = TRUE)
 
-\method{[}{rationalR6}(x, i, j, ...) <- value
-
-\method{[[}{rationalR6}(x, i, j, ..., drop)
-
-\method{[[}{rationalR6}(x, i, j, ...) <- value
+\method{[[}{rationalR6}(x, i, ..., exact = TRUE)
 
 \S4method{print}{rationalS4}(x)
 
@@ -89,6 +83,8 @@ show.rationalR6(x)
 \item{drop}{For matrices and arrays. If TRUE the result is coerced to the lowest possible dimension (see the examples). This only works for extracting elements, not for the replacement. See drop for further details.}
 
 \item{value}{the replacement value}
+
+\item{exact}{controls partial matching when extracting by character}
 
 \item{object}{the object to show}
 }
