@@ -20,9 +20,7 @@
 \alias{print,rationalS4-method}
 \alias{show,rationalS4-method}
 \alias{print.rationalS3}
-\alias{show.rationalS3}
 \alias{print.rationalR6}
-\alias{show.rationalR6}
 \title{Rational Number Classes}
 \usage{
 rational(n, d, method = "R6")
@@ -59,11 +57,7 @@ rational(n, d, method = "R6")
 
 \method{print}{rationalS3}(x, ...)
 
-show.rationalS3(x)
-
 \method{print}{rationalR6}(x, ...)
-
-show.rationalR6(x)
 }
 \arguments{
 \item{n}{the numerator}

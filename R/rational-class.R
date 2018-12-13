@@ -322,19 +322,15 @@ setMethod("[[<-",
   return(rational(x$getNumerator()[i], x$getDenominator()[i], "R6"))
 }
 
-# '[<-.rationalR6' <- function(x, i, ..., value)
-# {
-#   if (!is.rationalR6(value))
-#   {
-#     stop(.rationalErrorMessage7)
-#   }
-#   n <- x$getNumerator()
-#   d <- x$getDenominator()
-#   n[i] <- value$getNumerator()
-#   d[i] <- value$getDenominator()
-#   x <- rational(n, d, "R6")
-#   return(x)
-# }
+'[<-.rationalR6' <- function(x, i, ..., value)
+{
+  if (!is.rationalR6(value))
+  {
+    stop(.rationalErrorMessage7)
+  }
+  x$assign_at(i, value)
+  return(x)
+}
 
 #' @rdname rational-class
 #' @export
@@ -343,24 +339,26 @@ setMethod("[[<-",
   return(rational(x$getNumerator()[[i]], x$getDenominator()[[i]], "R6"))
 }
 
-# '[[<-.rationalR6' <- function(x, i, ..., value)
-# {
-#   if (!is.rationalR6(value))
-#   {
-#     stop(.rationalErrorMessage7)
-#   }
-#   n <- x$getNumerator()
-#   d <- x$getDenominator()
-#   n[[i]] <- value$getNumerator()
-#   d[[i]] <- value$getDenominator()
-#   return(rational(n, d, "R6"))
-# }
+'[[<-.rationalR6' <- function(x, i, ..., value)
+{
+  if (!is.rationalR6(value))
+  {
+    stop(.rationalErrorMessage7)
+  }
+  x$assign_at(i, value)
+  return(x)
+}
 
 ################################################################################
 
 .printRational <- function(n, d, v)
 {
   print(paste0("(", n, " / ", d, ") = ", v))
+}
+
+.catRational <- function(n, d, v)
+{
+  cat(paste0("(", n, " / ", d, ") = ", v))
 }
 
 #' @rdname rational-class
@@ -377,7 +375,7 @@ setMethod("print", signature = "rationalS4",
 setMethod("show", signature = "rationalS4",
           function(object)
           {
-            .printRational(object@n, object@d, object@v)
+            .catRational(object@n, object@d, object@v)
           })
 
 #' @rdname rational-class
@@ -389,23 +387,9 @@ print.rationalS3 <- function(x, ...)
 }
 
 #' @rdname rational-class
-#' @export
-show.rationalS3 <- function(x)
-{
-  .printRational(x$n, x$d, x$v)
-}
-
-#' @rdname rational-class
 #' @method print rationalR6
 #' @export
 print.rationalR6 <- function(x, ...)
-{
-  .printRational(x$getNumerator(), x$getDenominator(), x$getValue())
-}
-
-#' @rdname rational-class
-#' @export
-show.rationalR6 <- function(x)
 {
   .printRational(x$getNumerator(), x$getDenominator(), x$getValue())
 }

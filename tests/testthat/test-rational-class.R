@@ -259,10 +259,7 @@ test_that("Other math functions", {
   testthat::expect_output(print(rational(1L, 2L, "S4")))
   testthat::expect_output(show(rational(1L, 2L, "S4")))
   testthat::expect_output(print(rational(1L, 2L, "S3")))
-  testthat::expect_output(show(rational(1L, 2L, "S3")))
   testthat::expect_output(print(rational(1L, 2L, "R6")))
-  testthat::expect_output(show(rational(1L, 2L, "R6")))
-
 })
 
 testthat::test_that("Test Extract", {
@@ -288,6 +285,9 @@ testthat::test_that("Test Extract", {
   expect_true(a[1] == d)
   expect_true(a[2] == b)
 
+  expect_error(a[3] <- 7)
+  expect_error(a[[3]] <- "5")
+
   a <- rational(c(1L,2L,3L), c(4L,5L,7L), "R6")
   b <- rational(2L, 5L, "R6")
   d <- rational(1L, 9L, "R6")
@@ -298,4 +298,15 @@ testthat::test_that("Test Extract", {
   expect_true(a[[3]] == d)
   expect_true(a[1] == d)
   expect_true(a[2] == b)
+
+  a <- rational(c(1L,2L,3L), c(4L,5L,7L), "R6")
+  a[3] <- d
+  expect_true(a[[3]] == d)
+  expect_true(a[3] == d)
+  a[[1]] <- d
+  expect_true(a[[1]] == d)
+  expect_true(a[1] == d)
+
+  expect_error(a[2] <- "a")
+  expect_error(a[[2]] <- "b")
 })
