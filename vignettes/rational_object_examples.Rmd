@@ -1,0 +1,441 @@
+---
+title: "Rational Numbers: An example of R Classes"
+author: "Rob Carnell"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Rational Numbers: An example of R Classes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+require(rational)
+require(R6)
+```
+
+## Why do we need a rational package?
+
+This package serves 2 purposes:
+
+- Demonstrates the creation of the same classes in S3, S4, and R6 class systems
+- Demonstrates one way to solve some numerical accuracy problems that people struggle with
+
+For example:
+
+```{r demo}
+# expectations dashed
+(0.1 + 0.2) == 0.3
+# what?
+print(0.1 + 0.2, digits = 20)
+# what am I supposed to do in R? (or any other floating point arithmetic system)
+all.equal(0.1 + 0.2, 0.3, tolerance = 1E-9)
+abs(0.1 + 0.2 - 0.3) < 1E-9
+# is there another way?
+# Yes, rational numbers
+#   NOTE: the "L" notation indicates an integer
+rational(1L, 10L) + rational(2L, 10L) == rational(3L, 10L)
+```
+
+## Initialization
+
+#### Rational S3
+
+```{r rational_s3_init, eval=FALSE}
+.rationalS3 <- function(n, d)
+{
+  ret <- list(n = n, d = d, v = n / d)
+  class(ret) <- "rationalS3"
+  return(ret)
+}
+```
+
+```{r rational_S3_init2}
+# generating function
+a <- rational(1L, 3L, method = "S3")
+# basic structure
+str(a)
+# what is this object?
+class(a)
+is.list(a)
+is.rational(a)
+is.rationalS3(a)
+is.numeric(a)
+is.integer(a)
+# how can I access the values?
+a$n
+a$d
+a$v
+```
+
+#### Rational S4
+
+```{r rational_s4_init, eval = FALSE}
+setClass("rationalS4", slots = c(n = "integer", d = "integer", v = "numeric"),
+         valid = function(object)
+         {
+           if (length(object@n) == length(object@d)) {
+             if (all(is.integer(object@n)) && all(is.integer(object@d))) {
+               if (!any(object@d == 0)) return(TRUE)
+               else return(.rationalErrorMessage2)
+             }
+             else return(.rationalErrorMessage1)
+           }
+           else return(.rationalErrorMessage3)
+         })
+
+setMethod("initialize", "rationalS4", function(.Object, n, d)
+{
+  .Object@n <- n
+  .Object@d <- d
+  .Object@v <- n / d
+  # validity checks happen on the default initialize
+  callNextMethod(.Object = .Object, n = n, d = d)
+})
+```
+
+```{r rational_s4_init2}
+# generating function
+a <- rational(1L, 3L, method = "S4")
+# basic structure
+str(a)
+# what is this object?
+class(a)
+is.rational(a)
+is.rationalS4(a)
+is.numeric(a)
+is.integer(a)
+# how can I access the values?
+a@n
+a@d
+a@v
+```
+
+#### Rational R6
+
+```{r rational_R6_init, eval=FALSE}
+.rationalR6 <- R6Class("rationalR6",
+  public = list(
+   getNumerator = function() private$n,
+   getDenominator = function() private$d,
+   getValue = function() private$v,
+   initialize = function(n, d)
+   {
+     private$n <- n
+     private$d <- d
+     private$v <- n / d
+     self
+   },
+   setNumerator = function(x)
+   {
+     private$n <- x
+     private$v <- private$n / private$d
+   },
+   setDenominator = function(x)
+   {
+     private$d <- x
+     private$v <- private$n / private$d
+   },
+   assign_at = function(i, value)
+   {
+     private$n[i] <- value$getNumerator()
+     private$d[i] <- value$getDenominator()
+     private$v <- private$n / private$d
+   }),
+  private = list(
+   n = 1L,
+   d = 1L,
+   v = 1L
+  ), lock_class = FALSE, lock_objects = TRUE, portable = TRUE)
+```
+
+```{r rational_R6_init2}
+# generating function
+a <- rational(1L, 3L, method = "R6")
+# basic structure
+str(a)
+# what is this object?
+class(a)
+is.rational(a)
+is.rationalR6(a)
+is.numeric(a)
+is.integer(a)
+# how can I access the values?
+a$getNumerator()
+a$getDenominator()
+a$getValue()
+```
+
+## Create operators
+
+#### Addition
+
+```{r add, eval=FALSE}
+'+.rationalS3' <- function(e1, e2)
+{
+  if (is.rationalS3(e1) && is.rationalS3(e2))
+  {
+    res <- .rationalAddRational(e1$n, e1$d, e2$n, e2$d)
+    return(.rationalS3(res$n, res$d))
+  } else if (is.integer(e1) && is.rationalS3(e2))
+  {
+    res <- .rationalAddInteger(e2$n, e2$d, e1)
+    return(.rationalS3(res$n, res$d))
+  } else if (is.rationalS3(e1) && is.integer(e2))
+  {
+    res <- .rationalAddInteger(e1$n, e1$d, e2)
+    return(.rationalS3(res$n, res$d))
+  } else if (is.numeric(e1) && is.rationalS3(e2))
+  {
+    return(.rationalAddNumeric(e2$n, e2$d, e1))
+  } else if (is.rationalS3(e1) && is.numeric(e2))
+  {
+    return(.rationalAddNumeric(e1$n, e1$d, e2))
+  } else
+  {
+    return(NA)
+  }
+}
+
+'+.rationalR6' <- function(e1, e2)
+{
+  if (is.rationalR6(e1) && is.rationalR6(e2))
+  {
+    res <- .rationalAddRational(e1$getNumerator(), e1$getDenominator(), 
+                                e2$getNumerator(), e2$getDenominator())
+    return(.rationalR6$new(res$n, res$d))
+  } else if (is.integer(e1) && is.rationalR6(e2))
+  {
+    res <- .rationalAddInteger(e2$getNumerator(), e2$getDenominator(), e1)
+    return(.rationalR6$new(res$n, res$d))
+  } else if (is.rationalR6(e1) && is.integer(e2))
+  {
+    res <- .rationalAddInteger(e1$getNumerator(), e1$getDenominator(), e2)
+    return(.rationalR6$new(res$n, res$d))
+  } else if (is.numeric(e1) && is.rationalR6(e2))
+  {
+    return(.rationalAddNumeric(e2$getNumerator(), e2$getDenominator(), e1))
+  } else if (is.rationalR6(e1) && is.numeric(e2))
+  {
+    return(.rationalAddNumeric(e1$getNumerator(), e1$getDenominator(), e2))
+  } else
+  {
+    return(NA)
+  }
+}
+
+setMethod("+", c("rationalS4", "rationalS4"), function(e1, e2)
+{
+  res <- .rationalAddRational(e1@n, e1@d, e2@n, e2@d)
+  return(new("rationalS4", n = res$n, d = res$d))
+})
+
+setMethod("+", c("integer", "rationalS4"), function(e1, e2)
+{
+  res <- .rationalAddInteger(e2@n, e2@d, e1)
+  return(new("rationalS4", n = res$n, d = res$d))
+})
+
+# and many more ...
+```
+
+```{r add_show}
+a3 <- rational(1L, 3L, method = "S3")
+b3 <- rational(3L, 4L, method = "S3")
+a3 + 1.8
+a3 + 2L
+a3 + b3
+```
+
+#### Other Operators
+
+```{r log10, eval=FALSE}
+.rational_log <- function(n, d, base)
+{
+  if (base == exp(1))
+    log(n) - log(d)
+  else if (base == 10)
+    log10(n) - log10(d)
+  else if (base == 2)
+    log2(n) - log2(d)
+  else
+    logb(n, base = base) - logb(d, base = base)
+}
+
+setMethod("log10", signature = c("rationalS4"),
+  function(x)
+  {
+    .rational_log(x@n, x@d, 10)
+  }
+)
+
+log10.rationalS3 <- function(x)
+{
+  .rational_log(x$n, x$d, 10)
+}
+
+log10.rationalR6 <- function(x)
+{
+  .rational_log(x$getNumerator(), x$getDenominator(), 10)
+}
+```
+
+```{r log10_show}
+log10(rational(1L, 3L, method = "S3"))
+log10(rational(3L, 4L, method = "R6"))
+log10(rational(3L, 4L, method = "S4"))
+```
+
+## Inheritance
+
+#### S3
+
+```{r s3inherit}
+polygon <- function(area)
+{
+  value <- list(area = area)
+  class(value) <- "polygonS3"
+  return(value)
+}
+
+rectangle <- function(l, w)
+{
+  value <- list(area = l*w, l = l, w = w)
+  class(value) <- c("rectangleS3", "polygonS3")
+  return(value)
+}
+
+print.polygonS3 <- function(obj) cat("Area: ", obj$area, "\n")
+print.rectangleS3 <- function(obj) 
+{
+  cat("Length: ", obj$l, " Width: ", obj$w, " ")
+  print.polygonS3(obj)
+}
+
+p3 <- polygon(5)
+r3 <- rectangle(2, 3)
+is(p3, "polygonS3")
+is(r3, "polygonS3")
+is(r3, "rectangleS3")
+inherits(r3, "polygonS3")
+p3
+r3
+```
+
+#### S4
+
+```{r s4inherit}
+setClass("polygonS4", slots = list(area = "numeric"))
+setMethod("show", "polygonS4", function(object) cat("Area: ", object@area, "\n"))
+setClass("rectangleS4", slots = list(l = "numeric", w = "numeric"),
+         contains = "polygonS4")
+setMethod("initialize", "rectangleS4", function(.Object, l, w)
+{
+  .Object@l <- l
+  .Object@w <- w
+  .Object@area <- l*w
+  .Object
+})
+setMethod("show", "rectangleS4", function(object) 
+{
+  cat("Length: ", object@l, " Width: ", object@w, " ")
+  callNextMethod()
+})
+p4 <- new("polygonS4", area = 5)
+r4 <- new("rectangleS4", l = 2, w = 3)
+is(p4, "polygonS4")
+is(r4, "polygonS4")
+is(r4, "rectangleS4")
+inherits(r4, "polygonS4")
+p4
+r4
+```
+
+#### R6
+
+```{r r6inherit}
+polygonR6 <- R6Class("polygonR6",
+  public = list(
+    initialize = function(area)
+    {
+      private$area = area
+    },
+    print = function()
+    {
+      cat("Area: ", private$area, "\n")
+    }
+  ),
+  private = list(
+    area = numeric()
+  )
+)
+
+rectangleR6 <- R6Class("rectangleR6",
+  inherit = polygonR6,
+  public = list(
+    initialize = function(l, w)
+    {
+      private$l = l
+      private$w = w
+      private$area = l*w
+    },
+    print = function()
+    {
+      cat("Length: ", private$l, " Width: ", private$w, " ")
+      super$print()
+    }
+  ),
+  private = list(
+    l = numeric(),
+    w = numeric()
+  )
+)
+p6 <- polygonR6$new(area = 5)
+r6 <- rectangleR6$new(l = 2, w = 3)
+is(p6, "polygonR6")
+is(r6, "polygonR6")
+is(r6, "rectangleR6")
+inherits(r6, "polygonR6")
+p6
+r6
+```
+
+## Encapsulation
+
+#### S3 + S4
+
+There is no encapsulation in the S3 and S4 system.  All objects of the class can be 
+accessed directly.  There is no concept of "public" and "private" in the class.
+
+```{r encaps3}
+r3$l <- 10
+# this is bad
+r3
+
+r4@l <- 10
+# so is this
+r4
+
+# R6 solves this problem
+tryCatch(r6$l <- 10, error = function(e) print(e)) 
+```
+
+#### R6
+
+With R6, we can restrict the method users use to interact with the class.
+
+```{r encapr6}
+rectangleR6$set("public", "setLength", function(l){
+  private$l <- l
+  private$area <- l * private$w
+})
+r6 <- rectangleR6$new(2, 3)
+r6$setLength(10)
+r6
+
+```
+

@@ -11,7 +11,9 @@ License: GPL-2
 LazyData: true
 Suggests: 
     testthat,
-    covr
+    covr,
+    knitr,
+    rmarkdown
 RoxygenNote: 6.1.1
 Collate: 
     'gcd.R'
@@ -31,3 +33,4 @@ Collate:
     'rational.R'
 URL: https://github.com/bertcarnell/rational
 BugReports: https://github.com/bertcarnell/rational/issues
+VignetteBuilder: knitr
