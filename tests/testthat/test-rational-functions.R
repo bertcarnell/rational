@@ -17,6 +17,8 @@ testthat::test_that("Test S4 functions", {
   expect_equal(gamma(3/2), gamma(rational(3L, 2L, "S4")))
   expect_equal(gamma(-3/2), gamma(rational(-3L, 2L, "S4")))
   expect_true(3 == max(rational(c(2L, 3L), c(5L, 1L), "S4")))
+  expect_true(3 == max(rational(2L, 5L, "S4"), rational(3L, 1L, "S4")))
+  expect_true(3 == max(rational(c(2L, 3L), c(5L, 1L), "S4"), rational(c(1L,2L), c(6L,7L), "S4")))
   expect_true(2/5 == min(rational(c(2L, 3L), c(5L, 1L), "S4")))
   expect_true(is.list(range(rational(c(2L, 3L), c(5L, 1L), "S4"))))
   expect_true(range(rational(c(2L, 3L), c(5L, 1L), "S4"))[[1]] == rational(2L, 5L, "S4"))

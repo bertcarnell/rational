@@ -21,8 +21,6 @@
 #' @importFrom R6 R6Class
 NULL
 
-require(R6)
-
 # error messages
 .rationalError0 <- "rational class error:"
 .rationalErrorMessage1 <- paste(.rationalError0, "the numerator and denominator must be integers",
