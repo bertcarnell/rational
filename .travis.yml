@@ -14,3 +14,6 @@ sudo: false
 cache: packages
 warnings_are_errors: true
 r_check_args: "--as-cran"
+
+# 3/8/2019 time checks are failing on R-devel
+env: _R_CHECK_SYSTEM_CLOCK_ = 0
