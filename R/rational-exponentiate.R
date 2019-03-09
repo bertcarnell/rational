@@ -44,7 +44,7 @@
   {
     return(v1^v2)
   }
-  if (d2 == 1L)
+  if (all(d2 == 1L))
   {
     n <- .integerExponentiate(n1, n2, FALSE)
     d <- .integerExponentiate(d1, n2, FALSE)
