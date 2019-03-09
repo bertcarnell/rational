@@ -39,8 +39,8 @@
   # check overflow
   res_n <- n1^v2
   res_d <- d1^v2
-  if (res_n > .Machine$integer.max ||
-        res_d > .Machine$integer.max)
+  if (any(res_n > .Machine$integer.max) ||
+        any(res_d > .Machine$integer.max))
   {
     return(v1^v2)
   }
@@ -58,8 +58,8 @@
   # check overflow
   res_n <- n1^i2
   res_d <- d1^i2
-  if (res_n > .Machine$integer.max ||
-        res_d > .Machine$integer.max)
+  if (any(res_n > .Machine$integer.max) ||
+        any(res_d > .Machine$integer.max))
   {
     return(v1^i2)
   }
@@ -72,11 +72,11 @@
 {
   # check overflow
   res_n <- i1^v2
-  if (res_n > .Machine$integer.max)
+  if (any(res_n > .Machine$integer.max))
   {
     return(res_n)
   }
-  if (d2 == 1L)
+  if (all(d2 == 1L))
   {
     n <- .integerExponentiate(i1, n2, FALSE)
     return(list(n = n, d = rep(1L, length(n))))
