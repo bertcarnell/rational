@@ -2,7 +2,7 @@
 
 A rational number class using a variety of class systems
 
-[![Build Status](https://travis-ci.org/bertcarnell/rational.svg?branch=master)](https://travis-ci.org/bertcarnell/rational)
+[![R-CMD-CHECK](https://github.com/bertcarnell/rational/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/rational/actions/workflows/r-cmd-check.yml)
 [![Coverage status](https://codecov.io/gh/bertcarnell/rational/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/rational?branch=master)
 
 [Rational Website](https://bertcarnell.github.io/rational/)
