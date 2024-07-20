@@ -179,147 +179,6 @@ rational <- function(n, d, method="R6")
 
 
 
-#' @param x the rational number
-#' @param i index specifying elements
-#' @param j index specifying elements
-#' @param ... indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.
-#' @param drop For matrices and arrays. If TRUE the result is coerced to the lowest possible dimension (see the examples). This only works for extracting elements, not for the replacement. See drop for further details.
-#' @param value the replacement value
-#' @param exact controls partial matching when extracting by character
-#' @seealso \code{\link{Extract}} for more full descriptions
-#' @export
-#' @rdname rational-class
-#' @examples
-#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S4")
-#'   stopifnot(a[2]@@n == 5L)
-#'   stopifnot(all(a[2:3]@@n == c(5,6)))
-setMethod("[",
-          "rationalS4",
-          function(x, i, j, ..., drop)
-          {
-            rational(x@n[i], x@d[i], "S4")
-          })
-
-#' @rdname rational-class
-#' @export
-setMethod("[<-",
-          "rationalS4",
-          function(x, i, j, ..., value)
-          {
-            x@n[i] <- value@n
-            x@d[i] <- value@d
-            x@v[i] <- value@v
-            return(x)
-          })
-
-#' @rdname rational-class
-#' @export
-setMethod("[[",
-          "rationalS4",
-          function(x, i, ..., drop)
-          {
-            rational(x@n[[i]], x@d[[i]], "S4")
-          })
-
-#' @rdname rational-class
-#' @export
-setMethod("[[<-",
-          "rationalS4",
-          function(x, i, ..., value)
-          {
-            x@n[[i]] <- value@n
-            x@d[[i]] <- value@d
-            x@v[[i]] <- value@v
-            return(x)
-          })
-
-#' @rdname rational-class
-#' @export
-#' @examples
-#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S3")
-#'   stopifnot(a[2]$n == 5L)
-#'   stopifnot(all(a[2:3]$n == c(5,6)))
-'[.rationalS3' <- function(x, i, ..., drop = TRUE)
-{
-  return(rational(x$n[i], x$d[i], "S3"))
-}
-
-#' @rdname rational-class
-#' @export
-'[<-.rationalS3' <- function(x, i, ..., value)
-{
-  if (!is.rationalS3(value))
-  {
-    stop(.rationalErrorMessage8)
-  }
-  x$n[i] <- value$n
-  x$d[i] <- value$d
-  x$v[i] <- value$v
-  return(x)
-}
-
-#' @rdname rational-class
-#' @export
-'[[.rationalS3' <- function(x, i, ..., exact = TRUE)
-{
-  return(rational(x$n[[i]], x$d[[i]], "S3"))
-}
-
-#' @rdname rational-class
-#' @export
-'[[<-.rationalS3' <- function(x, i, ..., value)
-{
-  if (!is.rationalS3(value))
-  {
-    stop(.rationalErrorMessage8)
-  }
-  x$n[[i]] <- value$n
-  x$d[[i]] <- value$d
-  x$v[[i]] <- value$v
-  return(x)
-}
-
-#' @rdname rational-class
-#' @examples
-#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "R6")
-#'   stopifnot(a[2]$getNumerator() == 5L)
-#'   stopifnot(all(a[2:3]$n == c(5,6)))
-#' @export
-'[.rationalR6' <- function(x, i, ..., drop = TRUE)
-{
-  return(rational(x$getNumerator()[i], x$getDenominator()[i], "R6"))
-}
-
-#' @rdname rational-class
-#' @export
-'[<-.rationalR6' <- function(x, i, ..., value)
-{
-  if (!is.rationalR6(value))
-  {
-    stop(.rationalErrorMessage7)
-  }
-  x$assign_at(i, value)
-  return(x)
-}
-
-#' @rdname rational-class
-#' @export
-'[[.rationalR6' <- function(x, i, ..., exact = TRUE)
-{
-  return(rational(x$getNumerator()[[i]], x$getDenominator()[[i]], "R6"))
-}
-
-#' @rdname rational-class
-#' @export
-'[[<-.rationalR6' <- function(x, i, ..., value)
-{
-  if (!is.rationalR6(value))
-  {
-    stop(.rationalErrorMessage7)
-  }
-  x$assign_at(i, value)
-  return(x)
-}
 
 ################################################################################
 
@@ -352,6 +211,8 @@ setMethod("show", signature = "rationalS4",
 
 #' @rdname rational-class
 #' @method print rationalS3
+#' @param x rational object
+#' @param ... other arguments passed to print
 #' @export
 print.rationalS3 <- function(x, ...)
 {

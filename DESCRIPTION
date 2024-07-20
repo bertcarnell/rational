@@ -24,6 +24,7 @@ Collate:
     'rational-multiply.R'
     'rational-divide.R'
     'rational-exponentiate.R'
+    'rational-extract.R'
     'rational-functions.R'
     'rational-integer-division.R'
     'rational-length.R'
