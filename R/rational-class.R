@@ -337,6 +337,8 @@ setMethod("[[<-",
   return(rational(x$getNumerator()[[i]], x$getDenominator()[[i]], "R6"))
 }
 
+#' @rdname rational-class
+#' @export
 '[[<-.rationalR6' <- function(x, i, ..., value)
 {
   if (!is.rationalR6(value))

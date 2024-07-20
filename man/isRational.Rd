@@ -6,9 +6,7 @@
 \alias{is.rationalR6}
 \alias{is.rationalS4}
 \alias{is.rational}
-\title{Is an object from class rational
-
-Test if an object is of class "rationalS3", "rationalS4", or "rationalR6"}
+\title{Is an object from class rational}
 \usage{
 is.rationalS3(e1, inherit = FALSE)
 
@@ -24,8 +22,6 @@ is.rational(e1, inherit = FALSE)
 \item{inherit}{should inheritence be checked? default=\code{FALSE}}
 }
 \description{
-Is an object from class rational
-
 Test if an object is of class "rationalS3", "rationalS4", or "rationalR6"
 }
 \note{

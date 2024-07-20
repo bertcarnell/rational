@@ -2,7 +2,6 @@
 % Please edit documentation in R/rational-add.R, R/rational-multiply.R,
 %   R/rational-divide.R, R/rational-exponentiate.R,
 %   R/rational-integer-division.R, R/rational-mod.R, R/rational-subtract.R
-\docType{methods}
 \name{rational-operators}
 \alias{rational-operators}
 \alias{+,rationalS4,rationalS4-method}

@@ -8,13 +8,12 @@ Imports:
     R6,
     methods
 License: GPL-2
-LazyData: true
 Suggests: 
     testthat,
     covr,
     knitr,
     rmarkdown
-RoxygenNote: 6.1.1
+RoxygenNote: 7.3.2
 Collate: 
     'gcd.R'
     'rational-class.R'
@@ -28,9 +27,10 @@ Collate:
     'rational-functions.R'
     'rational-integer-division.R'
     'rational-mod.R'
+    'rational-package.R'
     'rational-subtract.R'
     'rational-transformation.R'
-    'rational.R'
 URL: https://github.com/bertcarnell/rational
 BugReports: https://github.com/bertcarnell/rational/issues
 VignetteBuilder: knitr
+Encoding: UTF-8

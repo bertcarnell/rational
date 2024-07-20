@@ -1,7 +1,8 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
+NULL
 
-#' @title Is an object from class rational
+#' Is an object from class rational
 #'
 #' Test if an object is of class "rationalS3", "rationalS4", or "rationalR6"
 #'
@@ -10,7 +11,7 @@
 #' When \code{inherit==FALSE}, the the first class returned from \code{class()} is
 #' checked to be equal to "rationalXX".  When \code{inherit==TRUE}, then the
 #' \code{methods::is()} function is used.
-
+#'
 #' @param e1 object to be tested
 #' @param inherit should inheritence be checked? default=\code{FALSE}
 #'
