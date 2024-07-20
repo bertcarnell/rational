@@ -3,9 +3,6 @@
 \name{rational-class}
 \alias{rational-class}
 \alias{rational}
-\alias{length,rationalS4-method}
-\alias{length.rationalS3}
-\alias{length.rationalR6}
 \alias{[,rationalS4-method}
 \alias{[<-,rationalS4-method}
 \alias{[[,rationalS4-method}
@@ -15,6 +12,7 @@
 \alias{[[.rationalS3}
 \alias{[[<-.rationalS3}
 \alias{[.rationalR6}
+\alias{[<-.rationalR6}
 \alias{[[.rationalR6}
 \alias{[[<-.rationalR6}
 \alias{print,rationalS4-method}
@@ -24,12 +22,6 @@
 \title{Rational Number Classes}
 \usage{
 rational(n, d, method = "R6")
-
-\S4method{length}{rationalS4}(x)
-
-\method{length}{rationalS3}(x, ...)
-
-\method{length}{rationalR6}(x, ...)
 
 \S4method{[}{rationalS4}(x, i, j, ..., drop = TRUE)
 
@@ -48,6 +40,8 @@ rational(n, d, method = "R6")
 \method{[[}{rationalS3}(x, i, ...) <- value
 
 \method{[}{rationalR6}(x, i, ..., drop = TRUE)
+
+\method{[}{rationalR6}(x, i, ...) <- value
 
 \method{[[}{rationalR6}(x, i, ..., exact = TRUE)
 
@@ -70,11 +64,11 @@ rational(n, d, method = "R6")
 
 \item{x}{the rational number}
 
-\item{...}{indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.}
-
 \item{i}{index specifying elements}
 
 \item{j}{index specifying elements}
+
+\item{...}{indices specifying elements to extract or replace. Indices are numeric or character vectors or empty (missing) or NULL.}
 
 \item{drop}{For matrices and arrays. If TRUE the result is coerced to the lowest possible dimension (see the examples). This only works for extracting elements, not for the replacement. See drop for further details.}
 
@@ -131,12 +125,6 @@ on is.integer() and are not permitted
  d <- rational(3L, 7L, method="R6")
  stopifnot(d$getNumerator() == 3L && d$getDenominator() == 7L && abs(d$getValue() - 3/7) < 1E-12)
  stopifnot(class(d)[1] == "rationalR6" && is(d, "rationalR6") && is(d, "R6"))
-  a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S4")
-  stopifnot(length(a) == 3)
-  a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S3")
-  stopifnot(length(a) == 3)
-  a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "R6")
-  stopifnot(length(a) == 3)
   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S4")
   stopifnot(a[2]@n == 5L)
   stopifnot(all(a[2:3]@n == c(5,6)))

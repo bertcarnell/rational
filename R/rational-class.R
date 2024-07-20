@@ -35,14 +35,12 @@ NULL
 .rationalErrorMessage7 <- paste(.rationalError0, "only rationalR6 objects can be insterted into a rationalR6 vector")
 .rationalErrorMessage8 <- paste(.rationalError0, "only rationalS3 objects can be insterted into a rationalS3 vector")
 
-# rational number S3 class generator
-#
-# author Rob Carnell
-# param n integer numerator
-# param d integer denominator (non-zero)
-# field n integer numerator
-# field d integer denominator
-# field v numeric value
+#' rational number S3 class generator
+#'
+#' @noRd
+#' @author Rob Carnell
+#' @param n integer numerator
+#' @param d integer denominator (non-zero)
 .rationalS3 <- function(n, d)
 {
   # for consistency, integrity checks are done in the generating function
@@ -51,15 +49,16 @@ NULL
   return(ret)
 }
 
-# rational number R6 class generator
-#
-# @author Rob Carnell
-# @field n integer numerator
-# @field d integer denominator
-# @field v numeric value
-# @field initialize initialization function
-# @rdname rational-class
-# for consistency, integrity checks are done in the generating function
+#' rational number R6 class generator
+#'
+#' for consistency, integrity checks are done in the generating function
+#'
+#' @noRd
+#' @author Rob Carnell
+#' @field n integer numerator
+#' @field d integer denominator
+#' @field v numeric value
+#' @field initialize initialization function
 .rationalR6 <- R6Class("rationalR6",
                        public = list(
                          getNumerator = function() private$n,
@@ -94,12 +93,13 @@ NULL
                          v = 1L
                        ), lock_class = FALSE, lock_objects = TRUE, portable = TRUE)
 
-# rational number S4 class generator
-#
-# slot n integer numerator
-# slot d integer denominator
-# slot v numeric value
-# rdname rational-class
+#' rational number S4 class generator
+#'
+#' @noRd
+#'
+#' @slot n integer numerator
+#' @slot d integer denominator
+#' @slot v numeric value
 setClass("rationalS4", slots = c(n = "integer", d = "integer", v = "numeric"),
          valid = function(object)
          {
@@ -113,11 +113,12 @@ setClass("rationalS4", slots = c(n = "integer", d = "integer", v = "numeric"),
            else return(.rationalErrorMessage3)
          })
 
-# initialize method for the \code{rationalS4} class
-#
-# param .Object the instance of the class
-# return the initialized class object
-# rdname rational-class
+#' initialize method for the \code{rationalS4} class
+#'
+#' @noRd
+#'
+#' @param .Object the instance of the class
+#' @return the initialized class object
 setMethod("initialize", "rationalS4", function(.Object, n, d)
 {
   .Object@n <- n
@@ -176,38 +177,7 @@ rational <- function(n, d, method="R6")
   }
 }
 
-#' @rdname rational-class
-#' @examples
-#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S4")
-#'   stopifnot(length(a) == 3)
-setMethod("length",
-          "rationalS4",
-          function(x)
-          {
-            callNextMethod(x@n)
-          })
 
-#' @rdname rational-class
-#' @method length rationalS3
-#' @export
-#' @examples
-#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S3")
-#'   stopifnot(length(a) == 3)
-length.rationalS3 <- function(x, ...)
-{
-  return(length(x$n))
-}
-
-#' @rdname rational-class
-#' @method length rationalR6
-#' @export
-#' @examples
-#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "R6")
-#'   stopifnot(length(a) == 3)
-length.rationalR6 <- function(x, ...)
-{
-  return(length(x$getNumerator()))
-}
 
 #' @param x the rational number
 #' @param i index specifying elements
@@ -320,6 +290,8 @@ setMethod("[[<-",
   return(rational(x$getNumerator()[i], x$getDenominator()[i], "R6"))
 }
 
+#' @rdname rational-class
+#' @export
 '[<-.rationalR6' <- function(x, i, ..., value)
 {
   if (!is.rationalR6(value))
