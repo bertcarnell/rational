@@ -3,21 +3,9 @@
 \name{rational-class}
 \alias{rational-class}
 \alias{rational}
-\alias{print,rationalS4-method}
-\alias{show,rationalS4-method}
-\alias{print.rationalS3}
-\alias{print.rationalR6}
 \title{Rational Number Classes}
 \usage{
 rational(n, d, method = "R6")
-
-\S4method{print}{rationalS4}(x)
-
-\S4method{show}{rationalS4}(object)
-
-\method{print}{rationalS3}(x, ...)
-
-\method{print}{rationalR6}(x, ...)
 }
 \arguments{
 \item{n}{the numerator}
@@ -25,12 +13,6 @@ rational(n, d, method = "R6")
 \item{d}{the denominator}
 
 \item{method}{a length = 1 character vector.  One of "R6" (default), "S3", "S4"}
-
-\item{x}{rational object}
-
-\item{object}{the object to show}
-
-\item{...}{other arguments passed to print}
 }
 \value{
 the desired instance of the rational class

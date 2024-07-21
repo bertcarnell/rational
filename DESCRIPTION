@@ -30,6 +30,7 @@ Collate:
     'rational-length.R'
     'rational-mod.R'
     'rational-package.R'
+    'rational-print.R'
     'rational-subtract.R'
     'rational-transformation.R'
 URL: https://github.com/bertcarnell/rational
