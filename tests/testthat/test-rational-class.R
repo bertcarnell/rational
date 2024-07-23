@@ -52,6 +52,33 @@ test_that("S4 creation works", {
   expect_equal(a[1:2]@v, c(0.6, 4/6))
 })
 
+test_that("S7 creation works", {
+  a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S7")
+  expect_equal(a@n, c(3L, 5L, 6L))
+  expect_equal(a@d, c(4L, 5L, 7L))
+  expect_equal(a@v, c(3/4, 1, 6/7), tolerance = 1E-12)
+
+  # the numerator and denominator must be of equal length
+  expect_error(rational(c(3L, 4L), 5L, "S7"))
+  expect_error(rationalS7(n=c(3L, 4L), d=5L))
+  # NULL is not permitted
+  expect_error(rational(3L, 5L, NULL))
+  expect_error(rationalS7(n=NULL, d=4L))
+  expect_error(rationalS7(n=NA, d=4L))
+  expect_error(rationalS7(n=NaN, d=4L))
+  expect_error(rationalS7(n=as.integer(NA), d=4L))
+  # numerics are not permitted where integers are required
+  expect_error(rational(3, 4L, "S7"))
+  expect_error(rationalS7(n=3, d=4L))
+  # other objects like characters are not permitted
+  expect_error(rational("a", 4L, "S7"))
+  expect_error(rationalS7(n="a", d=4L))
+
+  a <- rational(3L, 4L, "S7")
+  b <- rational(3L, 4L, "S7")
+  expect_identical(a, b)
+})
+
 test_that("Other arithmetic operations", {
   a <- rational(4L, 5L, "S4")
   b <- rational(2L, 3L, "S4")
@@ -256,10 +283,12 @@ test_that("Other math functions", {
   expect_equal(length(rational(as.integer(1:10), as.integer(10:1), "R6")), 10)
 
   # operational check
-  testthat::expect_output(print(rational(1L, 2L, "S4")))
-  testthat::expect_output(show(rational(1L, 2L, "S4")))
-  testthat::expect_output(print(rational(1L, 2L, "S3")))
-  testthat::expect_output(print(rational(1L, 2L, "R6")))
+  expect_output(print(rational(1L, 2L, "S4")))
+  expect_output(show(rational(1L, 2L, "S4")))
+  expect_output(print(rational(1L, 2L, "S3")))
+  expect_output(print(rational(1L, 2L, "R6")))
+  expect_output(print(rational(1L, 2L, "S7")))
+  expect_output(show(rational(1L, 2L, "S7")))
 })
 
 testthat::test_that("Test Extract", {

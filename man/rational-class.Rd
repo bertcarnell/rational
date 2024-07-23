@@ -55,10 +55,18 @@ on is.integer() and are not permitted
  a <- rational(1L, 3L, method="S3")
  stopifnot(a$n == 1L && a$d == 3L && abs(a$v - 1/3) < 1E-12)
  stopifnot(class(a) == "rationalS3")
+
  b <- rational(2L, 5L, method="S4")
  stopifnot(b@n == 2L && b@d == 5L && abs(b@v - 2/5) < 1E-12)
  stopifnot(class(b) == "rationalS4" && isS4(b) && is(b, "rationalS4"))
+
  d <- rational(3L, 7L, method="R6")
- stopifnot(d$getNumerator() == 3L && d$getDenominator() == 7L && abs(d$getValue() - 3/7) < 1E-12)
+ stopifnot(d$getNumerator() == 3L && d$getDenominator() == 7L)
+ stopifnot(abs(d$getValue() - 3/7) < 1E-12)
  stopifnot(class(d)[1] == "rationalR6" && is(d, "rationalR6") && is(d, "R6"))
+
+ e <- rational(3L, 7L, method="S7")
+ stopifnot(e@n == 3L && e@d == 7L && abs(e@v - 3/7) < 1E-12)
+ stopifnot(class(e)[1] == "rationalS7")
+ stopifnot(is(e, "rationalS7") && is(e, "S7_object"))
 }

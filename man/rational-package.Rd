@@ -5,7 +5,7 @@
 \alias{rational-package}
 \title{A rational number class using multiple R class paradigms}
 \description{
-This package provides examples of creating rational numbers under the S3, S4, and R6 object framework.
+This package provides examples of creating rational numbers under the S3, S4, R6, and S7 object framework.
 }
 \seealso{
 Useful links:

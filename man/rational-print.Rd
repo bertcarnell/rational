@@ -6,6 +6,7 @@
 \alias{show,rationalS4-method}
 \alias{print.rationalS3}
 \alias{print.rationalR6}
+\alias{print.rationalS7}
 \title{Print an object of class Rational}
 \usage{
 \S4method{print}{rationalS4}(x)
@@ -15,6 +16,8 @@
 \method{print}{rationalS3}(x, ...)
 
 \method{print}{rationalR6}(x, ...)
+
+\method{print}{rationalS7}(x, ...)
 }
 \arguments{
 \item{x}{rational object}

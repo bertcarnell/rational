@@ -19,6 +19,7 @@
 #'
 #' @importFrom methods callGeneric callNextMethod is new show
 #' @importFrom R6 R6Class
+#' @importFrom S7 new_class new_object S7_object
 NULL
 
 # error messages
@@ -30,7 +31,7 @@ NULL
 .rationalErrorMessage2 <- paste(.rationalError0, "The denominator of the rational number must be non-zero")
 .rationalErrorMessage3 <- paste(.rationalError0, "The numerator and denominator must have equal length")
 .rationalErrorMessage4 <- paste(.rationalError0, "The method argument may only be of length 1")
-.rationalErrorMessage5 <- paste(.rationalError0, "the method must be one of S3, S4, or R6")
+.rationalErrorMessage5 <- paste(.rationalError0, "the method must be one of S3, S4, R6, or S7")
 .rationalErrorMessage6 <- paste(.rationalError0, "binary operators of rational numbers require that the numbers be the same length")
 .rationalErrorMessage7 <- paste(.rationalError0, "only rationalR6 objects can be insterted into a rationalR6 vector")
 .rationalErrorMessage8 <- paste(.rationalError0, "only rationalS3 objects can be insterted into a rationalS3 vector")
@@ -129,6 +130,38 @@ setMethod("initialize", "rationalS4", function(.Object, n, d)
   callNextMethod(.Object = .Object, n = n, d = d)
 })
 
+#' Rational number S7 class
+#'
+#' @noRd
+#'
+#' @author Rob Carnell
+#' @slot n integer numerator
+#' @slot d integer denominator
+#' @slot v numeric value
+rationalS7 <- S7::new_class("rationalS7",
+                             properties = list(
+                               n = S7::class_integer,
+                               d = S7::class_integer,
+                               v = S7::class_numeric
+                             ),
+                             validator = function(self) {
+                               if (length(self@n) != length(self@d)) {
+                                 return("@n and @d must be the same length")
+                               }
+                               if (any(is.na(self@n)) | any(is.na(self@d))) {
+                                 return("@n and @d must not be NA or NaN")
+                               }
+                             },
+                             constructor = function(.data, n, d) {
+                               stopifnot(is.integer(n), is.integer(d))
+                               stopifnot(all(d != 0L))
+                               S7::new_object(S7::S7_object, n = n, d = d, v = n / d)
+                             },
+                             parent = S7::S7_object,
+                             package = NULL
+)
+
+
 #' rational number generator for all classes
 #'
 #' generator rational number of class \code{rationalS3}, \code{rationalS4},
@@ -146,12 +179,20 @@ setMethod("initialize", "rationalS4", function(.Object, n, d)
 #'  a <- rational(1L, 3L, method="S3")
 #'  stopifnot(a$n == 1L && a$d == 3L && abs(a$v - 1/3) < 1E-12)
 #'  stopifnot(class(a) == "rationalS3")
+#'
 #'  b <- rational(2L, 5L, method="S4")
 #'  stopifnot(b@@n == 2L && b@@d == 5L && abs(b@@v - 2/5) < 1E-12)
 #'  stopifnot(class(b) == "rationalS4" && isS4(b) && is(b, "rationalS4"))
+#'
 #'  d <- rational(3L, 7L, method="R6")
-#'  stopifnot(d$getNumerator() == 3L && d$getDenominator() == 7L && abs(d$getValue() - 3/7) < 1E-12)
+#'  stopifnot(d$getNumerator() == 3L && d$getDenominator() == 7L)
+#'  stopifnot(abs(d$getValue() - 3/7) < 1E-12)
 #'  stopifnot(class(d)[1] == "rationalR6" && is(d, "rationalR6") && is(d, "R6"))
+#'
+#'  e <- rational(3L, 7L, method="S7")
+#'  stopifnot(e@@n == 3L && e@@d == 7L && abs(e@@v - 3/7) < 1E-12)
+#'  stopifnot(class(e)[1] == "rationalS7")
+#'  stopifnot(is(e, "rationalS7") && is(e, "S7_object"))
 rational <- function(n, d, method="R6")
 {
   if (!all(is.integer(n)) || !all(is.integer(d)))
@@ -171,6 +212,9 @@ rational <- function(n, d, method="R6")
   } else if (method == "S4")
   {
    return(new("rationalS4", n = n, d = d))
+  } else if (method == "S7")
+  {
+    return(rationalS7(n = n, d = d))
   } else
   {
    stop(.rationalErrorMessage5)
