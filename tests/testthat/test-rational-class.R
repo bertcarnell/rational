@@ -283,12 +283,12 @@ test_that("Other math functions", {
   expect_equal(length(rational(as.integer(1:10), as.integer(10:1), "R6")), 10)
 
   # operational check
-  expect_output(print(rational(1L, 2L, "S4")))
-  expect_output(show(rational(1L, 2L, "S4")))
-  expect_output(print(rational(1L, 2L, "S3")))
-  expect_output(print(rational(1L, 2L, "R6")))
-  expect_output(print(rational(1L, 2L, "S7")))
-  expect_output(show(rational(1L, 2L, "S7")))
+  expect_output(print(rational(1L, 2L, "S4")), '[1] "(1 / 2) = 0.5"', fixed = TRUE)
+  expect_output(show(rational(1L, 2L, "S4")), "(1 / 2) = 0.5", fixed = TRUE)
+  expect_output(print(rational(1L, 2L, "S3")), '[1] "(1 / 2) = 0.5"', fixed = TRUE)
+  expect_output(print(rational(1L, 2L, "R6")), '[1] "(1 / 2) = 0.5"', fixed = TRUE)
+  expect_output(print(rational(1L, 2L, "S7")), '[1] "(1 / 2) = 0.5"', fixed = TRUE)
+  expect_output(show(rational(1L, 2L, "S7")), "(1 / 2) = 0.5", fixed = TRUE)
 })
 
 testthat::test_that("Test Extract", {

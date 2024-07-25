@@ -67,6 +67,6 @@ on is.integer() and are not permitted
 
  e <- rational(3L, 7L, method="S7")
  stopifnot(e@n == 3L && e@d == 7L && abs(e@v - 3/7) < 1E-12)
- stopifnot(class(e)[1] == "rationalS7")
- stopifnot(is(e, "rationalS7") && is(e, "S7_object"))
+ stopifnot(class(e)[1] == "rational::rationalS7")
+ stopifnot(is(e, "rational::rationalS7") && is(e, "S7_object"))
 }

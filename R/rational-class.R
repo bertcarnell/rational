@@ -158,7 +158,7 @@ rationalS7 <- S7::new_class("rationalS7",
                                S7::new_object(S7::S7_object, n = n, d = d, v = n / d)
                              },
                              parent = S7::S7_object,
-                             package = NULL
+                             package = "rational"
 )
 
 
@@ -191,8 +191,8 @@ rationalS7 <- S7::new_class("rationalS7",
 #'
 #'  e <- rational(3L, 7L, method="S7")
 #'  stopifnot(e@@n == 3L && e@@d == 7L && abs(e@@v - 3/7) < 1E-12)
-#'  stopifnot(class(e)[1] == "rationalS7")
-#'  stopifnot(is(e, "rationalS7") && is(e, "S7_object"))
+#'  stopifnot(class(e)[1] == "rational::rationalS7")
+#'  stopifnot(is(e, "rational::rationalS7") && is(e, "S7_object"))
 rational <- function(n, d, method="R6")
 {
   if (!all(is.integer(n)) || !all(is.integer(d)))
