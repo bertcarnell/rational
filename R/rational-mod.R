@@ -1,6 +1,8 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
 #' @include rational-add.R
+#' @include rational-subtract.R
+#' @include rational-integer-division.R
 
 #' @rdname rational-operators
 #' @export

@@ -254,6 +254,24 @@ S7::method(S7_Compare, list(rational:::rationalS7, S7::class_double)) <- functio
   {
     #S7_Ops(e1, e2, ..., .Generic = .Generic)
     S7_Compare(e1, e2, ..., .Generic = .Generic)
+  } else if (.Generic == "+")
+  {
+    S7_Add(e1, e2, ..., .Generic = .Generic)
+  } else if (.Generic == "-")
+  {
+    S7_Subtract(e1, e2, ..., .Generic = .Generic)
+  } else if (.Generic == "*")
+  {
+    S7_Multiply(e1, e2, ..., .Generic = .Generic)
+  } else if (.Generic == "/")
+  {
+    S7_Divide(e1, e2, ..., .Generic = .Generic)
+  } else if (.Generic == "%/%")
+  {
+    S7_Integer_Divide(e1, e2, ..., .Generic = .Generic)
+  } else if (.Generic == "%%")
+  {
+    return(e1 - e2 * e1 %/% e2)
   } else if (.Generic %in% methods::getGroupMembers("Arith")) {
     S7_Ops(e1, e2, ..., .Generic = .Generic)
   } else {

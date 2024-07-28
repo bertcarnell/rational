@@ -1,5 +1,6 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
+#' @include rational-group-generics.R
 
 #' @title Rational Number Arithmetic
 #'
@@ -235,3 +236,26 @@ setMethod("+", c("rationalS4", "numeric"), function(e1, e2)
   private$v <- private$n / private$d
   return(self)
 })
+
+S7::method(S7_Add, list(rational:::rationalS7, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  res <- .rationalAddRational(e1@n, e1@d, e2@n, e2@d)
+  return(rationalS7(n = res$n, d = res$d))
+}
+
+S7::method(S7_Add, list(S7::class_integer, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  res <- .rationalAddInteger(e2@n, e2@d, e1)
+  return(rationalS7(n = res$n, d = res$d))
+}
+
+S7::method(S7_Add, list(rational:::rationalS7, S7::class_integer)) <- function(e1, e2, ..., .Generic) {
+  res <- .rationalAddInteger(e1@n, e1@d, e2)
+  return(rationalS7(n = res$n, d = res$d))
+}
+
+S7::method(S7_Add, list(S7::class_double, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  .rationalAddNumeric(e2@n, e2@d, e1)
+}
+
+S7::method(S7_Add, list(rational:::rationalS7, S7::class_double)) <- function(e1, e2, ..., .Generic) {
+  .rationalAddNumeric(e1@n, e1@d, e2)
+}

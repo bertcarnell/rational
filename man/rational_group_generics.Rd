@@ -5,6 +5,7 @@
 \alias{S7_Math}
 \alias{S7_Ops}
 \alias{S7_Compare}
+\alias{S7_Add}
 \alias{Math.S7_object}
 \alias{find_base_generic}
 \title{Ratinoal Group Generics}
@@ -17,6 +18,8 @@ S7_Math(x, ..., .Generic)
 S7_Ops(e1, e2, ..., .Generic)
 
 S7_Compare(e1, e2, ..., .Generic)
+
+S7_Add(e1, e2, ..., .Generic)
 
 \method{Math}{S7_object}(x, ...)
 

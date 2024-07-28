@@ -1,6 +1,7 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
 #' @include rational-add.R
+#' @include rational-group-generics.R
 
 .rationalIntDivRational <- function(n1, d1, n2, d2) (n1 * d2) %/% (n2 * d1)
 .integerIntDivRational <- function(i1, n2, d2) (i1 * d2) %/% n2
@@ -150,3 +151,22 @@ setMethod("%/%", signature = c("rationalS4", "numeric"),
   }
 }
 
+S7::method(S7_Integer_Divide, list(rational:::rationalS7, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  .rationalIntDivRational(e1@n, e1@d, e2@n, e2@d)
+}
+
+S7::method(S7_Integer_Divide, list(S7::class_integer, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  .integerIntDivRational(e1, e2@n, e2@d)
+}
+
+S7::method(S7_Integer_Divide, list(rational:::rationalS7, S7::class_integer)) <- function(e1, e2, ..., .Generic) {
+  .rationalIntDivInteger(e1@n, e1@d, e2)
+}
+
+S7::method(S7_Integer_Divide, list(S7::class_double, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  .numericIntDivRational(e1, e2@v)
+}
+
+S7::method(S7_Integer_Divide, list(rational:::rationalS7, S7::class_double)) <- function(e1, e2, ..., .Generic) {
+  .rationalIntDivNumeric(e1@v, e2)
+}

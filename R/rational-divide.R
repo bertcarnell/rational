@@ -204,3 +204,26 @@ setMethod("/", c("rationalS4", "numeric"), function(e1, e2)
   private$v <- private$n / private$d
   return(self)
 })
+
+S7::method(S7_Divide, list(rational:::rationalS7, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  res <- .rationalMultiplyRational(e1@n, e1@d, e2@d, e2@n)
+  return(rationalS7(n = res$n, d = res$d))
+}
+
+S7::method(S7_Divide, list(S7::class_integer, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  res <- .rationalMultiplyInteger(e2@d, e2@n, e1)
+  return(rationalS7(n = res$n, d = res$d))
+}
+
+S7::method(S7_Divide, list(rational:::rationalS7, S7::class_integer)) <- function(e1, e2, ..., .Generic) {
+  res <- .rationalMultiplyInteger(e1@n, e1@d*e2, 1L)
+  return(rationalS7(n = res$n, d = res$d))
+}
+
+S7::method(S7_Divide, list(S7::class_double, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  .rationalMultiplyNumeric(e2@d, e2@n, e1)
+}
+
+S7::method(S7_Divide, list(rational:::rationalS7, S7::class_double)) <- function(e1, e2, ..., .Generic) {
+  .rationalMultiplyNumeric(e1@n, e1@d, 1.0/e2)
+}

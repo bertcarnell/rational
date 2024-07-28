@@ -48,6 +48,28 @@ S7_Compare <- S7::new_generic("S7_Compare", c("e1", "e2"), function(e1, e2, ...,
   S7::S7_dispatch()
 })
 
+#' @export
+#' @rdname rational_group_generics
+S7_Add <- S7::new_generic("S7_Add", c("e1", "e2"), function(e1, e2, ..., .Generic) {
+  S7::S7_dispatch()
+})
+
+S7_Subtract <- S7::new_generic("S7_Subtract", c("e1", "e2"), function(e1, e2, ..., .Generic) {
+  S7::S7_dispatch()
+})
+
+S7_Multiply <- S7::new_generic("S7_Multiply", c("e1", "e2"), function(e1, e2, ..., .Generic) {
+  S7::S7_dispatch()
+})
+
+S7_Divide <- S7::new_generic("S7_Divide", c("e1", "e2"), function(e1, e2, ..., .Generic) {
+  S7::S7_dispatch()
+})
+
+S7_Integer_Divide <- S7::new_generic("S7_Integer_Divide", c("e1", "e2"), function(e1, e2, ..., .Generic) {
+  S7::S7_dispatch()
+})
+
 #@export
 # @rdname S7_group_generics
 #S7_Complex <- S7::new_generic("Complex", "z", function(z, ..., .Generic) {
