@@ -6,7 +6,6 @@
 \alias{S7_Ops}
 \alias{S7_Compare}
 \alias{S7_Add}
-\alias{Math.S7_object}
 \alias{find_base_generic}
 \title{Ratinoal Group Generics}
 \source{
@@ -21,14 +20,12 @@ S7_Compare(e1, e2, ..., .Generic)
 
 S7_Add(e1, e2, ..., .Generic)
 
-\method{Math}{S7_object}(x, ...)
-
 find_base_generic(.Generic)
 }
 \arguments{
-\item{x, z, e1, e2}{Objects used for dispatch.}
+\item{x, e1, e2}{Objects used for dispatch.}
 
-\item{..., na.rm}{Additional arguments passed to methods.}
+\item{...}{Additional arguments passed to methods.}
 
 \item{.Generic}{The name of the generic being dispatched on, i.e. if you've
   defined a method for `S7_Math` and the user calls `abs()` then `.Generic`

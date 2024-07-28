@@ -7,8 +7,8 @@
 #' when you call `abs()`, `sign()`, `sqrt()`, and many other similar generics
 #' (see below for a complete list).
 #'
-#' @param x,z,e1,e2 Objects used for dispatch.
-#' @param ...,na.rm Additional arguments passed to methods.
+#' @param x,e1,e2 Objects used for dispatch.
+#' @param ... Additional arguments passed to methods.
 #' @param .Generic The name of the generic being dispatched on, i.e. if you've
 #'   defined a method for `S7_Math` and the user calls `abs()` then `.Generic`
 #'   will be `"abs"`.
@@ -73,29 +73,6 @@ S7_Integer_Divide <- S7::new_generic("S7_Integer_Divide", c("e1", "e2"), functio
 S7_Exponent <- S7::new_generic("S7_Exponent", c("e1", "e2"), function(e1, e2, ..., .Generic) {
   S7::S7_dispatch()
 })
-
-#@export
-# @rdname S7_group_generics
-#S7_Complex <- S7::new_generic("Complex", "z", function(z, ..., .Generic) {
-#   S7::S7_dispatch()
-# })
-
-# @export
-# @rdname S7_group_generics
-#S7_Summary <- S7::new_generic("Complex", "z", function(z, ..., .Generic) {
-#   S7::S7_dispatch()
-# })
-
-#' @export
-#' @rdname rational_group_generics
-Math.S7_object <- function(x, ...) {
-  tryCatch(
-    return(S7_Math(x, ..., .Generic = .Generic)),
-    S7_error_method_not_found = function(cnd) NULL
-  )
-
-  NextMethod()
-}
 
 #' @export
 #' @rdname rational_group_generics

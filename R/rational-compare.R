@@ -185,10 +185,6 @@ Ops.rationalR6 <- function(e1, e2)
 # methods::getGroupMembers("Compare")
 # S7:::base_ops # version 0.1.1 attempt at this
 
-# @rdname rational-compare
-# @usage \method{Compare}{rationalS7,rationalS7}(e1, e2)
-# @name rationalS7_gt
-
 S7::method(S7_Compare, list(rational:::rationalS7, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
  .Generic <- find_base_generic(.Generic)
  .compare(e1@n, e1@d, e2@n, e2@d, .Generic)
@@ -275,7 +271,7 @@ S7::method(S7_Compare, list(rational:::rationalS7, S7::class_double)) <- functio
   } else if (.Generic == "%%")
   {
     return(e1 - e2 * e1 %/% e2)
-  } else if (.Generic %in% methods.getGroupMembers("Logic")) {
+  } else if (.Generic %in% methods::getGroupMembers("Logic")) {
     .Generic <- find_base_generic(.Generic)
     .Generic(e1 > 0L, e2 > 0L)
   } else {

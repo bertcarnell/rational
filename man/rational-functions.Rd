@@ -5,40 +5,52 @@
 \alias{Math,rationalS4-method}
 \alias{Math.rationalS3}
 \alias{Math.rationalR6}
+\alias{Math.rational::rationalS7}
 \alias{Math2,rationalS4-method}
 \alias{abs,rationalS4-method}
 \alias{abs.rationalS3}
 \alias{abs.rationalR6}
+\alias{abs.rational::rationalS7}
 \alias{log,rationalS4-method}
 \alias{log.rationalS3}
 \alias{log.rationalR6}
+\alias{log.rational::rationalS7}
 \alias{log10,rationalS4-method}
 \alias{log10.rationalS3}
 \alias{log10.rationalR6}
+\alias{log10.rational::rationalS7}
 \alias{logb,rationalS4-method}
 \alias{logb.rationalS3}
 \alias{logb.rationalR6}
+\alias{logb.rational::rationalS7}
 \alias{log2,rationalS4-method}
 \alias{log2.rationalS3}
 \alias{log2.rationalR6}
+\alias{log2.rational::rationalS7}
 \alias{gamma,rationalS4-method}
 \alias{gamma.rationalS3}
 \alias{gamma.rationalR6}
+\alias{gamma.rational::rationalS7}
 \alias{max,rationalS4-method}
 \alias{max.rationalS3}
 \alias{max.rationalR6}
+\alias{max.rational::rationalS7}
 \alias{min,rationalS4-method}
 \alias{min.rationalS3}
 \alias{min.rationalR6}
+\alias{min.rational::rationalS7}
 \alias{range,rationalS4-method}
 \alias{range.rationalS3}
 \alias{range.rationalR6}
+\alias{range.rational::rationalS7}
 \alias{prod,rationalS4-method}
 \alias{prod.rationalS3}
 \alias{prod.rationalR6}
+\alias{prod.rational::rationalS7}
 \alias{sum,rationalS4-method}
 \alias{sum.rationalS3}
 \alias{sum.rationalR6}
+\alias{sum.rational::rationalS7}
 \title{Functions of Rational Numbers}
 \usage{
 \S4method{Math}{rationalS4}(x)
@@ -46,6 +58,8 @@
 \method{Math}{rationalS3}(x, ...)
 
 \method{Math}{rationalR6}(x, ...)
+
+\method{Math}{`rational::rationalS7`}(x, ...)
 
 \S4method{Math2}{rationalS4}(x)
 
@@ -55,11 +69,15 @@
 
 \method{abs}{rationalR6}(x)
 
+\method{abs}{`rational::rationalS7`}(x)
+
 \S4method{log}{rationalS4}(x, base = exp(1))
 
 \method{log}{rationalS3}(x, base = exp(1))
 
 \method{log}{rationalR6}(x, base = exp(1))
+
+\method{log}{`rational::rationalS7`}(x, base = exp(1))
 
 \S4method{log10}{rationalS4}(x)
 
@@ -67,11 +85,15 @@
 
 \method{log10}{rationalR6}(x)
 
+\method{log10}{`rational::rationalS7`}(x)
+
 \S4method{logb}{rationalS4}(x, base = exp(1))
 
 logb.rationalS3(x, base = exp(1))
 
 logb.rationalR6(x, base = exp(1))
+
+`logb.rational::rationalS7`(x, base = exp(1))
 
 \S4method{log2}{rationalS4}(x)
 
@@ -79,11 +101,15 @@ logb.rationalR6(x, base = exp(1))
 
 \method{log2}{rationalR6}(x)
 
+\method{log2}{`rational::rationalS7`}(x)
+
 \S4method{gamma}{rationalS4}(x)
 
 \method{gamma}{rationalS3}(x)
 
 \method{gamma}{rationalR6}(x)
+
+\method{gamma}{`rational::rationalS7`}(x)
 
 \S4method{max}{rationalS4}(x, ..., na.rm = FALSE)
 
@@ -91,11 +117,15 @@ logb.rationalR6(x, base = exp(1))
 
 \method{max}{rationalR6}(..., na.rm = FALSE)
 
+\method{max}{`rational::rationalS7`}(..., na.rm = FALSE)
+
 \S4method{min}{rationalS4}(x, ..., na.rm = FALSE)
 
 \method{min}{rationalS3}(..., na.rm = FALSE)
 
 \method{min}{rationalR6}(..., na.rm = FALSE)
+
+\method{min}{`rational::rationalS7`}(..., na.rm = FALSE)
 
 \S4method{range}{rationalS4}(x, ..., na.rm = FALSE)
 
@@ -103,17 +133,23 @@ logb.rationalR6(x, base = exp(1))
 
 \method{range}{rationalR6}(..., na.rm = FALSE)
 
+\method{range}{`rational::rationalS7`}(..., na.rm = FALSE)
+
 \S4method{prod}{rationalS4}(x, ..., na.rm = FALSE)
 
 \method{prod}{rationalS3}(..., na.rm = FALSE)
 
 \method{prod}{rationalR6}(..., na.rm = FALSE)
 
+\method{prod}{`rational::rationalS7`}(..., na.rm = FALSE)
+
 \S4method{sum}{rationalS4}(x, ..., na.rm = FALSE)
 
 \method{sum}{rationalS3}(..., na.rm = FALSE)
 
 \method{sum}{rationalR6}(..., na.rm = FALSE)
+
+\method{sum}{`rational::rationalS7`}(..., na.rm = FALSE)
 }
 \arguments{
 \item{x}{rational numbers}
@@ -132,6 +168,7 @@ floor(rational(5L, 2L, "S4"))
 sign(rational(-1L, 2L, "S4"))
 exp(rational(1L, 3L, "S3"))
 exp(rational(1L, 3L, "R6"))
+exp(rational(1L, 3L, "S7"))
 round(rational(5L, 2L, "S4"), 0)
 x <- abs(rational(-2L, 3L, "S4"))
 stopifnot("rationalS4" \%in\% class(x))
@@ -139,34 +176,46 @@ x <- abs(rational(-2L, 3L, "S3"))
 stopifnot("rationalS3" \%in\% class(x))
 x <- abs(rational(-2L, 3L, "R6"))
 stopifnot("rationalR6" \%in\% class(x))
+x <- abs(rational(-2L, 3L, "S7"))
+stopifnot("rational::rationalS7" \%in\% class(x))
 log(rational(2L, 5L, "S4"))
 log(rational(2L, 5L, "S3"))
 log(rational(2L, 5L, "R6"))
+log(rational(2L, 5L, "S7"))
 log10(rational(2L, 5L, "S4"))
 log10(rational(2L, 5L, "S3"))
 log10(rational(2L, 5L, "R6"))
+log10(rational(2L, 5L, "S7"))
 logb(rational(2L, 5L, "S4"), base = 5)
 logb(rational(2L, 5L, "S3"), base = 5)
 logb(rational(2L, 5L, "R6"), base = 5)
+logb(rational(2L, 5L, "S7"), base = 5)
 log2(rational(2L, 5L, "S4"))
 log2(rational(2L, 5L, "S3"))
 log2(rational(2L, 5L, "R6"))
+log2(rational(2L, 5L, "S7"))
 gamma(rational(2L, 5L, "S4"))
 gamma(rational(2L, 5L, "S3"))
 gamma(rational(2L, 5L, "R6"))
+gamma(rational(2L, 5L, "S7"))
 max(rational(c(2L, 3L), c(5L, 1L), "S4"))
 max(rational(c(2L, 3L), c(5L, 1L), "S3"))
 max(rational(c(2L, 3L), c(5L, 1L), "R6"))
+max(rational(c(2L, 3L), c(5L, 1L), "S7"))
 min(rational(c(2L, 3L), c(5L, 1L), "S4"))
 min(rational(c(2L, 3L), c(5L, 1L), "S3"))
 min(rational(c(2L, 3L), c(5L, 1L), "R6"))
+min(rational(c(2L, 3L), c(5L, 1L), "S7"))
 range(rational(c(2L, 3L), c(5L, 1L), "S4"))
 range(rational(c(2L, 3L), c(5L, 1L), "S3"))
 range(rational(c(2L, 3L), c(5L, 1L), "R6"))
+range(rational(c(2L, 3L), c(5L, 1L), "S7"))
 prod(rational(c(2L, 3L), c(5L, 1L), "S4"))
 prod(rational(c(2L, 3L), c(5L, 1L), "S3"))
 prod(rational(c(2L, 3L), c(5L, 1L), "R6"))
+prod(rational(c(2L, 3L), c(5L, 1L), "S7"))
 sum(rational(c(2L, 3L), c(5L, 1L), "S4"))
 sum(rational(c(2L, 3L), c(5L, 1L), "S3"))
 sum(rational(c(2L, 3L), c(5L, 1L), "R6"))
+sum(rational(c(2L, 3L), c(5L, 1L), "S7"))
 }

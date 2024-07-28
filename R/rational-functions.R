@@ -43,6 +43,15 @@ Math.rationalR6 <- function(x, ...)
 #' @rdname rational-functions
 #' @export
 #' @examples
+#' exp(rational(1L, 3L, "S7"))
+'Math.rational::rationalS7' <- function(x, ...)
+{
+  get(.Generic)(x@v, ...)
+}
+
+#' @rdname rational-functions
+#' @export
+#' @examples
 #' round(rational(5L, 2L, "S4"), 0)
 setMethod("Math2", signature = c("rationalS4"),
   function(x)
@@ -86,6 +95,16 @@ abs.rationalS3 <- function(x)
 abs.rationalR6 <- function(x)
 {
   .rational_abs(x$getNumerator(), x$getDenominator(), "R6")
+}
+
+#' @rdname rational-functions
+#' @export
+#' @examples
+#' x <- abs(rational(-2L, 3L, "S7"))
+#' stopifnot("rational::rationalS7" %in% class(x))
+'abs.rational::rationalS7' <- function(x)
+{
+  .rational_abs(x@n, x@d, "S7")
 }
 
 .rational_log <- function(n, d, base)
@@ -132,6 +151,15 @@ log.rationalR6 <- function(x, base = exp(1))
 #' @rdname rational-functions
 #' @export
 #' @examples
+#' log(rational(2L, 5L, "S7"))
+'log.rational::rationalS7' <- function(x, base = exp(1))
+{
+  .rational_log(x@n, x@d, base = base)
+}
+
+#' @rdname rational-functions
+#' @export
+#' @examples
 #' log10(rational(2L, 5L, "S4"))
 setMethod("log10", signature = c("rationalS4"),
   function(x)
@@ -156,6 +184,15 @@ log10.rationalS3 <- function(x)
 log10.rationalR6 <- function(x)
 {
   .rational_log(x$getNumerator(), x$getDenominator(), 10)
+}
+
+#' @rdname rational-functions
+#' @export
+#' @examples
+#' log10(rational(2L, 5L, "S7"))
+'log10.rational::rationalS7' <- function(x)
+{
+  .rational_log(x@n, x@d, 10)
 }
 
 setGeneric("logb")
@@ -193,6 +230,15 @@ logb.rationalR6 <- function(x, base = exp(1))
 #' @rdname rational-functions
 #' @export
 #' @examples
+#' logb(rational(2L, 5L, "S7"), base = 5)
+'logb.rational::rationalS7' <- function(x, base = exp(1))
+{
+  .rational_log(x@n, x@d, base = base)
+}
+
+#' @rdname rational-functions
+#' @export
+#' @examples
 #' log2(rational(2L, 5L, "S4"))
 setMethod("log2", signature = c("rationalS4"),
   function(x)
@@ -217,6 +263,15 @@ log2.rationalS3 <- function(x)
 log2.rationalR6 <- function(x)
 {
   .rational_log(x$getNumerator(), x$getDenominator(), 2)
+}
+
+#' @rdname rational-functions
+#' @export
+#' @examples
+#' log2(rational(2L, 5L, "S7"))
+'log2.rational::rationalS7' <- function(x)
+{
+  .rational_log(x@n, x@d, 2)
 }
 
 #' @rdname rational-functions
@@ -261,6 +316,15 @@ gamma.rationalS3 <- function(x)
 gamma.rationalR6 <- function(x)
 {
   gamma(x$getValue())
+}
+
+#' @rdname rational-functions
+#' @export
+#' @examples
+#' gamma(rational(2L, 5L, "S7"))
+'gamma.rational::rationalS7' <- function(x)
+{
+  gamma(x@v)
 }
 
 .rational_max <- function(n, d, v, na.rm = FALSE, rational_type = "S4")
@@ -331,6 +395,19 @@ max.rationalR6 <- function(..., na.rm = FALSE)
 #' @rdname rational-functions
 #' @export
 #' @examples
+#' max(rational(c(2L, 3L), c(5L, 1L), "S7"))
+'max.rational::rationalS7' <- function(..., na.rm = FALSE)
+{
+  args_ <- list(...)
+  n <- sapply(args_, function(z) z@n, USE.NAMES = FALSE)
+  d <- sapply(args_, function(z) z@d, USE.NAMES = FALSE)
+  v <- sapply(args_, function(z) z@v, USE.NAMES = FALSE)
+  .rational_max(n, d, v, na.rm = na.rm, "S7")
+}
+
+#' @rdname rational-functions
+#' @export
+#' @examples
 #' min(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("min", signature = c(x = "rationalS4"),
   function(x, ..., na.rm=FALSE)
@@ -380,6 +457,19 @@ min.rationalR6 <- function(..., na.rm = FALSE)
 #' @rdname rational-functions
 #' @export
 #' @examples
+#' min(rational(c(2L, 3L), c(5L, 1L), "S7"))
+'min.rational::rationalS7' <- function(..., na.rm = FALSE)
+{
+  args_ <- list(...)
+  n <- sapply(args_, function(z) z@n, USE.NAMES = FALSE)
+  d <- sapply(args_, function(z) z@d, USE.NAMES = FALSE)
+  v <- sapply(args_, function(z) z@v, USE.NAMES = FALSE)
+  .rational_min(n, d, v, na.rm = na.rm, "S7")
+}
+
+#' @rdname rational-functions
+#' @export
+#' @examples
 #' range(rational(c(2L, 3L), c(5L, 1L), "S4"))
 setMethod("range", signature = c("rationalS4"),
   function(x, ..., na.rm=FALSE)
@@ -402,6 +492,15 @@ range.rationalS3 <- function(..., na.rm = FALSE)
 #' @examples
 #' range(rational(c(2L, 3L), c(5L, 1L), "R6"))
 range.rationalR6 <- function(..., na.rm = FALSE)
+{
+  list(min(..., na.rm = na.rm), max(..., na.rm = na.rm))
+}
+
+#' @rdname rational-functions
+#' @export
+#' @examples
+#' range(rational(c(2L, 3L), c(5L, 1L), "S7"))
+'range.rational::rationalS7' <- function(..., na.rm = FALSE)
 {
   list(min(..., na.rm = na.rm), max(..., na.rm = na.rm))
 }
@@ -465,6 +564,18 @@ prod.rationalR6 <- function(..., na.rm  = FALSE)
   .rational_prod(n, d, na.rm, "R6")
 }
 
+#' @rdname rational-functions
+#' @export
+#' @examples
+#' prod(rational(c(2L, 3L), c(5L, 1L), "S7"))
+'prod.rational::rationalS7' <- function(..., na.rm = FALSE)
+{
+  args_ <- list(...)
+  n <- sapply(args_, function(z) z@n, USE.NAMES = FALSE)
+  d <- sapply(args_, function(z) z@d, USE.NAMES = FALSE)
+  .rational_prod(n, d, na.rm, "S7")
+}
+
 .rational_sum <- function(n, d, na.rm = FALSE, rational_type = "S4")
 {
   d_ <- prod(d, na.rm = na.rm)
@@ -523,4 +634,16 @@ sum.rationalR6 <- function(..., na.rm = FALSE)
   n <- sapply(args_, function(z) z$getNumerator(), USE.NAMES = FALSE)
   d <- sapply(args_, function(z) z$getDenominator(), USE.NAMES = FALSE)
   .rational_sum(n, d, na.rm, "R6")
+}
+
+#' @rdname rational-functions
+#' @export
+#' @examples
+#' sum(rational(c(2L, 3L), c(5L, 1L), "S7"))
+'sum.rational::rationalS7' <- function(..., na.rm = FALSE)
+{
+  args_ <- list(...)
+  n <- sapply(args_, function(z) z@n, USE.NAMES = FALSE)
+  d <- sapply(args_, function(z) z@d, USE.NAMES = FALSE)
+  .rational_sum(n, d, na.rm, "S7")
 }
