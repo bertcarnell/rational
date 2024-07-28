@@ -87,20 +87,17 @@ show.rationalR6 <- function(object)
 }
 
 #' @rdname rational-print
-#' @rawNamespace S3method("print", "rational::rationalS7", "print.rationalS7")
-#' @usage print(x, \dots)
-#' @aliases print
+#' @method print rational::rationalS7
 #' @export
-# Similar to print.S7_object in https://github.com/RConsortium/S7/blob/main/R/class.R
-print.rationalS7 <- function(x, ...)
+'print.rational::rationalS7' <- function(x, ...)
 {
   .printRational(x@n, x@d, x@v)
 }
 
 #' @rdname rational-print
-#' @rawNamespace S3method("show", "rational::rationalS7", "show.rationalS7")
+#' @exportS3Method methods::show
 #' @export
-show.rationalS7 <- function(object)
+'show.rational::rationalS7' <- function(object)
 {
   .catRational(object@n, object@d, object@v)
 }

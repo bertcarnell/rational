@@ -21,6 +21,7 @@ Collate:
     'isRational.R'
     'rat.R'
     'rational-add.R'
+    'rational-group-generics.R'
     'rational-compare.R'
     'rational-multiply.R'
     'rational-divide.R'

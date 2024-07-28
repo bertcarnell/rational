@@ -9,6 +9,7 @@
 \alias{Compare,rationalS4,rationalS4-method}
 \alias{Ops.rationalS3}
 \alias{Ops.rationalR6}
+\alias{Ops.rational::rationalS7}
 \title{Rational Number Comparisons}
 \usage{
 \S4method{Compare}{rationalS4,numeric}(e1, e2)
@@ -24,14 +25,26 @@
 \method{Ops}{rationalS3}(e1, e2)
 
 \method{Ops}{rationalR6}(e1, e2)
+
+\method{Ops}{`rational::rationalS7`}(e1, e2, ...)
 }
 \arguments{
 \item{e1}{rational numbers, integers, or numerics}
 
 \item{e2}{rational numbers, integers, or numerics}
+
+\item{...}{Additional arguments}
 }
 \description{
 Rational Number Comparisons
+}
+\note{
+Dispatch happens in 3 steps
+\itemize{
+\item 1. Ops.rational::rationalS7
+\item 2. S7_Ops generic
+\item 3. rationalS7 method for S7_Ops with the right signature
+}
 }
 \examples{
 a <- rational(1L, 3L, "S3")
@@ -58,6 +71,28 @@ stopifnot(a <= e)
 stopifnot(!(a >= e))
 a <- rational(1L, 3L, "R6")
 b <- rational(3L, 4L, "R6")
+d <- 3L
+e <-  20.1
+stopifnot(a != b)
+stopifnot(!(a == b))
+stopifnot(a < b)
+stopifnot(!(a > b))
+stopifnot(a <= b)
+stopifnot(!(a >= b))
+stopifnot(a != d)
+stopifnot(!(a == d))
+stopifnot(a < d)
+stopifnot(!(a > d))
+stopifnot(a <= d)
+stopifnot(!(a >= d))
+stopifnot(a != e)
+stopifnot(!(a == e))
+stopifnot(a < e)
+stopifnot(!(a > e))
+stopifnot(a <= e)
+stopifnot(!(a >= e))
+a <- rational(1L, 3L, "S7")
+b <- rational(3L, 4L, "S7")
 d <- 3L
 e <-  20.1
 stopifnot(a != b)

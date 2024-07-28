@@ -1,11 +1,13 @@
 # include the rational-class.R so that it is loaded first
 #' @include rational-class.R
 #' @include isRational.R
+#' @include rational-group-generics.R
 
 #' @title Rational Number Comparisons
 #'
 #' @param e1 rational numbers, integers, or numerics
 #' @param e2 rational numbers, integers, or numerics
+#' @param ... Additional arguments
 #' @importMethodsFrom methods Compare
 #' @name rational-compare
 NULL
@@ -177,5 +179,84 @@ Ops.rationalR6 <- function(e1, e2)
   } else
   {
     stop("Comparisons are only valid between rationalS3, integers, and numerics")
+  }
+}
+
+# methods::getGroupMembers("Compare")
+# S7:::base_ops # version 0.1.1 attempt at this
+
+# @rdname rational-compare
+# @usage \method{Compare}{rationalS7,rationalS7}(e1, e2)
+# @name rationalS7_gt
+
+S7::method(S7_Compare, list(rational:::rationalS7, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+ .Generic <- find_base_generic(.Generic)
+ .compare(e1@n, e1@d, e2@n, e2@d, .Generic)
+}
+
+S7::method(S7_Compare, list(S7::class_integer, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  .Generic <- find_base_generic(.Generic)
+  .compare(e1, 1L, e2@n, e2@d, .Generic)
+}
+
+S7::method(S7_Compare, list(rational:::rationalS7, S7::class_integer)) <- function(e1, e2, ..., .Generic) {
+  .Generic <- find_base_generic(.Generic)
+  .compare(e1@n, e1@d, e2, 1L, .Generic)
+}
+
+S7::method(S7_Compare, list(S7::class_double, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  .Generic <- find_base_generic(.Generic)
+  .Generic(e1, e2@v)
+}
+
+S7::method(S7_Compare, list(rational:::rationalS7, S7::class_double)) <- function(e1, e2, ..., .Generic) {
+  .Generic <- find_base_generic(.Generic)
+  .Generic(e1@v, e2)
+}
+
+#' @rdname rational-compare
+#' @export
+#'
+#' @importFrom methods getGroupMembers
+#'
+#' @note Dispatch happens in 3 steps
+#' \itemize{
+#' \item 1. Ops.rational::rationalS7
+#' \item 2. S7_Ops generic
+#' \item 3. rationalS7 method for S7_Ops with the right signature
+#' }
+#'
+#' @examples
+#' a <- rational(1L, 3L, "S7")
+#' b <- rational(3L, 4L, "S7")
+#' d <- 3L
+#' e <-  20.1
+#' stopifnot(a != b)
+#' stopifnot(!(a == b))
+#' stopifnot(a < b)
+#' stopifnot(!(a > b))
+#' stopifnot(a <= b)
+#' stopifnot(!(a >= b))
+#' stopifnot(a != d)
+#' stopifnot(!(a == d))
+#' stopifnot(a < d)
+#' stopifnot(!(a > d))
+#' stopifnot(a <= d)
+#' stopifnot(!(a >= d))
+#' stopifnot(a != e)
+#' stopifnot(!(a == e))
+#' stopifnot(a < e)
+#' stopifnot(!(a > e))
+#' stopifnot(a <= e)
+#' stopifnot(!(a >= e))
+'Ops.rational::rationalS7' <- function(e1, e2, ...) {
+  if (.Generic %in% methods::getGroupMembers("Compare"))
+  {
+    #S7_Ops(e1, e2, ..., .Generic = .Generic)
+    S7_Compare(e1, e2, ..., .Generic = .Generic)
+  } else if (.Generic %in% methods::getGroupMembers("Arith")) {
+    S7_Ops(e1, e2, ..., .Generic = .Generic)
+  } else {
+    stop(paste0("Function ", .Generic, " not available for class rationalS7"))
   }
 }

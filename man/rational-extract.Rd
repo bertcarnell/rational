@@ -14,6 +14,10 @@
 \alias{[<-.rationalR6}
 \alias{[[.rationalR6}
 \alias{[[<-.rationalR6}
+\alias{[.rational::rationalS7}
+\alias{[<-.rational::rationalS7}
+\alias{[[.rational::rationalS7}
+\alias{[[<-.rational::rationalS7}
 \title{Extract from a rational vector}
 \usage{
 \S4method{[}{rationalS4}(x, i, j, ..., drop = TRUE)
@@ -39,6 +43,14 @@
 \method{[[}{rationalR6}(x, i, ..., exact = TRUE)
 
 \method{[[}{rationalR6}(x, i, ...) <- value
+
+\method{[}{`rational::rationalS7`}(x, i, ..., drop = TRUE)
+
+\method{[}{`rational::rationalS7`}(x, i, j, ...) <- value
+
+\method{[[}{`rational::rationalS7`}(x, i, j, ..., drop)
+
+\method{[[}{`rational::rationalS7`}(x, i, j, ...) <- value
 }
 \arguments{
 \item{x}{the rational number}

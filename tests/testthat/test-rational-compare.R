@@ -88,3 +88,34 @@ testthat::test_that("Test R6", {
 
   expect_error(a == "test")
 })
+
+testthat::test_that("Test S7", {
+  a <- rational(1L, 3L, "S7")
+  b <- rational(3L, 4L, "S7")
+  d <- 3L
+  e <-  20.1
+  expect_true(a != b)
+  expect_true(!(a == b))
+  expect_true(a < b)
+  expect_true(!(a > b))
+  expect_true(a <= b)
+  expect_true(!(a >= b))
+  expect_true(a != d)
+  expect_true(!(a == d))
+  expect_true(a < d)
+  expect_true(!(a > d))
+  expect_true(a <= d)
+  expect_true(!(a >= d))
+  expect_true(a != e)
+  expect_true(!(a == e))
+  expect_true(a < e)
+  expect_true(!(a > e))
+  expect_true(a <= e)
+  expect_true(!(a >= e))
+
+  expect_true(d != a)
+
+  expect_error(rational(c(1L, 2L), c(3L, 5L), "S7") == rational(6L, 7L, "S7"))
+
+  expect_error(a == "test")
+})

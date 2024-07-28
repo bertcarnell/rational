@@ -150,3 +150,36 @@ setMethod("[[<-",
   x$assign_at(i, value)
   return(x)
 }
+
+#' @rdname rational-extract
+#' @export
+'[.rational::rationalS7' <- function(x, i, ..., drop = TRUE)
+{
+  return(rational(x@n[i], x@d[i], "S7"))
+}
+
+#' @rdname rational-extract
+#' @export
+'[<-.rational::rationalS7' <- function(x, i, j, ..., value) {
+  n <- x@n
+  d <- x@d
+  n[i] <- value@n
+  d[i] <- value@d
+  return(rational(n = n, d = d, "S7"))
+}
+
+#' @rdname rational-extract
+#' @export
+'[[.rational::rationalS7' <- function(x, i, j, ..., drop) {
+  rational(x@n[[i]], x@d[[i]], "S7")
+}
+
+#' @rdname rational-extract
+#' @export
+'[[<-.rational::rationalS7' <- function(x, i, j, ..., value) {
+  n <- x@n
+  d <- x@d
+  n[[i]] <- value@n
+  d[[i]] <- value@d
+  return(rational(n = n, d = d, "S7"))
+}
