@@ -259,3 +259,29 @@ setMethod("^", signature = c("numeric", "rationalS4"),
     return(NA)
   }
 }
+
+S7::method(S7_Exponent, list(rational:::rationalS7, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  res <- .rationalExpRational(e1@n, e1@d, e1@v, e2@n, e2@d, e2@v)
+  if (is.list(res)) return(rationalS7(n = res$n, d = res$d))
+  else return(res)
+}
+
+S7::method(S7_Exponent, list(S7::class_integer, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  res <- .integerExpRational(e1, e2@n, e2@d, e2@v)
+  if (is.list(res)) return(rationalS7(n = res$n, d = res$d))
+  else return(res)
+}
+
+S7::method(S7_Exponent, list(rational:::rationalS7, S7::class_integer)) <- function(e1, e2, ..., .Generic) {
+  res <- .rationalExpInteger(e1@n, e1@d, e1@v, e2)
+  if (is.list(res)) return(rationalS7(n = res$n, d = res$d))
+  else return(res)
+}
+
+S7::method(S7_Exponent, list(S7::class_double, rational:::rationalS7)) <- function(e1, e2, ..., .Generic) {
+  return(e1^e2@v)
+}
+
+S7::method(S7_Exponent, list(rational:::rationalS7, S7::class_double)) <- function(e1, e2, ..., .Generic) {
+  return(e1@v^e2)
+}

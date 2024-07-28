@@ -40,3 +40,15 @@ length.rationalR6 <- function(x, ...)
 {
   return(length(x$getNumerator()))
 }
+
+#' @rdname rational-length
+#' @method length rational::rationalS7
+#' @export
+#' @examples
+#'   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S7")
+#'   stopifnot(length(a) == 3)
+'length.rational::rationalS7' <- function(x, ...)
+{
+  return(length(x@n))
+}
+

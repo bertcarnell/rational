@@ -70,6 +70,10 @@ S7_Integer_Divide <- S7::new_generic("S7_Integer_Divide", c("e1", "e2"), functio
   S7::S7_dispatch()
 })
 
+S7_Exponent <- S7::new_generic("S7_Exponent", c("e1", "e2"), function(e1, e2, ..., .Generic) {
+  S7::S7_dispatch()
+})
+
 #@export
 # @rdname S7_group_generics
 #S7_Complex <- S7::new_generic("Complex", "z", function(z, ..., .Generic) {

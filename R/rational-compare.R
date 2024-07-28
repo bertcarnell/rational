@@ -266,14 +266,18 @@ S7::method(S7_Compare, list(rational:::rationalS7, S7::class_double)) <- functio
   } else if (.Generic == "/")
   {
     S7_Divide(e1, e2, ..., .Generic = .Generic)
+  } else if (.Generic == "^")
+  {
+    S7_Exponent(e1, e2, ..., .Generic = .Generic)
   } else if (.Generic == "%/%")
   {
     S7_Integer_Divide(e1, e2, ..., .Generic = .Generic)
   } else if (.Generic == "%%")
   {
     return(e1 - e2 * e1 %/% e2)
-  } else if (.Generic %in% methods::getGroupMembers("Arith")) {
-    S7_Ops(e1, e2, ..., .Generic = .Generic)
+  } else if (.Generic %in% methods.getGroupMembers("Logic")) {
+    .Generic <- find_base_generic(.Generic)
+    .Generic(e1 > 0L, e2 > 0L)
   } else {
     stop(paste0("Function ", .Generic, " not available for class rationalS7"))
   }

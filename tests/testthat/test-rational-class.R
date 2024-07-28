@@ -77,6 +77,10 @@ test_that("S7 creation works", {
   a <- rational(3L, 4L, "S7")
   b <- rational(3L, 4L, "S7")
   expect_identical(a, b)
+
+  a <- rational(c(3L, 3L, 3L), c(4L, 5L, 7L), "S7")
+  expect_equal(length(a), 3)
+
 })
 
 test_that("Other arithmetic operations", {

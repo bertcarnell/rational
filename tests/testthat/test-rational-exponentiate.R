@@ -10,7 +10,7 @@ test_that("exponentiations works", {
   expect_true(is.na(rational(1L, 2L, "S3")^"test"))
   expect_true(is.na(rational(1L, 2L, "R6")^"test"))
 
-  for (i in c("S4","S3","R6"))
+  for (i in c("S4", "S3", "R6", "S7"))
   {
     expect_equal(rational(2L, 3L, i)^rational(5L, 1L, i), rational(32L, 243L, i))
     expect_equal(rational(2L, 3L, i)^rational(5L, 2L, i), (2/3)^(5/2))
@@ -28,7 +28,7 @@ test_that("exponentiations works", {
     expect_equal(1.7^rational(1L, 2L, i), 1.7^(1/2))
   }
 
-  for (i in c("S4","S3","R6"))
+  for (i in c("S4", "S3", "R6", "S7"))
   {
     a <- rational(1L,2L,i)
     b <- rational(3L,5L,i)
@@ -43,7 +43,7 @@ test_that("exponentiations works", {
   }
 })
 
-test_that("Exponentiation with vectors works", {
+test_that("Exponentiation with vectors works R6", {
   # both rational
   a <- rational(c(1L, 3L), c(5L, 6L), "R6")
   b <- rational(c(2L, 2L), c(3L, 5L), "R6")
@@ -62,4 +62,22 @@ test_that("Exponentiation with vectors works", {
   expect_equal(a^b, c((2E9/2)^(8/3), (2E9/2)^(9/4)))
 })
 
+test_that("Exponentiation with vectors works S7", {
+  # both rational
+  a <- rational(c(1L, 3L), c(5L, 6L), "S7")
+  b <- rational(c(2L, 2L), c(3L, 5L), "S7")
+  expect_equal(a^b, c((1/5)^(2/3), (3/6)^(2/5)))
+  # both rational with one denominator == 1
+  a <- rational(c(1L, 3L), c(5L, 6L), "S7")
+  b <- rational(c(2L, 2L), c(3L, 1L), "S7")
+  expect_equal(a^b, c((1/5)^(2/3), (3/6)^(2/1)))
+  # both rational with both denominator == 1
+  a <- rational(c(1L, 3L), c(5L, 6L), "S7")
+  b <- rational(c(2L, 2L), c(1L, 1L), "S7")
+  expect_equal(a^b, rational(c(1L, 9L), c(25L, 36L), "S7"))
+  # integer overflow
+  a <- rational(c(2000000000L, 2000000000L), c(2L, 2L), "S7")
+  b <- rational(c(8L, 9L), c(3L, 4L), "S7")
+  expect_equal(a^b, c((2E9/2)^(8/3), (2E9/2)^(9/4)))
+})
 

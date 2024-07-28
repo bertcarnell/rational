@@ -5,6 +5,7 @@
 \alias{length,rationalS4-method}
 \alias{length.rationalS3}
 \alias{length.rationalR6}
+\alias{length.rational::rationalS7}
 \title{Rational class \code{length}}
 \usage{
 \S4method{length}{rationalS4}(x)
@@ -12,6 +13,8 @@
 \method{length}{rationalS3}(x, ...)
 
 \method{length}{rationalR6}(x, ...)
+
+\method{length}{`rational::rationalS7`}(x, ...)
 }
 \arguments{
 \item{x}{An object of class \code{rational}}
@@ -27,5 +30,7 @@ Rational class \code{length}
   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S3")
   stopifnot(length(a) == 3)
   a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "R6")
+  stopifnot(length(a) == 3)
+  a <- rational(c(3L, 5L, 6L), c(4L, 5L, 7L), "S7")
   stopifnot(length(a) == 3)
 }
