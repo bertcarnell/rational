@@ -7,7 +7,7 @@ Depends: R (>= 4.3.0)
 Imports:
     R6,
     methods,
-    S7
+    S7 (>= 0.2.2)
 License: GPL-2
 Suggests: 
     testthat,
