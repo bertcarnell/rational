@@ -152,10 +152,10 @@ rationalS7 <- S7::new_class("rationalS7",
                                  return("@n and @d must not be NA or NaN")
                                }
                              },
-                             constructor = function(.data, n, d) {
+                             constructor = function(n, d) {
                                stopifnot(is.integer(n), is.integer(d))
                                stopifnot(all(d != 0L))
-                               S7::new_object(S7::S7_object, n = n, d = d, v = n / d)
+                               S7::new_object(S7::S7_object(), n = n, d = d, v = n / d)
                              },
                              parent = S7::S7_object,
                              package = "rational"
